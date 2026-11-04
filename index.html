@@ -218,6 +218,18 @@ const ROLES = {
   marketing:{name:"Marketing", steps:["Business cards ordered","Pitch deck","Sign riders, if marked on the form"]},
   tech:{name:"Technology", steps:["Mailbox and license created","Added to the office SalesAgents list","Authenticator set up","MyQ print app installed"]}
 };
+const CSTEPS = [
+  "Listing or contract file created in SkySlope by the agent, all documents uploaded",
+  "Compliance review: pages, signatures, initials, dates, names, price, and start and end dates checked; agent told what is missing",
+  "Every checklist item green before the MLS entry",
+  "Change forms and addenda reviewed as they come in; nothing changed on the original",
+  "Closing packet sent to the attorney by the agent, admin copied",
+  "CL-100 need date set from the contract; ordered after due diligence in Georgetown County",
+  "Closing statement checked: commission, admin fee, CL-100, home warranty, each on the right side",
+  "Commission payment method confirmed: check, wire, or drop-off",
+  "Final closing statement and check copy in SkySlope; file closed in SkySlope and Broker Wolf; EFT issued"
+];
+const mk = n => CSTEPS.map((t,i)=>[t,i<n]);
 const S = {
   mode:"staff",
   page:"today",
@@ -234,9 +246,9 @@ const S = {
     {id:1040,agent:"Jordan Hale",cat:"BoldTrail",text:"Can't see my leads in the BoldTrail app.",status:"done",owner:"Ashley",opened:"Nov 2",updates:["Nov 2: We have your request.","Nov 2: Ashley reset your BoldTrail app login. Try signing in again.","Nov 2: Closed. Thanks for confirming."],notes:["Nov 2: App login was still on the old email."]}
   ],
   files:[
-    {id:"C-2026-018",agent:"Tom Ellison",prop:"412 Marsh Hen Lane, Pawleys Island",side:"Buyer",county:"Georgetown",dd:"Nov 10, 2026",close:"Dec 1, 2026",cl100:"Palmetto Pest (per contract, buyer pays)",need:"14 days before closing (Nov 17)",status:"doing",steps:[["Contract received and checked against the listing agreement and buyer agency",true],["Due diligence end date entered",true],["CL-100 company and who pays confirmed from the contract",true],["Order the CL-100 after due diligence, before the need date",false],["Inspections scheduled per showing instructions",false],["Closing statement verified against contract, compensation agreement, buyer agency, listing agreement",false],["File to closing",false]]},
-    {id:"C-2026-019",agent:"Dana Whitfield",prop:"88 Cedar Row, Orangeburg",side:"Listing",county:"Orangeburg",dd:"Nov 6, 2026",close:"Nov 25, 2026",cl100:"Not chosen in the contract",need:"",status:"waiting",steps:[["Contract received and checked against the listing agreement and buyer agency",true],["Due diligence end date entered",true],["CL-100 company and who pays confirmed from the contract",false],["Order the CL-100 after due diligence, before the need date",false],["Inspections scheduled per showing instructions",false],["Closing statement verified against contract, compensation agreement, buyer agency, listing agreement",false],["File to closing",false]],flag:"Termite box not checked in the contract. Waiver needs to be signed and added, or the contract amended, before this file moves."},
-    {id:"C-2026-016",agent:"Priya Nair",prop:"2201 Ocean Blvd, Unit 9C, Myrtle Beach",side:"Buyer",county:"Horry",dd:"Oct 24, 2026",close:"Nov 14, 2026",cl100:"Coastal Termite (attorney's office orders in Horry)",need:"10 days before closing (Nov 4)",status:"done",steps:[["Contract received and checked against the listing agreement and buyer agency",true],["Due diligence end date entered",true],["CL-100 company and who pays confirmed from the contract",true],["Order the CL-100 after due diligence, before the need date",true],["Inspections scheduled per showing instructions",true],["Closing statement verified against contract, compensation agreement, buyer agency, listing agreement",true],["File to closing",true]]}
+    {id:"C-2026-018",agent:"Tom Ellison",prop:"412 Marsh Hen Lane, Pawleys Island",side:"Buyer",county:"Georgetown",dd:"Nov 10, 2026",close:"Dec 1, 2026",cl100:"Palmetto Pest (per contract, buyer pays)",need:"14 days before closing (Nov 17)",fee:"$125, billed with the admin fee on the closing statement",status:"doing",steps:mk(5)},
+    {id:"C-2026-019",agent:"Dana Whitfield",prop:"88 Cedar Row, Orangeburg",side:"Listing",county:"Orangeburg",dd:"Nov 6, 2026",close:"Nov 25, 2026",cl100:"Not chosen in the contract",need:"",fee:"Not charged (inland office)",status:"waiting",steps:mk(2),flag:"Termite box not checked in the contract. Waiver needs to be signed and added, or the contract amended, before this file moves."},
+    {id:"C-2026-016",agent:"Priya Nair",prop:"2201 Ocean Blvd, Unit 9C, Myrtle Beach",side:"Buyer",county:"Horry",dd:"Oct 24, 2026",close:"Nov 14, 2026",cl100:"Coastal Termite (attorney's office orders in Horry)",need:"10 days before closing (Nov 4)",fee:"$125, billed with the admin fee on the closing statement",status:"done",steps:mk(9)}
   ],
   me:3, sel:{agent:1,req:1041,file:"C-2026-018",order:"O-2026-041"}, cart:[]
 };
@@ -251,9 +263,11 @@ const CATALOG = [
   {id:"badge",group:"Branded items",name:"Name badge",desc:"Magnetic badge with the company mark.",opts:["Gold","Silver"],optLabel:"Finish",content:"Name and title as you want them on the badge"},
   {id:"polo",group:"Branded items",name:"Company polo",desc:"Embroidered polo for events and open houses.",opts:["S","M","L","XL","2XL"],optLabel:"Size"},
   {id:"folders",group:"Branded items",name:"Presentation folders",desc:"Pocket folders for closing packets and buyer consultations.",opts:["25","50"],optLabel:"Quantity",content:"Anything to add to the standard folder"},
+  {id:"custom",group:"Custom work",name:"Custom marketing request",desc:"Anything the templates do not cover: a custom card, an event banner, a one-off piece. Marketing quotes it at $50 an hour and sends a proof.",opts:["Quote first"],optLabel:"",upload:"Reference images, if any",content:"Describe what you need and when you need it"},
   {id:"gift",group:"Branded items",name:"Closing gift",desc:"Company closing gift set, delivered to the office for you to hand off.",opts:["1","2","3"],optLabel:"Quantity",content:"Client name and the date you need it"}
 ];
 const ART = {
+  custom:`<svg viewBox="0 0 100 100"><rect x="22" y="22" width="56" height="56" rx="4" fill="#fff" stroke="#1f4d3f" stroke-width="2" stroke-dasharray="4,3"/><path d="M50 36 v28 M36 50 h28" stroke="#1f4d3f" stroke-width="2.5"/></svg>`,
   cards:`<svg viewBox="0 0 100 100"><rect x="14" y="30" width="72" height="44" rx="3" fill="#fff" stroke="#1f4d3f" stroke-width="2"/><rect x="22" y="40" width="20" height="20" rx="10" fill="#dfe6e1"/><rect x="48" y="42" width="28" height="4" fill="#1f4d3f"/><rect x="48" y="50" width="22" height="3" fill="#b0b5ae"/><rect x="48" y="57" width="26" height="3" fill="#b0b5ae"/></svg>`,
   riders:`<svg viewBox="0 0 100 100"><rect x="18" y="38" width="64" height="20" rx="2" fill="#fff" stroke="#1f4d3f" stroke-width="2"/><rect x="28" y="46" width="44" height="4" fill="#1f4d3f"/><rect x="22" y="58" width="3" height="22" fill="#1f4d3f"/><rect x="75" y="58" width="3" height="22" fill="#1f4d3f"/></svg>`,
   openhouse:`<svg viewBox="0 0 100 100"><path d="M50 18 L24 82 H76 Z" fill="#fff" stroke="#1f4d3f" stroke-width="2"/><rect x="38" y="48" width="24" height="5" fill="#1f4d3f"/><rect x="36" y="58" width="28" height="3" fill="#b0b5ae"/></svg>`,
@@ -474,7 +488,7 @@ function record(a,staff){
 PAGES.concierge = () => {
   const f=S.files.find(x=>x.id===S.sel.file)||S.files[0];
   if(S.sel.file==="new") return `<div class="pagehead"><div><h1>New concierge file</h1><p>Opened by staff when an agent asks for the service on a transaction. Everything the admin team needs comes from the body of the contract.</p></div></div>${fileForm(true)}`;
-  return `<div class="pagehead"><div><h1>Concierge</h1><p>Transactions where the agent has chosen the service. The contract sets every date; this keeps them in one place with the steps that follow.</p></div><button class="btn" onclick="go('concierge',{file:'new'})">Open a file</button></div>
+  return `<div class="pagehead"><div><h1>Concierge</h1><p>Files where the agent has chosen the $125 service. One coordinator per file, the contract sets every date, and Sue audits SkySlope daily to confirm every file is assigned.</p></div><button class="btn" onclick="go('concierge',{file:'new'})">Open a file</button></div>
   <div class="split">
     <div class="list">${S.files.map(x=>`<div class="item ${x.id===f.id?"on":""}" onclick="go('concierge',{file:'${x.id}'})"><div class="t">${x.prop}</div><div class="m"><span>${x.agent}, closes ${x.close}</span>${chip(x.status)}</div></div>`).join("")}</div>
     ${fileDetail(f,true)}
@@ -484,19 +498,19 @@ function fileDetail(f,staff){
   const done=f.steps.filter(s=>s[1]).length;
   return `<div class="grid" style="gap:16px">
     <div class="panel"><div class="pagehead" style="margin-bottom:10px"><div><h2>${f.prop}</h2><p class="small">${f.id}. ${f.agent}, ${f.side.toLowerCase()} side. ${f.county} County.</p></div>${chip(f.status)}</div>
-      <div class="kv"><div>Due diligence ends</div><div>${f.dd}</div><div>Closing</div><div>${f.close}</div><div>CL-100</div><div>${f.cl100}</div><div>CL-100 need date</div><div>${f.need||"<span class='muted'>not set until the contract names a company</span>"}</div></div>
+      <div class="kv"><div>Due diligence ends</div><div>${f.dd}</div><div>Closing</div><div>${f.close}</div><div>CL-100</div><div>${f.cl100}</div><div>CL-100 need date</div><div>${f.need||"<span class='muted'>not set until the contract names a company</span>"}</div><div>Concierge fee</div><div>${f.fee||""}</div></div>
       ${f.flag?`<div class="note" style="margin-top:12px">${f.flag}</div>`:""}
       ${(f.log||[]).length?`<div class="timeline" style="margin-top:10px">${f.log.map(u=>`<div class="tl done"><div class="dot"></div><div>${u}</div></div>`).join("")}</div>`:""}
-      ${f.county==="Georgetown"?`<p class="muted small" style="margin-top:10px">Georgetown County: the attorney's office does not order the CL-100. The admin team orders it.</p>`:f.county==="Horry"?`<p class="muted small" style="margin-top:10px">Horry County: the attorney's office orders the CL-100.</p>`:""}
+      ${f.county==="Georgetown"?`<p class="muted small" style="margin-top:10px">Georgetown County: the attorney's office does not order the CL-100, so the admin team orders it after due diligence. The agent still gives the client three or more pest companies to choose from.</p>`:f.county==="Horry"?`<p class="muted small" style="margin-top:10px">Horry County: the attorney's office orders the CL-100.</p>`:""}
     </div>
     <div class="panel"><h3>Steps <span class="muted small">${done} of ${f.steps.length}</span></h3>
       ${f.steps.map((s,i)=>`<div class="step ${s[1]?"done":""}" ${staff?`onclick="toggleFile('${f.id}',${i})" role="checkbox" aria-checked="${s[1]}" tabindex="0"`:`style="cursor:default"`}><span class="box"></span><span class="lbl">${s[0]}</span></div>`).join("")}
-      ${f.status!=="done"?`<div class="actions" style="margin-top:12px"><button class="btn quiet small" onclick="orderFrom('${f.id}','CL-100')">Order the CL-100</button><button class="btn quiet small" onclick="orderFrom('${f.id}','inspection')">Order an inspection</button></div>`:""}
-      ${staff?`<p class="muted small" style="margin-top:10px">Click a step to mark it done. The agent sees the same list from their side, read only.</p>`:`<p class="muted small" style="margin-top:10px">You will get a text at each step. Call the office if a date in the contract changes.</p>`}
+      ${f.status!=="done"&&f.county==="Georgetown"?`<div class="actions" style="margin-top:12px"><button class="btn quiet small" onclick="orderFrom('${f.id}','CL-100')">Order the CL-100</button></div>`:""}
+      ${staff?`<p class="muted small" style="margin-top:10px">Click a step to mark it done. The agent sees the same list from their side, read only. If the closing statement does not match, notify Kathy and Ruth; the agent is not paid until it is corrected.</p>`:`<p class="muted small" style="margin-top:10px">You will get a text at each step. Still yours on every file: MLS entry and every MLS change, ordering the home warranty, the closing packet to the attorney, and closing out the MLS.</p>`}
     </div>
   </div>`;
 }
-function orderFrom(id,what){ const f=S.files.find(x=>x.id===id); if(what==="CL-100"&&f.cl100.startsWith("Not chosen")){toast("The contract names no CL-100 company. Amend the contract or sign the waiver first."); return;} f.log=f.log||[]; f.log.push("Nov 4: "+(what==="CL-100"?"CL-100 ordered from "+f.cl100.split(" (")[0]+" for after due diligence ("+f.dd+")":"Inspection request sent to the agent's chosen inspector; showing instructions attached")); if(what==="CL-100") f.steps[3][1]=true; else f.steps[4][1]=true; render(); toast(what==="CL-100"?"CL-100 ordered.":"Inspection requested."); }
+function orderFrom(id,what){ const f=S.files.find(x=>x.id===id); if(what==="CL-100"&&f.cl100.startsWith("Not chosen")){toast("The contract names no CL-100 company. Amend the contract or sign the waiver first."); return;} f.log=f.log||[]; f.log.push("Nov 4: "+(what==="CL-100"?"CL-100 ordered from "+f.cl100.split(" (")[0]+" for after due diligence ("+f.dd+")":"Inspection request sent to the agent's chosen inspector; showing instructions attached")); f.steps[5][1]=true; render(); toast(what==="CL-100"?"CL-100 ordered.":"Inspection requested."); }
 function toggleFile(id,i){ const f=S.files.find(x=>x.id===id); f.steps[i][1]=!f.steps[i][1]; const d=f.steps.filter(s=>s[1]).length; f.status = d===f.steps.length?"done":(d===0?"todo":(f.flag?"waiting":"doing")); render(); }
 function fileForm(staff){ return `<form class="form" onsubmit="return addFile(event,${staff})">
   ${staff?`<label>Agent<select name="agent">${S.agents.map(a=>`<option>${a.name}</option>`).join("")}</select></label>`:""}
@@ -506,7 +520,7 @@ function fileForm(staff){ return `<form class="form" onsubmit="return addFile(ev
   <div class="row2"><label>CL-100 company named in the contract<input name="cl100" placeholder="Leave blank if the box is not checked"></label><label>CL-100 need date per contract<input name="need" placeholder="e.g. 14 days before closing"></label></div>
   <label>Upload the signed contract<input type="file"></label>
   <div class="actions"><button class="btn" type="submit">${staff?"Open the file":"Request the service"}</button><button class="btn quiet" type="button" onclick="go('${staff?"concierge":"myconcierge"}',{file:'C-2026-018'})">Cancel</button></div></form>`; }
-function addFile(e,staff){ e.preventDefault(); const f=new FormData(e.target); const id="C-2026-0"+(20+S.files.length-3); const steps=S.files[0].steps.map(s=>[s[0],false]); S.files.unshift({id,agent:staff?f.get("agent"):me().name,prop:f.get("prop"),side:f.get("side"),county:f.get("county"),dd:f.get("dd")||"",close:f.get("close")||"",cl100:f.get("cl100")||"Not chosen in the contract",need:f.get("need")||"",status:"todo",steps,flag:f.get("cl100")?"":"Termite box not checked in the contract. Waiver needs to be signed and added, or the contract amended, before this file moves."}); toast(staff?"File "+id+" opened.":"Request sent. The admin team will open the file and text you."); go(staff?"concierge":"myconcierge",{file:id}); return false; }
+function addFile(e,staff){ e.preventDefault(); const f=new FormData(e.target); const id="C-2026-0"+(20+S.files.length-3); const steps=mk(0); S.files.unshift({id,agent:staff?f.get("agent"):me().name,prop:f.get("prop"),side:f.get("side"),county:f.get("county"),dd:f.get("dd")||"",close:f.get("close")||"",cl100:f.get("cl100")||"Not chosen in the contract",need:f.get("need")||"",fee:["Orangeburg","Clarendon"].includes(f.get("county"))?"Not charged (inland office)":"$125, billed with the admin fee on the closing statement",status:"todo",steps,flag:f.get("cl100")?"":"Termite box not checked in the contract. Waiver needs to be signed and added, or the contract amended, before this file moves."}); toast(staff?"File "+id+" opened.":"Request sent. The admin team will open the file and text you."); go(staff?"concierge":"myconcierge",{file:id}); return false; }
 
 PAGES.orders = () => {
   const o=S.orders.find(x=>x.id===S.sel.order)||S.orders[0];
@@ -615,8 +629,12 @@ PAGES.profile = () => `<div class="pagehead"><div><h1>My profile</h1><p>What the
 PAGES.help = () => `<div class="pagehead"><div><h1>Request help</h1><p>Say what you need. It gets a number, someone picks it up, and you can watch it move from Home.</p></div></div>${requestForm(false)}`;
 PAGES.myconcierge = () => {
   const mine=S.files.filter(f=>f.agent===me().name); const f=mine.find(x=>x.id===S.sel.file)||mine[0];
-  if(S.sel.file==="new") return `<div class="pagehead"><div><h1>Request the concierge service</h1><p>For one transaction. Upload the signed contract and the admin team takes the paperwork from there.</p></div></div>${fileForm(false)}`;
-  return `<div class="pagehead"><div><h1>Concierge</h1><p>Your transactions where the admin team is handling the paperwork, with where each one stands.</p></div><button class="btn" onclick="go('myconcierge',{file:'new'})">Request the service</button></div>
+  if(S.sel.file==="new") return `<div class="pagehead"><div><h1>Request the concierge service</h1><p>For one listing or contract. Upload the signed paperwork and your coordinator takes the file from there. Your paperwork has to be in SkySlope before the file can be reviewed.</p></div></div>${fileForm(false)}`;
+  return `<div class="pagehead"><div><h1>Concierge</h1><p>For $125 per listing, a compliance coordinator carries your file from SkySlope to closing. Request it one file at a time.</p></div><button class="btn" onclick="go('myconcierge',{file:'new'})">Request the service</button></div>
+  <div class="grid c2" style="margin-bottom:22px">
+    <div class="panel"><h3>What the service covers</h3><div class="small">${["Your SkySlope checklist reviewed and kept green through closing","Missing pages, signatures, and dates chased with you until fixed","CL-100 need date tracked and ordered after due diligence (Georgetown County)","Closing statement checked line by line: commission, admin fee, CL-100, home warranty","File closed out in SkySlope and Broker Wolf, EFT issued"].map(t=>`<div class="step" style="padding:6px 0;cursor:default"><span class="box" style="background:var(--green);border-color:var(--green)">\u2713</span><span class="lbl">${t}</span></div>`).join("")}</div></div>
+    <div class="panel"><h3>What stays with you</h3><div class="small">${["Entering and updating the MLS, and closing it out","Ordering home inspections and the home warranty","Giving your client three or more pest companies to choose from","Sending the closing packet to the attorney (copy the admin team)","Talking to your clients and getting signatures"].map(t=>`<div class="step" style="padding:6px 0;cursor:default"><span class="box"></span><span class="lbl">${t}</span></div>`).join("")}</div><p class="muted small" style="margin-top:8px">The $125 shows with your admin fee on the closing statement. Agents in the Orangeburg and Manning offices are not charged.</p></div>
+  </div>
   ${f?`<div class="split"><div class="list">${mine.map(x=>`<div class="item ${x.id===f.id?"on":""}" onclick="go('myconcierge',{file:'${x.id}'})"><div class="t">${x.prop}</div><div class="m"><span>Closes ${x.close}</span>${chip(x.status)}</div></div>`).join("")}</div>${fileDetail(f,false)}</div>`:`<div class="empty">You have no concierge files. Request the service on your next contract.</div>`}`;
 };
 
