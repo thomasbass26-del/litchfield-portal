@@ -150,8 +150,9 @@ textarea{min-height:96px;resize:vertical}
 .tile .o{display:none}
 @media (max-width:980px){.tiles{grid-template-columns:repeat(4,1fr)}.tile.wide{grid-column:span 4}}
 @media (prefers-reduced-motion:no-preference){.app-icon{transition:transform .15s}}
-.shop{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:28px}
-.prod{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;display:flex;flex-direction:column}
+.shop{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-bottom:28px}
+.prod select{max-width:100%;min-width:0}
+.prod{min-width:0;background:var(--panel);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;display:flex;flex-direction:column}
 .prod .img{position:relative;width:100%;padding-top:100%;background:#efeee9;border-bottom:1px solid var(--line)}
 .prod .img > svg{position:absolute;left:19%;top:19%;width:62%;height:62%}
 .prod .img > img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
@@ -162,7 +163,8 @@ textarea{min-height:96px;resize:vertical}
 .prod select{padding:6px 8px;font-size:13.5px}
 .cartitem{padding:12px 0;border-bottom:1px solid var(--line);display:grid;gap:8px}
 .cartitem:last-child{border-bottom:0}
-.cartitem .h{display:flex;justify-content:space-between;align-items:center}
+.cartitem .h{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.cartitem .h>div:first-child{flex:1;min-width:0}
 .cartitem input[type=file]{font-size:12.5px;padding:6px}
 .cartitem textarea{min-height:60px;font-size:13.5px}
 .files{font-size:12.5px;color:var(--green)}
@@ -204,7 +206,10 @@ textarea{min-height:96px;resize:vertical}
 .quiet-kv div:nth-child(odd){color:var(--mute)}
 @media (max-width:980px){.hero,.cover,.filecard{grid-template-columns:1fr}.hero .side{border-left:0;padding-left:0;border-top:1px solid rgba(255,255,255,.12);padding-top:20px}}
 .prod{min-height:100%}
-.prod .body{flex:1}
+.prod .body{flex:1;min-width:0;overflow-wrap:anywhere}
+.prod .ctl label,.prod .ctl span{overflow-wrap:normal;white-space:nowrap}
+.prod .pr{font-weight:500;white-space:nowrap;color:var(--green-ink)}
+.sample{display:inline-block;font-family:Inter,system-ui,sans-serif;font-weight:500;letter-spacing:0;font-size:12px;color:var(--amber);background:var(--amber-tint);padding:2px 9px;border-radius:999px;margin-left:8px;vertical-align:middle}
 .prod .ctl{margin-top:auto;flex-wrap:wrap}
 .prod .img{background:#ecebe6;background-image:radial-gradient(circle at 50% 40%,#f4f3ef 0,#e6e5df 70%)}
 .mock{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);box-shadow:0 10px 24px rgba(0,0,0,.14),0 1px 0 rgba(0,0,0,.05)}
@@ -249,6 +254,30 @@ textarea{min-height:96px;resize:vertical}
 .m-gift::after{top:46%;left:0;height:8%;width:100%}
 .m-gift .lg{position:absolute;left:8%;bottom:8%;width:34%}
 .m-custom{width:66%;height:50%;border:2px dashed #9aa59f;display:flex;align-items:center;justify-content:center;color:#6b7570;font-size:13px;box-shadow:none}
+.m-lux{width:64%;height:78%;background:#fff;display:grid;grid-template-rows:58% 42%;transform:translate(-50%,-50%) rotate(-3deg)}
+.m-lux .ph{background:linear-gradient(170deg,#d7dcd2,#8fb0a3 55%,#2f5d50)}
+.m-lux .cap{padding:8% 9%;display:flex;flex-direction:column;gap:3px}
+.m-lux .h{font-family:"Cormorant Garamond",Georgia,serif;font-size:14px;font-weight:600}
+.m-lux .s{font-size:7px;letter-spacing:.14em;color:#6b7570}
+.m-lux .lg{width:55%;margin-top:auto}
+.m-book{width:62%;height:76%;display:grid;grid-template-columns:7% 93%;background:#121a16;transform:translate(-50%,-50%) rotate(4deg)}
+.m-book .spine{background:#0b100d}
+.m-book .cov{background:#121a16;padding:9% 9%;display:flex;flex-direction:column;gap:6px;color:#fff}
+.m-book .ph{height:46%;background:linear-gradient(170deg,#8fb0a3,#2f5d50)}
+.m-book .h{font-family:"Cormorant Garamond",Georgia,serif;font-size:13px}
+.m-book .lg{width:60%;filter:invert(1) brightness(2);margin-top:auto}
+.m-site{width:80%;height:62%;background:#fff;border-radius:6px;overflow:hidden;display:grid;grid-template-rows:12% 66% 22%}
+.m-site .bar{background:#eceae4;display:flex;gap:4px;align-items:center;padding-left:6%}
+.m-site .bar i{width:6px;height:6px;border-radius:50%;background:#cfcbc2}
+.m-site .ph{background:linear-gradient(170deg,#c9d1c6,#44695c 60%,#1f3d33);display:grid;place-items:center;color:#fff;font-size:18px}
+.m-site .ft{display:flex;align-items:center;justify-content:space-between;padding:0 6%}
+.m-site .h{font-size:8px;letter-spacing:.06em}
+.m-site .lg{width:40%}
+.m-mag{width:60%;height:80%;background:#fff;overflow:hidden;transform:translate(-50%,-50%) rotate(-2deg)}
+.m-mag .ph{position:absolute;inset:0;z-index:0;background:linear-gradient(180deg,#e9e3d2 0,#c9d1c6 40%,#2f5d50 100%)}
+.m-mag .mast{z-index:1;position:absolute;top:7%;left:0;right:0;text-align:center;font-family:"Cormorant Garamond",Georgia,serif;font-size:15px;letter-spacing:.14em;color:#161716}
+.m-mag .sub{z-index:1;position:absolute;top:21%;left:0;right:0;text-align:center;font-size:5px;letter-spacing:.2em;color:#4a4d49}
+.m-mag .tag{z-index:1;position:absolute;bottom:7%;left:8%;right:8%;font-size:6.5px;color:#fff;letter-spacing:.04em}
 .cart-sticky{position:sticky;top:20px}
 .cartitem .h .t{font-size:14.5px}
 .cartitem label{font-size:12.5px}
@@ -342,17 +371,21 @@ const S = {
 };
 const ROUTE = {"Email and Microsoft 365":["Technology","Seth"],"SkySlope":["Operations","Natalie"],"BoldTrail":["Marketing","Ashley"],"Printing":["Technology","Seth"],"Website or marketing":["Marketing","Ashley"],"Pay or commission":["Accounting","Sue"],"Something else":["Front desk",""]};
 const CATALOG = [
-  {id:"cards",group:"Print",name:"Business cards",desc:"Company card with your photo, name, title, cell, and email.",opts:["250","500","1000"],optLabel:"Quantity",upload:"Headshot",content:"Name, title, cell, and email as you want them printed"},
-  {id:"riders",group:"Print",name:"Sign riders",desc:"Name rider for your yard signs.",opts:["2","4","6"],optLabel:"Quantity",content:"Name and phone for the rider"},
-  {id:"openhouse",group:"Print",name:"Open house signs",desc:"Directional A-frame inserts with the company mark.",opts:["2","4"],optLabel:"Quantity",content:"Wording, if different from Open House"},
-  {id:"postcards",group:"Print",name:"Just listed or just sold postcards",desc:"Mailed to the neighborhood around a listing. Upload the property photo at checkout.",opts:["100","250","500"],optLabel:"Quantity",upload:"Property photos",content:"Property address, headline, and the message on the back"},
-  {id:"brochure",group:"Print",name:"Listing brochure",desc:"Folded property brochure. Marketing builds it from the MLS photos.",opts:["25","50","100"],optLabel:"Quantity",upload:"Photos, if not using the MLS set",content:"Property address, price, and the highlights to feature"},
-  {id:"deck",group:"Print",name:"Listing presentation deck",desc:"Printed and bound pitch deck with your name on the cover.",opts:["1","3","5"],optLabel:"Copies",upload:"Headshot or cover image",content:"Any pages to add or remove, and the client name for the cover"},
-  {id:"badge",group:"Branded items",name:"Name badge",desc:"Magnetic badge with the company mark.",opts:["Gold","Silver"],optLabel:"Finish",content:"Name and title as you want them on the badge"},
-  {id:"polo",group:"Branded items",name:"Company polo",desc:"Embroidered polo for events and open houses.",opts:["S","M","L","XL","2XL"],optLabel:"Size"},
-  {id:"folders",group:"Branded items",name:"Presentation folders",desc:"Pocket folders for closing packets and buyer consultations.",opts:["25","50"],optLabel:"Quantity",content:"Anything to add to the standard folder"},
-  {id:"custom",group:"Custom work",name:"Custom marketing request",desc:"Anything the templates do not cover: a custom card, an event banner, a one-off piece. Marketing quotes it at $50 an hour and sends a proof.",opts:["Quote first"],optLabel:"",upload:"Reference images, if any",content:"Describe what you need and when you need it"},
-  {id:"gift",group:"Branded items",name:"Closing gift",desc:"Company closing gift set, delivered to the office for you to hand off.",opts:["1","2","3"],optLabel:"Quantity",content:"Client name and the date you need it"}
+  {id:"cards",group:"Print",name:"Business cards",desc:"Company card with your photo, name, title, cell, and email.",opts:["250","500","1000"],optLabel:"Quantity",price:"$45",upload:"Headshot",content:"Name, title, cell, and email as you want them printed"},
+  {id:"riders",group:"Print",name:"Sign riders",desc:"Name rider for your yard signs.",opts:["2","4","6"],optLabel:"Quantity",price:"$30",content:"Name and phone for the rider"},
+  {id:"openhouse",group:"Print",name:"Open house signs",desc:"Directional A-frame inserts with the company mark.",opts:["2","4"],optLabel:"Quantity",price:"$40",content:"Wording, if different from Open House"},
+  {id:"postcards",group:"Print",name:"Just listed or just sold postcards",desc:"Mailed to the neighborhood around a listing. Upload the property photo at checkout.",opts:["100","250","500"],optLabel:"Quantity",price:"$95",upload:"Property photos",content:"Property address, headline, and the message on the back"},
+  {id:"brochure",group:"Print",name:"Listing brochure",desc:"Folded property brochure. Marketing builds it from the MLS photos.",opts:["25","50","100"],optLabel:"Quantity",price:"$75",upload:"Photos, if not using the MLS set",content:"Property address, price, and the highlights to feature"},
+  {id:"deck",group:"Print",name:"Listing presentation deck",desc:"Printed and bound pitch deck with your name on the cover.",opts:["1","3","5"],optLabel:"Copies",price:"$60",upload:"Headshot or cover image",content:"Any pages to add or remove, and the client name for the cover"},
+  {id:"badge",group:"Branded items",name:"Name badge",desc:"Magnetic badge with the company mark.",opts:["Gold","Silver"],optLabel:"Finish",price:"$25",content:"Name and title as you want them on the badge"},
+  {id:"polo",group:"Branded items",name:"Company polo",desc:"Embroidered polo for events and open houses.",opts:["S","M","L","XL","2XL"],optLabel:"Size",price:"$55"},
+  {id:"folders",group:"Branded items",name:"Presentation folders",desc:"Pocket folders for closing packets and buyer consultations.",opts:["25","50"],optLabel:"Quantity",price:"$50",content:"Anything to add to the standard folder"},
+  {id:"luxbro",group:"Luxury listing presentation",name:"Luxury property brochure",desc:"Twelve pages on heavy stock with professional photography, printed for the home and the listing appointment.",opts:["25","50","100"],optLabel:"Quantity",price:"$240",upload:"Professional photos, or we schedule the shoot",content:"Property address, price, and the story you want told"},
+  {id:"book",group:"Luxury listing presentation",name:"Hardcover property book",desc:"Coffee-table book of the home, left on the kitchen island for showings and given to the seller at closing.",opts:["1","2","3"],optLabel:"Copies",price:"$180",upload:"Photos, or we schedule the shoot",content:"Property address and any history or architect details to include"},
+  {id:"site",group:"Luxury listing presentation",name:"Single-property website and video",desc:"Dedicated address website with a cinematic walkthrough and drone footage, linked from the MLS and your signs.",opts:["Video","Website","Both"],optLabel:"Package",price:"$650",upload:"Any footage or photos you already have",content:"Property address, showing instructions, and the date it goes live"},
+  {id:"mag",group:"Luxury listing presentation",name:"Christie's magazine or Guided Luxury feature",desc:"Placement in the Christie's International Real Estate magazine or the Guided Luxury regional edition. Marketing confirms the issue and deadline.",opts:["Half page","Full page","Spread"],optLabel:"Size",price:"$950",upload:"Hero photo for the feature",content:"Property address, price, and the headline"},
+  {id:"custom",group:"Custom work",name:"Custom marketing request",desc:"Anything the templates do not cover: a custom card, an event banner, a one-off piece. Marketing quotes it at $50 an hour and sends a proof.",opts:["Quote first"],optLabel:"",price:"$50/hr",upload:"Reference images, if any",content:"Describe what you need and when you need it"},
+  {id:"gift",group:"Branded items",name:"Closing gift",desc:"Company closing gift set, delivered to the office for you to hand off.",opts:["1","2","3"],optLabel:"Quantity",price:"$80",content:"Client name and the date you need it"}
 ];
 const ART = {
   custom:`<svg viewBox="0 0 100 100"><rect x="22" y="22" width="56" height="56" rx="4" fill="#fff" stroke="#1f4d3f" stroke-width="2" stroke-dasharray="4,3"/><path d="M50 36 v28 M36 50 h28" stroke="#1f4d3f" stroke-width="2.5"/></svg>`,
@@ -628,12 +661,12 @@ function orderUpdate(e,id){ e.preventDefault(); const o=S.orders.find(x=>x.id===
 PAGES.print = () => {
   if(S.sel.order==="checkout") return checkout();
   const mine=S.orders.filter(o=>o.agent===me().name);
-  const groups=[...new Set(CATALOG.map(c=>c.group))];
-  return `<div class="pagehead"><div><h1>Print and order</h1><p>Company-branded print and items, ordered here and billed to your agent account. Add an item, then attach your photos and type the wording you want in the cart. Marketing sends a proof before anything custom prints.</p></div>${S.cart.length?`<button class="btn" onclick="go('print',{order:'checkout'})">Check out (${S.cart.length})</button>`:""}</div>
+  const groups=["Print","Luxury listing presentation","Branded items","Custom work"];
+  return `<div class="pagehead"><div><h1>Print and order <span class="sample">Sample pricing for the demo</span></h1><p>Company-branded print, items, and luxury listing pieces, ordered here and billed to your agent account. Add an item, attach your photos, and type the wording you want in the cart. Marketing sends a proof before anything prints.</p></div>${S.cart.length?`<button class="btn" onclick="go('print',{order:'checkout'})">Check out (${S.cart.length})</button>`:""}</div>
   <div class="split" style="grid-template-columns:1fr 340px">
-    <div>${groups.map(g=>`<h3 style="margin:6px 0 12px">${g}</h3><div class="shop">${CATALOG.filter(c=>c.group===g).map(c=>`<div class="prod"><div class="img">${mock(c.id)}</div><div class="body"><div class="t">${c.name}</div><div class="d">${c.desc}</div><div class="ctl"><label style="display:flex;align-items:center;gap:8px;font-size:13px">${c.optLabel}<select id="opt-${c.id}">${c.opts.map(o=>`<option>${o}</option>`).join("")}</select></label><button class="btn small" onclick="addToCart('${c.id}')">Add to order</button></div></div></div>`).join("")}</div>`).join("")}</div>
+    <div>${groups.map(g=>`<h3 style="margin:6px 0 12px">${g}</h3><div class="shop">${CATALOG.filter(c=>c.group===g).map(c=>`<div class="prod"><div class="img">${mock(c.id)}</div><div class="body"><div class="t" style="display:flex;justify-content:space-between;gap:10px"><span>${c.name}</span><span class="pr">${c.price||""}</span></div><div class="d">${c.desc}</div><div class="ctl"><label style="display:flex;align-items:center;gap:8px;font-size:13px">${c.optLabel}<select id="opt-${c.id}">${c.opts.map(o=>`<option>${o}</option>`).join("")}</select></label><button class="btn small" onclick="addToCart('${c.id}')">Add to order</button></div></div></div>`).join("")}</div>`).join("")}</div>
     <div class="cart-sticky">
-      <div class="panel"><h3>Your cart</h3>${S.cart.length?S.cart.map((i,n)=>`<div class="cartitem"><div class="h"><div><span class="t" style="font-weight:500">${i.name}</span> <span class="muted small">${i.optLabel}: ${i.opt}</span></div><button class="btn quiet small" onclick="S.cart.splice(${n},1);render()">Remove</button></div>
+      <div class="panel"><h3>Your cart</h3>${S.cart.length?S.cart.map((i,n)=>`<div class="cartitem"><div class="h"><div><span class="t" style="font-weight:500">${i.name}</span> <span class="muted small">${i.optLabel?i.optLabel+": ":""}${i.opt}</span></div><span class="pr" style="font-weight:500;color:var(--green-ink)">${i.price}</span><button class="btn quiet small" onclick="S.cart.splice(${n},1);render()">Remove</button></div>
       ${i.upload?`<label>${i.upload}<input type="file" multiple accept="image/*,.pdf" onchange="S.cart[${n}].files=[...this.files].map(f=>f.name);render()"></label>${(i.files||[]).length?`<div class="files">Attached: ${i.files.join(", ")}</div>`:""}`:`<label>Images or files, if any<input type="file" multiple accept="image/*,.pdf" onchange="S.cart[${n}].files=[...this.files].map(f=>f.name);render()"></label>${(i.files||[]).length?`<div class="files">Attached: ${i.files.join(", ")}</div>`:""}`}
       <label>${i.content||"What should it say"}<textarea placeholder="Type the exact wording you want" oninput="S.cart[${n}].text=this.value">${i.text||""}</textarea></label></div>`).join("")+`<div class="actions" style="margin-top:14px"><button class="btn" onclick="go('print',{order:'checkout'})">Check out</button></div>`:`<div class="empty">Nothing in your cart yet. Add an item, then attach your images and the wording you want.</div>`}</div>
       <div class="panel" style="margin-top:18px"><h3>Your orders</h3>${mine.length?mine.map(o=>`<div class="item" style="cursor:default"><div class="t">${o.id} <span class="muted small">${o.placed}</span></div><div class="muted small">${o.items.map(i=>i[0]+" ("+i[1]+")").join(", ")}</div><div class="m"><span>${o.updates[o.updates.length-1].replace(/^[A-Z][a-z]{2} \d+: /,"")}</span>${chip(o.status)}</div></div>`).join(""):`<div class="empty">No orders yet.</div>`}</div>
@@ -653,11 +686,15 @@ function mock(id){
     case "polo": return `<div class="mock m-polo"><svg viewBox="0 0 100 100"><path d="M36 18 l-20 11 7 18 9-3 v38 h36 v-38 l9 3 7-18 -20-11 c-4 7-24 7-28 0z" fill="#121a16"/><path d="M44 18 l6 15 6-15" fill="none" stroke="#3a4a42" stroke-width="2"/><circle cx="64" cy="46" r="4" fill="#fff"/></svg></div>`;
     case "folders": return `<div class="mock m-folder">${lg}</div>`;
     case "gift": return `<div class="mock m-gift">${lg}</div>`;
+    case "luxbro": return `<div class="mock m-lux"><div class="ph"></div><div class="cap"><span class="h">The Marsh House</span><span class="s">Pawleys Island</span>${lg}</div></div>`;
+    case "book": return `<div class="mock m-book"><div class="spine"></div><div class="cov"><div class="ph"></div><div class="h">The Marsh House</div>${lg}</div></div>`;
+    case "site": return `<div class="mock m-site"><div class="bar"><i></i><i></i><i></i></div><div class="ph"><span>&#9654;</span></div><div class="ft"><span class="h">412marshhen.com</span>${lg}</div></div>`;
+    case "mag": return `<div class="mock m-mag"><div class="ph"></div><div class="mast">CHRISTIE'S</div><div class="sub">INTERNATIONAL REAL ESTATE</div><div class="tag">Featured: The Marsh House, Pawleys Island</div></div>`;
     case "custom": return `<div class="mock m-custom">Your idea here</div>`;
   }
   return ART[id]||"";
 }
-function addToCart(id){ const c=CATALOG.find(x=>x.id===id); const opt=document.getElementById("opt-"+id).value; S.cart.push({name:c.name,opt,optLabel:c.optLabel,upload:c.upload,content:c.content,files:[],text:""}); render(); toast(c.name+" added."); }
+function addToCart(id){ const c=CATALOG.find(x=>x.id===id); const opt=document.getElementById("opt-"+id).value; S.cart.push({name:c.name,opt,optLabel:c.optLabel,upload:c.upload,content:c.content,files:[],text:"",price:c.price||""}); render(); toast(c.name+" added."); }
 function checkout(){
   const m=me();
   return `<div class="pagehead"><div><h1>Check out</h1><p>Confirm what you are ordering and where it should go. Marketing sends a proof for anything custom before it prints.</p></div></div>
@@ -670,9 +707,10 @@ function checkout(){
       <label class="check"><input type="checkbox" required> Bill this order to my agent account</label>
       <div class="actions"><button class="btn" type="submit">Place order</button><button class="btn quiet" type="button" onclick="go('print',{order:''})">Back to cart</button></div>
     </form>
-    <div class="panel"><h3>Order summary</h3>${S.cart.map(i=>`<div class="item" style="cursor:default"><div class="t">${i.name}</div><div class="muted small">${i.optLabel}: ${i.opt}</div>${(i.files||[]).length?`<div class="files">Attached: ${i.files.join(", ")}</div>`:""}${i.text?`<div class="small" style="margin-top:4px">${i.text}</div>`:""}</div>`).join("")||`<div class="empty">Your cart is empty.</div>`}<p class="muted small" style="margin-top:12px">Pricing follows the marketing price list and shows on your agent statement.</p></div>
+    <div class="panel"><h3>Order summary</h3>${S.cart.map(i=>`<div class="item" style="cursor:default"><div class="t" style="display:flex;justify-content:space-between"><span>${i.name}</span><span>${i.price}</span></div><div class="muted small">${i.optLabel?i.optLabel+": ":""}${i.opt}</div>${(i.files||[]).length?`<div class="files">Attached: ${i.files.join(", ")}</div>`:""}${i.text?`<div class="small" style="margin-top:4px">${i.text}</div>`:""}</div>`).join("")||`<div class="empty">Your cart is empty.</div>`}${cartTotal()}<p class="muted small" style="margin-top:12px">Prices shown are placeholders for the demo, not the marketing price list. Billed to your agent account and shown on your statement. Custom work and shoots are quoted before anything starts.</p></div>
   </div>`;
 }
+function cartTotal(){ let t=0, extra=false; S.cart.forEach(i=>{const m=/^\$(\d+)$/.exec(i.price||""); if(m) t+=+m[1]; else extra=true;}); return `<div class="total"><span>Total</span><span>$${t}${extra?" plus quoted work":""}</span></div>`; }
 function placeOrder(e){ e.preventDefault(); if(!S.cart.length){toast("Add something to the cart first."); return false;} const f=new FormData(e.target); const id="O-2026-0"+(42+S.orders.length-2); S.orders.unshift({id,agent:me().name,items:S.cart.map(i=>[i.name,i.opt+((i.files||[]).length?", "+i.files.length+" file"+(i.files.length>1?"s":""):"")+(i.text?", wording attached":"")]),deliver:f.get("deliver"),status:"new",placed:"Nov 4",owner:"Marketing",updates:["Nov 4: Order received. Marketing will send a proof for anything custom."]}); S.cart=[]; toast("Order "+id+" placed. You will get a text when there is a proof or it is ready."); go("print",{order:""}); return false; }
 
 // ---------- agent pages ----------
