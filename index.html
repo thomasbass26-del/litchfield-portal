@@ -150,16 +150,23 @@ textarea{min-height:96px;resize:vertical}
 .tile .o{display:none}
 @media (max-width:980px){.tiles{grid-template-columns:repeat(4,1fr)}.tile.wide{grid-column:span 4}}
 @media (prefers-reduced-motion:no-preference){.app-icon{transition:transform .15s}}
-.shop{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-bottom:28px}
-.prod select{max-width:100%;min-width:0}
-.prod{min-width:0;background:var(--panel);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;display:flex;flex-direction:column}
-.prod .img{position:relative;width:100%;padding-top:100%;background:#efeee9;border-bottom:1px solid var(--line)}
+
+.ghead{display:flex;align-items:baseline;gap:14px;margin:4px 0 10px;flex-wrap:wrap}
+.ghead h3{margin:0}
+.ghead p{margin:0}
+.menu{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-bottom:26px}
+.prod{min-width:0;background:var(--panel);border:1px solid var(--line);border-radius:var(--r);display:flex;gap:14px;padding:12px}
+.prod .img{flex:none;width:128px;height:128px;border-radius:6px;overflow:hidden;position:relative;background:#ecebe6;background-image:radial-gradient(circle at 50% 40%,#f4f3ef 0,#e4e3dd 72%)}
+.prod .img .stage{position:absolute;left:0;top:0;width:256px;height:256px;transform:scale(.5);transform-origin:0 0}
 .prod .img > svg{position:absolute;left:19%;top:19%;width:62%;height:62%}
 .prod .img > img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.prod .body{padding:14px 16px 16px;display:grid;gap:8px}
-.prod .t{font-weight:500;font-size:15px}
-.prod .d{color:var(--mute);font-size:13px;min-height:38px}
-.prod .ctl{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:4px}
+.prod .t{font-weight:500;font-size:15px;display:flex;justify-content:space-between;gap:10px;line-height:1.3}
+.prod .d{color:var(--mute);font-size:13px;line-height:1.4}
+.prod .ctl{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:auto;padding-top:6px}
+.prod .ctl label{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--mute)}
+.prod .ctl select{min-width:0;max-width:150px}
+.prod .ctl .btn{white-space:nowrap;flex:none}
+.menu .prod:only-child{grid-column:1 / -1}
 .prod select{padding:6px 8px;font-size:13.5px}
 .cartitem{padding:12px 0;border-bottom:1px solid var(--line);display:grid;gap:8px}
 .cartitem:last-child{border-bottom:0}
@@ -168,7 +175,7 @@ textarea{min-height:96px;resize:vertical}
 .cartitem input[type=file]{font-size:12.5px;padding:6px}
 .cartitem textarea{min-height:60px;font-size:13.5px}
 .files{font-size:12.5px;color:var(--green)}
-@media (max-width:980px){.shop{grid-template-columns:1fr 1fr}}
+@media (max-width:980px){.menu{grid-template-columns:1fr}}
 .asset{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
 .asset .img{position:relative;width:100%;padding-top:66%;background:#e9e8e2;border-bottom:1px solid var(--line)}
 .asset .img svg{position:absolute;left:0;top:0;width:100%;height:100%}
@@ -206,12 +213,12 @@ textarea{min-height:96px;resize:vertical}
 .quiet-kv div:nth-child(odd){color:var(--mute)}
 @media (max-width:980px){.hero,.cover,.filecard{grid-template-columns:1fr}.hero .side{border-left:0;padding-left:0;border-top:1px solid rgba(255,255,255,.12);padding-top:20px}}
 .prod{min-height:100%}
-.prod .body{flex:1;min-width:0;overflow-wrap:anywhere}
+.prod .body{flex:1;min-width:0;overflow-wrap:anywhere;display:flex;flex-direction:column;gap:4px;padding:2px 0}
 .prod .ctl label,.prod .ctl span{overflow-wrap:normal;white-space:nowrap}
 .prod .pr{font-weight:500;white-space:nowrap;color:var(--green-ink)}
 .sample{display:inline-block;font-family:Inter,system-ui,sans-serif;font-weight:500;letter-spacing:0;font-size:12px;color:var(--amber);background:var(--amber-tint);padding:2px 9px;border-radius:999px;margin-left:8px;vertical-align:middle}
-.prod .ctl{margin-top:auto;flex-wrap:wrap}
-.prod .img{background:#ecebe6;background-image:radial-gradient(circle at 50% 40%,#f4f3ef 0,#e6e5df 70%)}
+
+
 .mock{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);box-shadow:0 10px 24px rgba(0,0,0,.14),0 1px 0 rgba(0,0,0,.05)}
 .mock .lg{display:block;height:auto}
 .m-card{width:74%;height:42%;background:#fff;border-radius:3px;padding:7% 8%;transform:translate(-50%,-50%) rotate(-4deg);display:flex;flex-direction:column;justify-content:space-between}
@@ -661,14 +668,14 @@ function orderUpdate(e,id){ e.preventDefault(); const o=S.orders.find(x=>x.id===
 PAGES.print = () => {
   if(S.sel.order==="checkout") return checkout();
   const mine=S.orders.filter(o=>o.agent===me().name);
-  const groups=["Print","Luxury listing presentation","Branded items","Custom work"];
-  return `<div class="pagehead"><div><h1>Print and order <span class="sample">Sample pricing for the demo</span></h1><p>Company-branded print, items, and luxury listing pieces, ordered here and billed to your agent account. Add an item, attach your photos, and type the wording you want in the cart. Marketing sends a proof before anything prints.</p></div>${S.cart.length?`<button class="btn" onclick="go('print',{order:'checkout'})">Check out (${S.cart.length})</button>`:""}</div>
-  <div class="split" style="grid-template-columns:1fr 340px">
-    <div>${groups.map(g=>`<h3 style="margin:6px 0 12px">${g}</h3><div class="shop">${CATALOG.filter(c=>c.group===g).map(c=>`<div class="prod"><div class="img">${mock(c.id)}</div><div class="body"><div class="t" style="display:flex;justify-content:space-between;gap:10px"><span>${c.name}</span><span class="pr">${c.price||""}</span></div><div class="d">${c.desc}</div><div class="ctl"><label style="display:flex;align-items:center;gap:8px;font-size:13px">${c.optLabel}<select id="opt-${c.id}">${c.opts.map(o=>`<option>${o}</option>`).join("")}</select></label><button class="btn small" onclick="addToCart('${c.id}')">Add to order</button></div></div></div>`).join("")}</div>`).join("")}</div>
+  const groups=["Print","Luxury listing presentation","Branded items","Custom work"]; const NOTES={"Print": "Set in the company templates with your name and number. Pick a quantity and add it.", "Luxury listing presentation": "For the listing appointment and the home itself. Marketing schedules photography when you do not have it.", "Branded items": "Company-marked pieces for events, open houses, and closings.", "Custom work": "Anything the templates do not cover. Marketing quotes it before starting."};
+  return `<div class="pagehead"><div><h1>Print and order <span class="sample">Sample pricing for the demo</span></h1><p>Company-branded print, luxury listing pieces, and branded items, billed to your agent account. Add what you need, then attach photos and wording in your order on the right. Marketing sends a proof before anything prints.</p></div>${S.cart.length?`<button class="btn" onclick="go('print',{order:'checkout'})">Check out (${S.cart.length})</button>`:""}</div>
+  <div class="split" style="grid-template-columns:1fr 320px">
+    <div>${groups.map(g=>`<div class="ghead"><h3>${g}</h3><p class="muted small">${NOTES[g]}</p></div><div class="menu">${CATALOG.filter(c=>c.group===g).map(c=>`<div class="prod"><div class="img"><div class="stage">${mock(c.id)}</div></div><div class="body"><div class="t"><span>${c.name}</span><span class="pr">${c.price||""}</span></div><div class="d">${c.desc}</div><div class="ctl"><label>${c.optLabel}<select id="opt-${c.id}">${c.opts.map(o=>`<option>${o}</option>`).join("")}</select></label><button class="btn small" onclick="addToCart('${c.id}')">Add</button></div></div></div>`).join("")}</div>`).join("")}</div>
     <div class="cart-sticky">
-      <div class="panel"><h3>Your cart</h3>${S.cart.length?S.cart.map((i,n)=>`<div class="cartitem"><div class="h"><div><span class="t" style="font-weight:500">${i.name}</span> <span class="muted small">${i.optLabel?i.optLabel+": ":""}${i.opt}</span></div><span class="pr" style="font-weight:500;color:var(--green-ink)">${i.price}</span><button class="btn quiet small" onclick="S.cart.splice(${n},1);render()">Remove</button></div>
+      <div class="panel"><h3>Your order</h3>${S.cart.length?S.cart.map((i,n)=>`<div class="cartitem"><div class="h"><div><div class="t" style="font-weight:500">${i.name}</div><div class="muted small">${i.optLabel?i.optLabel+": ":""}${i.opt}</div></div><span class="pr" style="font-weight:500;color:var(--green-ink)">${i.price}</span><button class="btn quiet small" onclick="S.cart.splice(${n},1);render()">Remove</button></div>
       ${i.upload?`<label>${i.upload}<input type="file" multiple accept="image/*,.pdf" onchange="S.cart[${n}].files=[...this.files].map(f=>f.name);render()"></label>${(i.files||[]).length?`<div class="files">Attached: ${i.files.join(", ")}</div>`:""}`:`<label>Images or files, if any<input type="file" multiple accept="image/*,.pdf" onchange="S.cart[${n}].files=[...this.files].map(f=>f.name);render()"></label>${(i.files||[]).length?`<div class="files">Attached: ${i.files.join(", ")}</div>`:""}`}
-      <label>${i.content||"What should it say"}<textarea placeholder="Type the exact wording you want" oninput="S.cart[${n}].text=this.value">${i.text||""}</textarea></label></div>`).join("")+`<div class="actions" style="margin-top:14px"><button class="btn" onclick="go('print',{order:'checkout'})">Check out</button></div>`:`<div class="empty">Nothing in your cart yet. Add an item, then attach your images and the wording you want.</div>`}</div>
+      <label>${i.content||"What should it say"}<textarea placeholder="Type the exact wording you want" oninput="S.cart[${n}].text=this.value">${i.text||""}</textarea></label></div>`).join("")+`<div class="actions" style="margin-top:14px"><button class="btn" onclick="go('print',{order:'checkout'})">Check out</button></div>`:`<div class="empty">Nothing added yet. Items you add show here with a place for your photos and wording.</div>`}</div>
       <div class="panel" style="margin-top:18px"><h3>Your orders</h3>${mine.length?mine.map(o=>`<div class="item" style="cursor:default"><div class="t">${o.id} <span class="muted small">${o.placed}</span></div><div class="muted small">${o.items.map(i=>i[0]+" ("+i[1]+")").join(", ")}</div><div class="m"><span>${o.updates[o.updates.length-1].replace(/^[A-Z][a-z]{2} \d+: /,"")}</span>${chip(o.status)}</div></div>`).join(""):`<div class="empty">No orders yet.</div>`}</div>
     </div>
   </div>`;
