@@ -1,0 +1,626 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Litchfield Portal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f6f6f3; --panel:#ffffff; --line:#e4e2dc; --line-strong:#cfcbc2; --ink:#161716; --ink-2:#4a4d49; --mute:#7c807a;
+  --green:#1f4d3f; --green-ink:#143327; --green-tint:#e6efea;
+  --amber:#7a5a12; --amber-tint:#f5eddc; --clay:#8a4532; --clay-tint:#f4e5df; --blue:#2c4866; --blue-tint:#e5ebf2;
+  --r:4px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;background:var(--bg);color:var(--ink);font-family:"Inter","Segoe UI",Helvetica,Arial,sans-serif;font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased}
+button,input,select,textarea{font:inherit;color:inherit}
+a{color:var(--green)}
+h1,h2,h3{margin:0;font-family:"Cormorant Garamond",Georgia,serif;font-weight:600;letter-spacing:0;line-height:1.15}
+h1{font-size:40px}
+h2{font-size:30px}
+h3{font-size:22px}
+p{margin:0}
+.app{display:grid;grid-template-columns:232px 1fr;min-height:100vh}
+.rail{background:#121a16;color:#d7ddd9;padding:28px 18px;display:flex;flex-direction:column;gap:2px;position:sticky;top:0;height:100vh}
+.brand{padding:0 10px 22px;margin-bottom:12px;border-bottom:1px solid rgba(255,255,255,.1)}
+.brand .co{font-family:"Cormorant Garamond",Georgia,serif;font-weight:600;font-size:21px;color:#fff;line-height:1.2}
+.brand .sub{font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:#9aa59f;margin-top:8px;line-height:1.5}
+.rail button{background:none;border:0;color:inherit;text-align:left;padding:9px 10px;border-radius:var(--r);font-size:15px;cursor:pointer;display:flex;justify-content:space-between;align-items:center}
+.rail button:hover{background:rgba(255,255,255,.06);color:#fff}
+.rail button.on{background:rgba(255,255,255,.1);color:#fff;font-weight:500}
+.rail button .n{font-size:12px;color:#b9c3bd;min-width:20px;text-align:right}
+.rail .spacer{flex:1}
+.rail .who{font-size:12.5px;color:#8f9993;padding:0 10px 4px}
+.main{padding:0 48px 72px;max-width:1280px}
+.top{display:flex;justify-content:space-between;align-items:center;padding:20px 0;border-bottom:1px solid var(--line);margin-bottom:34px;gap:16px;flex-wrap:wrap}
+.viewas{display:flex;align-items:center;gap:12px;font-size:13.5px;color:var(--mute)}
+.seg{display:inline-flex;border:1px solid var(--line-strong);border-radius:var(--r);overflow:hidden;background:var(--panel)}
+.seg button{border:0;background:none;padding:5px 14px;cursor:pointer;font-size:13.5px;color:var(--ink-2)}
+.seg button.on{background:var(--ink);color:#fff}
+.badge{font-size:12.5px;color:var(--mute)}
+.pagehead{display:flex;justify-content:space-between;align-items:center;gap:24px;margin-bottom:26px;flex-wrap:wrap}
+.pagehead p{color:var(--ink-2);max-width:60ch;margin-top:8px;font-size:15px}
+.btn{background:var(--green);color:#fff;border:1px solid var(--green);border-radius:var(--r);padding:9px 16px;cursor:pointer;font-weight:500;font-size:14px}
+.btn:hover{background:var(--green-ink)}
+.btn.quiet{background:var(--panel);color:var(--ink);border:1px solid var(--line-strong);font-weight:500}
+.btn.quiet:hover{background:#f1f0eb}
+.btn.small{padding:6px 12px;font-size:13.5px}
+.grid{display:grid;gap:22px}
+.grid.c3{grid-template-columns:repeat(3,1fr)}
+.grid.c2{grid-template-columns:repeat(2,1fr)}
+.grid.c4{grid-template-columns:repeat(4,1fr);gap:0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.stat{padding:18px 20px 18px 0;border-right:1px solid var(--line);margin-right:20px}
+.stat:last-child{border-right:0;margin-right:0}
+.stat .k{font-size:32px;font-weight:500;line-height:1;letter-spacing:-.02em}
+.stat .l{color:var(--mute);font-size:13.5px;margin-top:6px}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:20px 22px}
+.panel h3{margin-bottom:12px;padding-bottom:10px;border-bottom:1px solid var(--line)}
+h1 .chip,h2 .chip,h3 .chip,h3 .small,h3 .muted{font-family:"Inter","Segoe UI",Helvetica,Arial,sans-serif;font-weight:400;font-size:12.5px;vertical-align:middle;margin-left:8px}
+table{width:100%;border-collapse:collapse;font-size:14.5px}
+th{text-align:left;font-weight:500;color:var(--mute);font-size:12.5px;padding:10px 12px;border-bottom:1px solid var(--line)}
+td{padding:13px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+tr:last-child td{border-bottom:0}
+tr.row{cursor:pointer}
+tr.row:hover td{background:#faf9f6}
+.chip{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;font-weight:500;white-space:nowrap;color:var(--ink-2)}
+.chip::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--line-strong)}
+.chip.doing::before{background:#c9961e}
+.chip.waiting::before{background:#b9674f}
+.chip.done::before{background:var(--green)}
+.chip.new::before{background:var(--blue)}
+.muted{color:var(--mute)}
+.small{font-size:13px}
+.split{display:grid;grid-template-columns:340px 1fr;gap:28px;align-items:start}
+.list{display:flex;flex-direction:column;background:var(--panel);border:1px solid var(--line);border-radius:var(--r)}
+.list:empty{display:none}
+.item{padding:13px 16px;cursor:pointer;border-bottom:1px solid var(--line);border-left:3px solid transparent}
+.item:last-child{border-bottom:0}
+.item:hover{background:#faf9f6}
+.item.on{border-left-color:var(--green);background:#f7f8f6}
+.item .t{font-weight:500;font-size:14.5px}
+.item .m{color:var(--mute);font-size:13px;margin-top:3px;display:flex;justify-content:space-between;gap:10px}
+.panel .list{border:0;border-radius:0}
+.panel .item{padding-left:0;padding-right:0;border-left:0}
+.panel .item.on{background:none}
+.ladder{display:grid;gap:16px}
+.role{border:1px solid var(--line);border-radius:var(--r);background:var(--panel);overflow:hidden}
+.role header{display:flex;justify-content:space-between;align-items:center;padding:10px 16px;border-bottom:1px solid var(--line);font-weight:500}
+.role header .pct{font-weight:400;color:var(--mute);font-size:13px}
+.step{display:flex;align-items:center;gap:12px;padding:9px 16px;border-top:1px solid var(--line);cursor:pointer;user-select:none}
+.role .step:first-of-type{border-top:0}
+.step:hover{background:#faf9f6}
+.box{width:17px;height:17px;border:1.5px solid var(--line-strong);border-radius:3px;flex:none;display:grid;place-items:center;font-size:11px;color:#fff}
+.step.done .box{background:var(--green);border-color:var(--green)}
+.step.done .box::after{content:"\2713"}
+.step.done .lbl{color:var(--mute)}
+.step .lbl{flex:1}
+.step .by{font-size:12.5px;color:var(--mute)}
+.bar{height:3px;background:var(--line);margin:8px 0 4px}
+.bar i{display:block;height:100%;background:var(--green)}
+.form{display:grid;gap:16px;max-width:680px}
+.form .row2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+label{display:grid;gap:6px;font-size:13px;color:var(--ink-2)}
+input,select,textarea{border:1px solid var(--line-strong);border-radius:var(--r);padding:9px 11px;background:#fff;color:var(--ink);font-size:14.5px}
+input:focus,select:focus,textarea:focus,button:focus-visible{outline:2px solid var(--green);outline-offset:1px}
+textarea{min-height:96px;resize:vertical}
+.check{display:flex;align-items:center;gap:8px;color:var(--ink)}
+.check input{width:16px;height:16px}
+.actions{display:flex;gap:10px;margin-top:6px}
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;padding:9px 16px;border-radius:var(--r);font-size:13.5px;opacity:0;transition:opacity .2s;pointer-events:none}
+.toast.show{opacity:1}
+.timeline{display:grid}
+.tl{display:grid;grid-template-columns:18px 1fr;gap:10px;padding:7px 0;font-size:14px}
+.tl .dot{width:8px;height:8px;border-radius:50%;background:var(--line-strong);margin:8px auto 0}
+.tl.done .dot{background:var(--green)}
+.kv{display:grid;grid-template-columns:160px 1fr;gap:8px 16px;font-size:14.5px}
+.kv div:nth-child(odd){color:var(--mute)}
+.note{border-left:3px solid #b9674f;padding:8px 14px;font-size:14px;color:var(--ink-2);background:var(--clay-tint)}
+.empty{color:var(--mute);padding:22px;text-align:center;font-size:14px}
+.sr{position:absolute;left:-9999px}
+@media (max-width:980px){.app{grid-template-columns:1fr}.rail{position:static;height:auto;flex-direction:row;flex-wrap:wrap}.rail .spacer,.rail .who{display:none}.main{padding:0 18px 40px}.split,.grid.c3,.grid.c2,.form .row2{grid-template-columns:1fr}.grid.c4{grid-template-columns:1fr 1fr}}
+@media (prefers-reduced-motion:reduce){.toast{transition:none}}
+.signin{position:fixed;inset:0;background:var(--bg);display:grid;place-items:center;z-index:10}
+.signin .card{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);padding:40px 44px;width:440px;max-width:92vw;text-align:center}
+.signin .co{font-family:"Cormorant Garamond",Georgia,serif;font-size:30px;font-weight:600;line-height:1.1}
+.signin .sub{font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--mute);margin:10px 0 28px}
+.msbtn{display:flex;align-items:center;justify-content:center;gap:12px;width:100%;border:1px solid var(--line-strong);background:#fff;border-radius:var(--r);padding:11px;cursor:pointer;font-weight:500;font-size:15px}
+.msbtn:hover{background:#f6f6f3}
+.ms{display:grid;grid-template-columns:1fr 1fr;gap:2px;width:16px;height:16px}
+.ms i{display:block}
+.signin .alt{margin-top:18px;font-size:13px;color:var(--mute)}
+.signin .alt button{background:none;border:0;color:var(--green);cursor:pointer;text-decoration:underline;padding:0 4px;font-size:13px}
+.age{font-size:12px;color:var(--mute)}
+.age.late{color:#b9674f;font-weight:500}
+.amount{text-align:right;font-variant-numeric:tabular-nums}
+.total{display:flex;justify-content:space-between;padding:12px 0 0;border-top:1px solid var(--line);font-weight:600;margin-top:4px}
+.tog{display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}
+.tog:last-child{border-bottom:0}
+.tiles{display:grid;grid-template-columns:repeat(11,1fr);gap:18px 12px;margin-bottom:30px;align-items:start}
+.app-icon{width:64px;height:64px;border-radius:16px;margin:0 auto 8px;display:grid;place-items:center;font-family:"Cormorant Garamond",Georgia,serif;font-weight:600;font-size:28px;color:#fff;overflow:hidden;box-shadow:inset 0 0 0 1px rgba(0,0,0,.06)}
+.app-icon img{width:70%;height:70%;object-fit:contain}
+.tile.wide{grid-column:span 4}
+.tile.wide .app-icon{width:100%;max-width:340px;height:64px;border-radius:16px;background:#fff;box-shadow:inset 0 0 0 1px var(--line)}
+.tile.wide .app-icon img{width:92%;height:70%;object-fit:contain}
+.tile{display:block;text-align:center;text-decoration:none;color:var(--ink);padding:6px 2px;border-radius:var(--r)}
+.tile:hover .app-icon{transform:translateY(-2px)}
+.tile .n{font-weight:500;font-size:13.5px;line-height:1.2}
+.tile .d{display:none}
+.tile .o{display:none}
+@media (max-width:980px){.tiles{grid-template-columns:repeat(4,1fr)}.tile.wide{grid-column:span 4}}
+@media (prefers-reduced-motion:no-preference){.app-icon{transition:transform .15s}}
+.shop{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:28px}
+.prod{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;display:flex;flex-direction:column}
+.prod .img{position:relative;width:100%;padding-top:100%;background:#efeee9;border-bottom:1px solid var(--line)}
+.prod .img svg{position:absolute;left:19%;top:19%;width:62%;height:62%}
+.prod .img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.prod .body{padding:14px 16px 16px;display:grid;gap:8px}
+.prod .t{font-weight:500;font-size:15px}
+.prod .d{color:var(--mute);font-size:13px;min-height:38px}
+.prod .ctl{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:4px}
+.prod select{padding:6px 8px;font-size:13.5px}
+.cartitem{padding:12px 0;border-bottom:1px solid var(--line);display:grid;gap:8px}
+.cartitem:last-child{border-bottom:0}
+.cartitem .h{display:flex;justify-content:space-between;align-items:center}
+.cartitem input[type=file]{font-size:12.5px;padding:6px}
+.cartitem textarea{min-height:60px;font-size:13.5px}
+.files{font-size:12.5px;color:var(--green)}
+@media (max-width:980px){.shop{grid-template-columns:1fr 1fr}}
+.asset{background:var(--panel);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.asset .img{position:relative;width:100%;padding-top:66%;background:#e9e8e2;border-bottom:1px solid var(--line)}
+.asset .img svg{position:absolute;left:0;top:0;width:100%;height:100%}
+.asset .body{padding:12px 14px}
+.asset .t{font-weight:500;font-size:14.5px}
+.asset .d{color:var(--mute);font-size:12.5px;margin-top:2px}
+.asset .a{margin-top:8px;display:flex;gap:10px;font-size:13px}
+.asset .a a{color:var(--green)}
+.okmark{display:inline-block;font-size:11.5px;color:var(--green-ink);background:var(--green-tint);padding:2px 8px;border-radius:999px;margin-top:8px}
+</style>
+</head>
+<body>
+<div class="signin" id="signin">
+  <div class="card">
+    <div class="co">The Litchfield Company</div>
+    <div class="sub">Christie's International Real Estate</div>
+    <button class="msbtn" onclick="document.getElementById('pick').style.display='block'"><span class="ms"><i style="background:#f25022"></i><i style="background:#7fba00"></i><i style="background:#00a4ef"></i><i style="background:#ffb900"></i></span>Sign in with your Microsoft work account</button>
+    <p class="muted small" style="margin-top:12px">Same email and Authenticator you use for company mail. No separate password.</p>
+    <div id="pick" style="display:none;margin-top:22px;border-top:1px solid var(--line);padding-top:18px">
+      <p class="small muted" style="margin-bottom:10px">Demo: pick who you are signing in as.</p>
+      <div class="actions" style="justify-content:center"><button class="btn" onclick="signIn('staff')">Litchfield staff</button><button class="btn quiet" onclick="signIn('agent')">Tom Ellison, agent</button></div>
+    </div>
+  </div>
+</div>
+<div class="app">
+  <nav class="rail" id="rail"></nav>
+  <main class="main">
+    <div class="top">
+      <div class="viewas">Viewing as
+        <span class="seg">
+          <button id="asStaff" class="on" onclick="setMode('staff')">Staff</button>
+          <button id="asAgent" onclick="setMode('agent')">Agent</button>
+        </span>
+        <span id="whoLabel"></span>
+      </div>
+      <span class="badge">Demo. Names, addresses, and dates are sample data.</span>
+    </div>
+    <section id="view"></section>
+  </main>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+// ---------- sample data (all made up) ----------
+const ROLES = {
+  natalie:{name:"Natalie", steps:["Intro meeting, in person or Zoom","Licensing form if newly licensed","SkySlope login and training modules","Broker Wolf entry: W-9, direct deposit, dues","Personnel file and compensation on file","Handbook, ops policy, and procedures sent","QR sheet of every program sent"]},
+  ashley:{name:"Ashley", steps:["Email signature","Website profile in BoldTrail","Voltron setup, if marked on the form","SkySlope setup, if marked on the form"]},
+  grace:{name:"Grace", steps:["Pl@tform account","Headshot and bio uploaded","Agent Power"]},
+  marketing:{name:"Marketing", steps:["Business cards ordered","Pitch deck","Sign riders, if marked on the form"]},
+  tech:{name:"Technology", steps:["Mailbox and license created","Added to the office SalesAgents list","Authenticator set up","MyQ print app installed"]}
+};
+const S = {
+  mode:"staff",
+  page:"today",
+  agents:[
+    {id:1,name:"Jordan Hale",office:"Litchfield",start:"Nov 2, 2026",email:"jhale@thelitchfieldcompany.com",phone:"843-555-0141",license:"Transfer",riders:true,voltron:true,status:"Onboarding",done:{natalie:[0,1,2],ashley:[0],grace:[],marketing:[],tech:[0,1]}},
+    {id:2,name:"Priya Nair",office:"Myrtle Beach",start:"Oct 19, 2026",email:"pnair@thelitchfieldcompany.com",phone:"843-555-0177",license:"Newly licensed",riders:false,voltron:false,status:"Onboarding",done:{natalie:[0,1,2,3,4,5,6],ashley:[0,1],grace:[0,1,2],marketing:[0,1],tech:[0,1,2,3]}},
+    {id:3,name:"Tom Ellison",office:"Prince Creek",start:"Sep 8, 2026",email:"tellison@thelitchfieldcompany.com",phone:"843-555-0102",license:"Transfer",riders:true,voltron:true,status:"Active",done:{natalie:[0,1,2,3,4,5,6],ashley:[0,1,2,3],grace:[0,1,2],marketing:[0,1,2],tech:[0,1,2,3]}},
+    {id:4,name:"Dana Whitfield",office:"Orangeburg",start:"Aug 25, 2026",email:"dwhitfield@thelitchfieldcompany.com",phone:"803-555-0160",license:"Transfer",riders:false,voltron:false,status:"Active",done:{natalie:[0,1,2,3,4,5,6],ashley:[0,1,2,3],grace:[0,1,2],marketing:[0,1,2],tech:[0,1,2,3]}}
+  ],
+  requests:[
+    {id:1041,agent:"Tom Ellison",cat:"Email and Microsoft 365",text:"Outlook on my phone stopped syncing after the Authenticator setup.",status:"doing",owner:"Seth",opened:"Nov 3",updates:["Nov 3: We have your request. Seth is on it.","Nov 3: Can you text Seth a screenshot of the error?"],notes:["Nov 3: Came in from help@. Likely the modern auth switch; check the account in Entra first."]},
+    {id:1042,agent:"Dana Whitfield",cat:"SkySlope",text:"Need the listing checklist for a land sale. The one in SkySlope is for homes.",status:"waiting",owner:"Natalie",opened:"Nov 3",updates:["Nov 3: We have your request. Natalie is pulling the land checklist."],notes:["Nov 3: No land checklist in SkySlope today. Natalie has an old one in OneDrive; needs the compliance coordinator to review before it goes out."]},
+    {id:1043,agent:"Priya Nair",cat:"Marketing",text:"Business cards came with the old office address.",status:"new",owner:"",opened:"Nov 4",updates:["Nov 4: We have your request."],notes:[]},
+    {id:1040,agent:"Jordan Hale",cat:"BoldTrail",text:"Can't see my leads in the BoldTrail app.",status:"done",owner:"Ashley",opened:"Nov 2",updates:["Nov 2: We have your request.","Nov 2: Ashley reset your BoldTrail app login. Try signing in again.","Nov 2: Closed. Thanks for confirming."],notes:["Nov 2: App login was still on the old email."]}
+  ],
+  files:[
+    {id:"C-2026-018",agent:"Tom Ellison",prop:"412 Marsh Hen Lane, Pawleys Island",side:"Buyer",county:"Georgetown",dd:"Nov 10, 2026",close:"Dec 1, 2026",cl100:"Palmetto Pest (per contract, buyer pays)",need:"14 days before closing (Nov 17)",status:"doing",steps:[["Contract received and checked against the listing agreement and buyer agency",true],["Due diligence end date entered",true],["CL-100 company and who pays confirmed from the contract",true],["Order the CL-100 after due diligence, before the need date",false],["Inspections scheduled per showing instructions",false],["Closing statement verified against contract, compensation agreement, buyer agency, listing agreement",false],["File to closing",false]]},
+    {id:"C-2026-019",agent:"Dana Whitfield",prop:"88 Cedar Row, Orangeburg",side:"Listing",county:"Orangeburg",dd:"Nov 6, 2026",close:"Nov 25, 2026",cl100:"Not chosen in the contract",need:"",status:"waiting",steps:[["Contract received and checked against the listing agreement and buyer agency",true],["Due diligence end date entered",true],["CL-100 company and who pays confirmed from the contract",false],["Order the CL-100 after due diligence, before the need date",false],["Inspections scheduled per showing instructions",false],["Closing statement verified against contract, compensation agreement, buyer agency, listing agreement",false],["File to closing",false]],flag:"Termite box not checked in the contract. Waiver needs to be signed and added, or the contract amended, before this file moves."},
+    {id:"C-2026-016",agent:"Priya Nair",prop:"2201 Ocean Blvd, Unit 9C, Myrtle Beach",side:"Buyer",county:"Horry",dd:"Oct 24, 2026",close:"Nov 14, 2026",cl100:"Coastal Termite (attorney's office orders in Horry)",need:"10 days before closing (Nov 4)",status:"done",steps:[["Contract received and checked against the listing agreement and buyer agency",true],["Due diligence end date entered",true],["CL-100 company and who pays confirmed from the contract",true],["Order the CL-100 after due diligence, before the need date",true],["Inspections scheduled per showing instructions",true],["Closing statement verified against contract, compensation agreement, buyer agency, listing agreement",true],["File to closing",true]]}
+  ],
+  me:3, sel:{agent:1,req:1041,file:"C-2026-018",order:"O-2026-041"}, cart:[]
+};
+const ROUTE = {"Email and Microsoft 365":["Technology","Seth"],"SkySlope":["Operations","Natalie"],"BoldTrail":["Marketing","Ashley"],"Printing":["Technology","Seth"],"Website or marketing":["Marketing","Ashley"],"Pay or commission":["Accounting","Sue"],"Something else":["Front desk",""]};
+const CATALOG = [
+  {id:"cards",group:"Print",name:"Business cards",desc:"Company card with your photo, name, title, cell, and email.",opts:["250","500","1000"],optLabel:"Quantity",upload:"Headshot",content:"Name, title, cell, and email as you want them printed"},
+  {id:"riders",group:"Print",name:"Sign riders",desc:"Name rider for your yard signs.",opts:["2","4","6"],optLabel:"Quantity",content:"Name and phone for the rider"},
+  {id:"openhouse",group:"Print",name:"Open house signs",desc:"Directional A-frame inserts with the company mark.",opts:["2","4"],optLabel:"Quantity",content:"Wording, if different from Open House"},
+  {id:"postcards",group:"Print",name:"Just listed or just sold postcards",desc:"Mailed to the neighborhood around a listing. Upload the property photo at checkout.",opts:["100","250","500"],optLabel:"Quantity",upload:"Property photos",content:"Property address, headline, and the message on the back"},
+  {id:"brochure",group:"Print",name:"Listing brochure",desc:"Folded property brochure. Marketing builds it from the MLS photos.",opts:["25","50","100"],optLabel:"Quantity",upload:"Photos, if not using the MLS set",content:"Property address, price, and the highlights to feature"},
+  {id:"deck",group:"Print",name:"Listing presentation deck",desc:"Printed and bound pitch deck with your name on the cover.",opts:["1","3","5"],optLabel:"Copies",upload:"Headshot or cover image",content:"Any pages to add or remove, and the client name for the cover"},
+  {id:"badge",group:"Branded items",name:"Name badge",desc:"Magnetic badge with the company mark.",opts:["Gold","Silver"],optLabel:"Finish",content:"Name and title as you want them on the badge"},
+  {id:"polo",group:"Branded items",name:"Company polo",desc:"Embroidered polo for events and open houses.",opts:["S","M","L","XL","2XL"],optLabel:"Size"},
+  {id:"folders",group:"Branded items",name:"Presentation folders",desc:"Pocket folders for closing packets and buyer consultations.",opts:["25","50"],optLabel:"Quantity",content:"Anything to add to the standard folder"},
+  {id:"gift",group:"Branded items",name:"Closing gift",desc:"Company closing gift set, delivered to the office for you to hand off.",opts:["1","2","3"],optLabel:"Quantity",content:"Client name and the date you need it"}
+];
+const ART = {
+  cards:`<svg viewBox="0 0 100 100"><rect x="14" y="30" width="72" height="44" rx="3" fill="#fff" stroke="#1f4d3f" stroke-width="2"/><rect x="22" y="40" width="20" height="20" rx="10" fill="#dfe6e1"/><rect x="48" y="42" width="28" height="4" fill="#1f4d3f"/><rect x="48" y="50" width="22" height="3" fill="#b0b5ae"/><rect x="48" y="57" width="26" height="3" fill="#b0b5ae"/></svg>`,
+  riders:`<svg viewBox="0 0 100 100"><rect x="18" y="38" width="64" height="20" rx="2" fill="#fff" stroke="#1f4d3f" stroke-width="2"/><rect x="28" y="46" width="44" height="4" fill="#1f4d3f"/><rect x="22" y="58" width="3" height="22" fill="#1f4d3f"/><rect x="75" y="58" width="3" height="22" fill="#1f4d3f"/></svg>`,
+  openhouse:`<svg viewBox="0 0 100 100"><path d="M50 18 L24 82 H76 Z" fill="#fff" stroke="#1f4d3f" stroke-width="2"/><rect x="38" y="48" width="24" height="5" fill="#1f4d3f"/><rect x="36" y="58" width="28" height="3" fill="#b0b5ae"/></svg>`,
+  postcards:`<svg viewBox="0 0 100 100"><rect x="16" y="26" width="68" height="48" rx="2" fill="#fff" stroke="#1f4d3f" stroke-width="2"/><rect x="22" y="32" width="28" height="36" fill="#dfe6e1"/><path d="M22 60 l10-10 8 8 6-6 4 4 v12 h-28z" fill="#1f4d3f" opacity=".5"/><rect x="56" y="40" width="22" height="3" fill="#b0b5ae"/><rect x="56" y="47" width="18" height="3" fill="#b0b5ae"/><rect x="56" y="54" width="20" height="3" fill="#b0b5ae"/></svg>`,
+  brochure:`<svg viewBox="0 0 100 100"><path d="M18 24 h22 v56 h-22z" fill="#fff" stroke="#1f4d3f" stroke-width="2"/><path d="M40 24 h22 v56 h-22z" fill="#f4f3ee" stroke="#1f4d3f" stroke-width="2"/><path d="M62 24 h20 v56 h-20z" fill="#fff" stroke="#1f4d3f" stroke-width="2"/><rect x="44" y="32" width="14" height="14" fill="#dfe6e1"/><rect x="44" y="52" width="14" height="3" fill="#b0b5ae"/><rect x="44" y="58" width="12" height="3" fill="#b0b5ae"/></svg>`,
+  deck:`<svg viewBox="0 0 100 100"><rect x="26" y="20" width="50" height="62" rx="2" fill="#fff" stroke="#1f4d3f" stroke-width="2"/><rect x="22" y="24" width="4" height="54" fill="#1f4d3f"/><rect x="36" y="34" width="30" height="5" fill="#1f4d3f"/><rect x="36" y="46" width="24" height="3" fill="#b0b5ae"/><rect x="36" y="53" width="26" height="3" fill="#b0b5ae"/><rect x="36" y="60" width="20" height="3" fill="#b0b5ae"/></svg>`,
+  badge:`<svg viewBox="0 0 100 100"><rect x="18" y="34" width="64" height="32" rx="4" fill="#fff" stroke="#1f4d3f" stroke-width="2"/><rect x="26" y="42" width="30" height="5" fill="#1f4d3f"/><rect x="26" y="52" width="22" height="3" fill="#b0b5ae"/><circle cx="70" cy="50" r="6" fill="#c9a84a"/></svg>`,
+  polo:`<svg viewBox="0 0 100 100"><path d="M36 22 l-18 10 6 16 8-3 v33 h36 v-33 l8 3 6-16 -18-10 c-4 6-24 6-28 0z" fill="#fff" stroke="#1f4d3f" stroke-width="2"/><path d="M44 22 l6 14 6-14" fill="none" stroke="#1f4d3f" stroke-width="2"/><circle cx="62" cy="48" r="3" fill="#1f4d3f"/></svg>`,
+  folders:`<svg viewBox="0 0 100 100"><path d="M18 30 h26 l6 6 h32 v40 h-64z" fill="#fff" stroke="#1f4d3f" stroke-width="2"/><rect x="24" y="44" width="52" height="26" fill="#f4f3ee" stroke="#1f4d3f" stroke-width="1.5"/><rect x="56" y="58" width="16" height="4" fill="#1f4d3f"/></svg>`,
+  gift:`<svg viewBox="0 0 100 100"><rect x="22" y="42" width="56" height="38" fill="#fff" stroke="#1f4d3f" stroke-width="2"/><rect x="18" y="34" width="64" height="10" fill="#fff" stroke="#1f4d3f" stroke-width="2"/><rect x="47" y="34" width="6" height="46" fill="#1f4d3f"/><path d="M50 34 c-10-14-22-6-10 0 M50 34 c10-14 22-6 10 0" fill="none" stroke="#1f4d3f" stroke-width="2"/></svg>`
+};
+const S_ORDERS_SEED = [
+  {id:"O-2026-041",agent:"Tom Ellison",items:[["Business cards","500"],["Sign riders","4"]],deliver:"Pick up at Prince Creek",status:"doing",placed:"Nov 3",owner:"Marketing",updates:["Nov 3: Order received. Marketing is laying out your cards.","Nov 4: Proof sent to your email. Reply approve and it goes to print."]},
+  {id:"O-2026-039",agent:"Priya Nair",items:[["Name badge","Gold"],["Company polo","M"]],deliver:"Pick up at Myrtle Beach",status:"done",placed:"Oct 28",owner:"Marketing",updates:["Oct 28: Order received.","Nov 2: Ready for pickup at the Myrtle Beach front desk."]}
+];
+S.orders=S_ORDERS_SEED;
+const DUES = {balance:415.00,nextDraft:"Nov 15, 2026",month:"November 2026",lines:[
+  ["Nov 1","Monthly brokerage dues",250.00],["Nov 1","Technology and portal fee",45.00],["Nov 1","E and O insurance, monthly share",60.00],["Nov 3","Print order O-2026-041: business cards (500), sign riders (4)",60.00]],
+  history:[["October 2026",355.00,"Paid Oct 15"],["September 2026",355.00,"Paid Sep 15"],["August 2026",410.00,"Paid Aug 15"]]};
+const NUMBERS = {asOf:"Nov 2, 2026 pull",ytd:{closed:14,volume:"$6,420,000",pending:3,pendingVolume:"$1,315,000",active:5},month:{closed:1,volume:"$485,000"}};
+const FORMS = [
+  ["Listing agreement","In-house version with the company fields filled"],["Buyer agency agreement","Current version, compensation section highlighted"],["Termite inspection waiver (contract amendment)","Use when the buyer removes the CL-100 from the contract"],["Termite inspection refusal acknowledgment","Use when the buyer was advised and declined"],["Refusal of inspections","In-house form"],["Commission revision form","Signed by the BIC before accounting calculates"],["Agent handbook","Current edition"],["Office policy manual and operating procedures","Current edition"],["Programs QR sheet","Every company program on one page"]];
+const SKY = [
+  {prop:"412 Marsh Hen Lane, Pawleys Island",type:"Buyer, under contract",docs:["Purchase agreement","Buyer agency","Compensation agreement","Due diligence addendum"],updated:"Nov 3"},
+  {prop:"19 Heron Point, Murrells Inlet",type:"Listing, active",docs:["Listing agreement","Seller disclosure","Lead paint disclosure","MLS data sheet"],updated:"Oct 29"},
+  {prop:"7 Tidewater Ct, Pawleys Island",type:"Buyer, closed Oct 2",docs:["Closing statement","Purchase agreement","Buyer agency","CL-100 report"],updated:"Oct 2"}];
+const DIRECTORY = [
+  ["Technology","Seth Bass","Email, Microsoft 365, Authenticator, printers, the portal","843-430-5201"],
+  ["Operations","Natalie Starnes","SkySlope, onboarding, Broker Wolf questions",""],
+  ["Marketing","Ashley Komoroski","Email signatures, website, BoldTrail, print orders",""],
+  ["Platform","Grace Shirer","Pl@tform, Agent Power, headshot and bio",""],
+  ["Accounting","Sue Walker","Dues, statements, commission questions",""],
+  ["Broker in charge","Ruth LeMoine","Prince Creek and Myrtle Beach contract questions",""],
+  ["Broker in charge","Kathy Besse","Manning, Wyboo, and Orangeburg contract questions",""]];
+// icon: a logo image file once the company drops it in (icon:"logos/skyslope.png"); until then the tile shows a letter mark in the app's color
+const LINKS = [
+  {n:"SkySlope",d:"Transactions, forms, and signatures",u:"https://app.skyslope.com",c:"#ffffff",m:"S",icon:"https://www.google.com/s2/favicons?domain=skyslope.com&sz=128"},
+  {n:"The Litchfield Company",d:"Company website and your agent page",u:"https://thelitchfieldcompany.com",c:"#ffffff",m:"L",icon:"data:image/png;base64,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",wide:true},
+  {n:"BoldTrail",d:"Leads, contacts, and campaigns",u:"https://www.boldtrail.com",c:"#ffffff",m:"B",icon:"https://www.google.com/s2/favicons?domain=boldtrail.com&sz=128"},
+  {n:"Pl@tform",d:"Christie's marketing and training",u:"#",c:"#7c2d12",m:"P",icon:""},
+  {n:"Outlook",d:"Company email on the web",u:"https://outlook.office.com",c:"#ffffff",m:"O",icon:"https://www.google.com/s2/favicons?domain=outlook.office.com&sz=128"},
+  {n:"Teams",d:"Office chat and files",u:"https://teams.microsoft.com",c:"#ffffff",m:"T",icon:"https://www.google.com/s2/favicons?domain=teams.microsoft.com&sz=128"},
+  {n:"MLS",d:"Paragon listings and searches",u:"#",c:"#6b7570",m:"M",icon:""},
+  {n:"TLCU",d:"Litchfield University class schedule",u:"#",c:"#1f4d3f",m:"U",icon:""}];
+const CONTENT = [
+  {g:"Logos and marks",items:[["Company logo, full color","PNG, SVG, EPS","logo"],["Company logo, reverse white","PNG, SVG","logo2"],["Christie's International Real Estate lockup","Per the affiliate brand standards","logo3"],["Office signature block","Outlook signature with the company mark","sig"]]},
+  {g:"Photography",items:[["Pawleys Island office","Exterior and lobby, licensed to the company","photo"],["Coastal lifestyle set","Beach, marsh, and creek scenes, licensed for agent marketing","photo2"],["Community set","Litchfield, Pawleys, Murrells Inlet, Myrtle Beach neighborhoods","photo3"],["Team and event photos","From company events, releases on file","photo4"]]},
+  {g:"Templates",items:[["Just listed and just sold, social","Square and story sizes, drop in the property photo","tpl"],["Listing presentation","The company deck with your name and photo on the cover","tpl2"],["Open house flyer","Letter size, fill in the address and time","tpl3"],["Email signature","Approved layout with the company mark","tpl4"]]},
+  {g:"Approved copy",items:[["Company description","Short and long versions for bios and listings","copy"],["Agent bio frame","Opening and closing lines, fill in your own middle","copy2"],["Fair housing and equal opportunity statement","Required on marketing pieces","copy3"],["Disclaimers","MLS, licensing, and brokerage lines for print and web","copy4"]]}];
+const CART_ART = {
+  logo:`<svg viewBox="0 0 150 100"><rect width="150" height="100" fill="#fff"/><text x="75" y="52" text-anchor="middle" font-family="Cormorant Garamond,Georgia,serif" font-size="15" font-weight="600" fill="#161716">The Litchfield Company</text><text x="75" y="66" text-anchor="middle" font-family="Inter,Arial" font-size="5.5" letter-spacing="1" fill="#7c807a">CHRISTIE'S INTERNATIONAL REAL ESTATE</text></svg>`,
+  logo2:`<svg viewBox="0 0 150 100"><rect width="150" height="100" fill="#121a16"/><text x="75" y="52" text-anchor="middle" font-family="Cormorant Garamond,Georgia,serif" font-size="15" font-weight="600" fill="#fff">The Litchfield Company</text><text x="75" y="66" text-anchor="middle" font-family="Inter,Arial" font-size="5.5" letter-spacing="1" fill="#9aa59f">CHRISTIE'S INTERNATIONAL REAL ESTATE</text></svg>`,
+  logo3:`<svg viewBox="0 0 150 100"><rect width="150" height="100" fill="#fff"/><rect x="30" y="38" width="90" height="1" fill="#161716"/><text x="75" y="56" text-anchor="middle" font-family="Cormorant Garamond,Georgia,serif" font-size="9" letter-spacing="2" fill="#161716">CHRISTIE'S</text><rect x="30" y="62" width="90" height="1" fill="#161716"/></svg>`,
+  sig:`<svg viewBox="0 0 150 100"><rect width="150" height="100" fill="#fff"/><rect x="20" y="30" width="40" height="5" fill="#161716"/><rect x="20" y="40" width="30" height="3" fill="#7c807a"/><rect x="20" y="48" width="36" height="3" fill="#7c807a"/><rect x="20" y="56" width="26" height="3" fill="#1f4d3f"/><rect x="90" y="32" width="40" height="28" fill="#efeee9"/></svg>`,
+  photo:`<svg viewBox="0 0 150 100"><rect width="150" height="100" fill="#dfe6e1"/><path d="M0 70 L40 40 L70 62 L95 45 L150 75 V100 H0z" fill="#1f4d3f" opacity=".55"/><circle cx="115" cy="28" r="10" fill="#fff" opacity=".8"/></svg>`,
+  photo2:`<svg viewBox="0 0 150 100"><rect width="150" height="100" fill="#e9e3d2"/><rect y="55" width="150" height="45" fill="#8fb0a3"/><path d="M0 60 q25-8 50 0 t50 0 t50 0 v40 H0z" fill="#6e9488"/></svg>`,
+  photo3:`<svg viewBox="0 0 150 100"><rect width="150" height="100" fill="#e6e8e3"/><path d="M20 75 V45 l20-15 20 15 v30z M70 75 V50 l18-12 18 12 v25z" fill="#fff" stroke="#1f4d3f" stroke-width="1.5"/><rect y="75" width="150" height="25" fill="#c9d1c6"/></svg>`,
+  photo4:`<svg viewBox="0 0 150 100"><rect width="150" height="100" fill="#ebe9e3"/><circle cx="45" cy="45" r="12" fill="#b0b5ae"/><circle cx="75" cy="40" r="12" fill="#1f4d3f" opacity=".6"/><circle cx="105" cy="45" r="12" fill="#b0b5ae"/><rect x="25" y="62" width="100" height="25" rx="12" fill="#c9d1c6"/></svg>`,
+  tpl:`<svg viewBox="0 0 150 100"><rect width="150" height="100" fill="#fff"/><rect x="45" y="8" width="60" height="60" fill="#dfe6e1"/><rect x="45" y="72" width="60" height="7" fill="#161716"/><rect x="45" y="84" width="40" height="3" fill="#7c807a"/></svg>`,
+  tpl2:`<svg viewBox="0 0 150 100"><rect width="150" height="100" fill="#fff"/><rect x="30" y="15" width="90" height="70" fill="#121a16"/><rect x="42" y="56" width="50" height="4" fill="#fff"/><rect x="42" y="64" width="34" height="3" fill="#9aa59f"/></svg>`,
+  tpl3:`<svg viewBox="0 0 150 100"><rect width="150" height="100" fill="#fff"/><rect x="50" y="8" width="50" height="84" fill="#f4f3ee" stroke="#d9d5cb"/><rect x="56" y="14" width="38" height="28" fill="#dfe6e1"/><rect x="56" y="48" width="30" height="4" fill="#161716"/><rect x="56" y="56" width="36" height="2.5" fill="#7c807a"/><rect x="56" y="62" width="32" height="2.5" fill="#7c807a"/></svg>`,
+  tpl4:`<svg viewBox="0 0 150 100"><rect width="150" height="100" fill="#fff"/><rect x="25" y="35" width="44" height="5" fill="#161716"/><rect x="25" y="45" width="30" height="3" fill="#7c807a"/><rect x="25" y="52" width="38" height="3" fill="#7c807a"/><rect x="25" y="60" width="50" height="3" fill="#1f4d3f"/><text x="125" y="52" text-anchor="middle" font-family="Cormorant Garamond,Georgia,serif" font-size="16" fill="#161716">TLC</text></svg>`,
+  copy:`<svg viewBox="0 0 150 100"><rect width="150" height="100" fill="#fff"/><text x="20" y="40" font-family="Cormorant Garamond,Georgia,serif" font-size="22" fill="#161716">“</text><rect x="36" y="30" width="90" height="3" fill="#7c807a"/><rect x="36" y="38" width="84" height="3" fill="#7c807a"/><rect x="36" y="46" width="92" height="3" fill="#7c807a"/><rect x="36" y="54" width="60" height="3" fill="#7c807a"/></svg>`,
+  copy2:`<svg viewBox="0 0 150 100"><rect width="150" height="100" fill="#fff"/><rect x="24" y="24" width="100" height="3" fill="#161716"/><rect x="24" y="34" width="100" height="22" fill="#f4f3ee" stroke="#d9d5cb" stroke-dasharray="3,3"/><rect x="24" y="64" width="100" height="3" fill="#161716"/></svg>`,
+  copy3:`<svg viewBox="0 0 150 100"><rect width="150" height="100" fill="#fff"/><path d="M75 28 l18 10 v22 h-36 v-22z" fill="none" stroke="#161716" stroke-width="2"/><rect x="70" y="48" width="10" height="12" fill="#161716"/><rect x="40" y="70" width="70" height="3" fill="#7c807a"/></svg>`,
+  copy4:`<svg viewBox="0 0 150 100"><rect width="150" height="100" fill="#fff"/><rect x="24" y="30" width="100" height="2.5" fill="#7c807a"/><rect x="24" y="38" width="96" height="2.5" fill="#7c807a"/><rect x="24" y="46" width="100" height="2.5" fill="#7c807a"/><rect x="24" y="54" width="70" height="2.5" fill="#7c807a"/><rect x="24" y="66" width="40" height="2.5" fill="#1f4d3f"/></svg>`
+};
+const TEMPLATES = ["We have your request and are on it.","Can you text a screenshot of what you see?","Fixed on our side. Try again and let us know.","Waiting on an outside vendor. We will update you by tomorrow.","Closed. Thanks for confirming."];
+S.prefs = {text:true,email:true,digest:false};
+const TODAY_DAY = 4;
+function ageDays(d){ const n=parseInt((d||"").split(" ")[1]); return isNaN(n)?0:TODAY_DAY-n; }
+function lastUpdate(r){ const u=r.updates[r.updates.length-1]||""; return u.split(":")[0]; }
+const CHIP = {new:"New",todo:"To do",doing:"In progress",waiting:"Waiting on",done:"Done"};
+const chip = s => `<span class="chip ${s}">${CHIP[s]||s}</span>`;
+const pct = a => { let t=0,d=0; for (const k in ROLES){t+=ROLES[k].steps.length; d+=(a.done[k]||[]).length;} return Math.round(100*d/t); };
+
+// ---------- nav ----------
+const NAV = {
+  staff:[["today","Today"],["onboarding","Onboarding"],["requests","Requests"],["orders","Print orders"],["library","Content library"],["agents","Agents"],["concierge","Concierge"]],
+  agent:[["home","Home"],["docs","Documents"],["content","Company content"],["help","Request help"],["myconcierge","Concierge"],["print","Print and order"],["dues","Dues and fees"],["numbers","My numbers"],["directory","Who to call"],["profile","My profile"]]
+};
+function counts(){ return {onboarding:S.agents.filter(a=>a.status==="Onboarding").length, requests:S.requests.filter(r=>r.status!=="done").length, concierge:S.files.filter(f=>f.status!=="done").length, help:S.requests.filter(r=>r.agent===me().name&&r.status!=="done").length, myconcierge:S.files.filter(f=>f.agent===me().name&&f.status!=="done").length, orders:S.orders.filter(o=>o.status!=="done").length, print:S.cart.length}; }
+function me(){ return S.agents.find(a=>a.id===S.me); }
+function signIn(m){ document.getElementById("signin").style.display="none"; setMode(m); }
+function signOut(){ document.getElementById("signin").style.display="grid"; document.getElementById("pick").style.display="none"; }
+function setMode(m){ S.mode=m; S.page = m==="staff"?"today":"home"; render(); }
+function go(p,extra){ S.page=p; if(extra) Object.assign(S.sel,extra); render(); }
+function render(){
+  const c=counts();
+  document.getElementById("asStaff").classList.toggle("on",S.mode==="staff");
+  document.getElementById("asAgent").classList.toggle("on",S.mode==="agent");
+  document.getElementById("whoLabel").textContent = S.mode==="staff"?"Litchfield staff":me().name+", "+me().office;
+  document.getElementById("rail").innerHTML = `<div class="brand"><div class="co">The Litchfield Company</div><div class="sub">Christie's International Real Estate</div><div class="sub" style="margin-top:4px;color:#d7ddd9">${S.mode==="staff"?"Programs portal":"Agent portal"}</div></div>` +
+    NAV[S.mode].map(([k,l])=>`<button class="${S.page===k?"on":""}" onclick="go('${k}')">${l}${c[k]?`<span class="n">${c[k]}</span>`:""}</button>`).join("") +
+    `<div class="spacer"></div><div class="who">${S.mode==="staff"?"Signed in as staff":"Signed in as "+me().name}<br><button style="padding:4px 0;font-size:12.5px;color:#9aa59f" onclick="signOut()">Sign out</button></div>`;
+  document.getElementById("view").innerHTML = PAGES[S.page]();
+}
+function toast(t){ const el=document.getElementById("toast"); el.textContent=t; el.classList.add("show"); setTimeout(()=>el.classList.remove("show"),2200); }
+
+// ---------- staff pages ----------
+const PAGES = {};
+PAGES.today = () => {
+  const c=counts(); const due=S.files.filter(f=>f.status!=="done");
+  return `<div class="pagehead"><div><h1>Today</h1><p>One place to see what is moving: new agents, open requests, and concierge files on the clock.</p></div></div>
+  <div class="grid c4" style="margin-bottom:24px">
+    <div class="stat"><div class="k">${c.onboarding}</div><div class="l">agents onboarding</div></div>
+    <div class="stat"><div class="k">${S.requests.filter(r=>r.status==="new").length}</div><div class="l">requests not yet assigned</div></div>
+    <div class="stat"><div class="k">${S.requests.filter(r=>r.status==="waiting").length}</div><div class="l">requests waiting on someone</div></div>
+    <div class="stat"><div class="k">${c.concierge}</div><div class="l">concierge files open</div></div>
+  </div>
+  <div class="grid c2">
+    <div class="panel"><h3>Onboarding in progress</h3>
+      ${S.agents.filter(a=>a.status==="Onboarding").map(a=>`<div class="item" onclick="go('onboarding',{agent:${a.id}})"><div class="t">${a.name} <span class="muted small">${a.office}, started ${a.start}</span></div><div class="bar"><i style="width:${pct(a)}%"></i></div><div class="m"><span>${pct(a)}% of steps done</span><span>${nextStep(a)}</span></div></div>`).join("")}
+    </div>
+    <div class="panel"><h3>Needs a hand</h3>
+      <div class="list">
+      ${S.requests.filter(r=>r.status!=="done").map(r=>{const a=TODAY_DAY-(parseInt(lastUpdate(r).split(" ")[1])||TODAY_DAY);return `<div class="item" onclick="go('requests',{req:${r.id}})"><div class="t">${r.agent}: ${r.text}</div><div class="m"><span>${r.cat}${a>=1?` <span class="age ${a>=1?"late":""}">no update in ${a} day${a>1?"s":""}</span>`:""}</span><span>${chip(r.status)}</span></div></div>`}).join("")}
+      ${due.filter(f=>f.flag).map(f=>`<div class="item" onclick="go('concierge',{file:'${f.id}'})"><div class="t">${f.id}, ${f.prop}</div><div class="m"><span>${f.flag}</span></div></div>`).join("")}
+      </div>
+    </div>
+  </div>
+  <div class="panel" style="margin-top:22px"><h3>Monday digest <span class="muted small">goes to Will, Ruth, Kathy, and Natalie every Monday at 7:00 AM</span></h3>
+    <div class="grid c4" style="border:0"><div class="stat"><div class="k">${S.requests.length}</div><div class="l">requests this week</div></div><div class="stat"><div class="k">${S.requests.filter(r=>r.status==="done").length}</div><div class="l">closed</div></div><div class="stat"><div class="k">${S.orders.length}</div><div class="l">print orders</div></div><div class="stat"><div class="k">${S.agents.filter(a=>a.status==="Onboarding").length}</div><div class="l">agents onboarding</div></div></div>
+    <p class="muted small" style="margin-top:10px">Most common request this week: ${(()=>{const m={};S.requests.forEach(r=>m[r.cat]=(m[r.cat]||0)+1);return Object.entries(m).sort((a,b)=>b[1]-a[1])[0][0]})()}. Oldest open request: #${S.requests.filter(r=>r.status!=="done").sort((a,b)=>ageDays(b.opened)-ageDays(a.opened))[0].id}.</p>
+  </div>`;
+};
+function nextStep(a){ for(const k in ROLES){ const d=a.done[k]||[]; const i=ROLES[k].steps.findIndex((s,idx)=>!d.includes(idx)); if(i>=0) return "Next: "+ROLES[k].name+": "+ROLES[k].steps[i]; } return "All steps done"; }
+
+PAGES.onboarding = () => {
+  const list=S.agents.filter(a=>a.status==="Onboarding"); const a=S.agents.find(x=>x.id===S.sel.agent)||list[0];
+  if(S.sel.agent==="new") return intakeForm();
+  return `<div class="pagehead"><div><h1>Onboarding</h1><p>One intake starts it. Each person sees their own steps. Everyone sees the same board.</p></div><button class="btn" onclick="go('onboarding',{agent:'new'})">Add a new agent</button></div>
+  <div class="split">
+    <div class="list">${list.map(x=>`<div class="item ${a&&x.id===a.id?"on":""}" onclick="go('onboarding',{agent:${x.id}})"><div class="t">${x.name}</div><div class="bar"><i style="width:${pct(x)}%"></i></div><div class="m"><span>${x.office}</span><span>${pct(x)}%</span></div></div>`).join("")||`<div class="empty">No one is onboarding right now. Add a new agent to start a checklist.</div>`}</div>
+    ${a?ladder(a):""}
+  </div>`;
+};
+function ladder(a){
+  return `<div>
+    <div class="pagehead" style="margin-bottom:14px"><div><h2>${a.name}</h2><p class="small">${a.office}. Started ${a.start}. ${a.license}. ${a.riders?"Sign riders needed.":"No sign riders."} ${a.voltron?"Gets Voltron leads.":""}</p></div><button class="btn quiet small" onclick="go('agents',{agent:${a.id}})">Open record</button></div>
+    <div class="ladder">${Object.keys(ROLES).map(k=>{const r=ROLES[k];const d=a.done[k]||[];return `<div class="role"><header><span>${r.name}</span><span class="pct">${d.length} of ${r.steps.length}</span></header>${r.steps.map((s,i)=>`<div class="step ${d.includes(i)?"done":""}" onclick="toggle(${a.id},'${k}',${i})" role="checkbox" aria-checked="${d.includes(i)}" tabindex="0"><span class="box"></span><span class="lbl">${s}</span><span class="by">${d.includes(i)?"done":""}</span></div>`).join("")}</div>`;}).join("")}</div>
+    <p class="muted small" style="margin-top:12px">Click a step to mark it done or undo it. When the last step closes, the agent moves to Active and a Teams post goes out.</p>
+  </div>`;
+}
+function toggle(id,k,i){ const a=S.agents.find(x=>x.id===id); const d=a.done[k]||(a.done[k]=[]); const at=d.indexOf(i); if(at>=0) d.splice(at,1); else d.push(i); if(pct(a)===100){a.status="Active"; toast(a.name+" is fully onboarded. Teams post sent.");} else a.status="Onboarding"; render(); }
+function intakeForm(){
+  return `<div class="pagehead"><div><h1>New agent</h1><p>The same fields as today's form. Submitting it creates the checklist and tells each person what they own. A missing license number does not hold it up.</p></div></div>
+  <form class="form" onsubmit="return addAgent(event)">
+    <div class="row2"><label>Full name<input name="name" required placeholder="First Last"></label><label>Preferred name<input name="pref"></label></div>
+    <div class="row2"><label>Office<select name="office"><option>Litchfield</option><option>Prince Creek</option><option>Myrtle Beach</option><option>Front Street</option><option>Lachicotte</option><option>Orangeburg</option><option>Wyboo</option><option>Manning</option><option>Charleston</option></select></label><label>Start date<input name="start" type="date"></label></div>
+    <div class="row2"><label>License type<select name="license"><option>Transfer</option><option>Newly licensed</option></select></label><label>License number (can be added later)<input name="licnum"></label></div>
+    <div class="row2"><label>Personal email<input name="pemail" type="email"></label><label>Cell<input name="phone"></label></div>
+    <label>Title<input name="title" placeholder="Realtor, Broker Associate, ..."></label>
+    <div class="row2"><label class="check"><input type="checkbox" name="riders"> Needs sign riders</label><label class="check"><input type="checkbox" name="voltron"> Gets Voltron leads</label></div>
+    <label>Bio<textarea name="bio" placeholder="Paste the bio Grace will upload"></textarea></label>
+    <label>Headshot<input type="file"></label>
+    <div class="actions"><button class="btn" type="submit">Start onboarding</button><button class="btn quiet" type="button" onclick="go('onboarding',{agent:1})">Cancel</button></div>
+  </form>`;
+}
+function addAgent(e){ e.preventDefault(); const f=new FormData(e.target); const id=S.agents.length+1; S.agents.unshift({id,name:f.get("name"),office:f.get("office"),start:f.get("start")||"today",email:"",phone:f.get("phone"),license:f.get("license"),riders:!!f.get("riders"),voltron:!!f.get("voltron"),status:"Onboarding",done:{}}); toast("Checklist created. Natalie, Ashley, Grace, marketing, and technology each got their steps."); go("onboarding",{agent:id}); return false; }
+
+PAGES.requests = () => {
+  const r=S.requests.find(x=>x.id===S.sel.req)||S.requests[0];
+  if(S.sel.req==="new") return newRequestStaff();
+  return `<div class="pagehead"><div><h1>Requests</h1><p>Everything that comes in to help@ lands here with a number and routes itself by category: technology to Seth, SkySlope to Natalie, BoldTrail and marketing to Ashley, pay to Sue. Anything else waits at the front desk for a person to route it.</p></div><button class="btn" onclick="go('requests',{req:'new'})">Log a request</button></div>
+  <div class="split" style="grid-template-columns:1fr 420px">
+    <div class="panel" style="padding:0"><table><thead><tr><th>#</th><th>Agent</th><th>Request</th><th>Routed to</th><th>Status</th></tr></thead><tbody>
+      ${S.requests.map(x=>`<tr class="row" onclick="go('requests',{req:${x.id}})"><td class="muted">${x.id}</td><td>${x.agent}</td><td>${x.text}<div class="muted small">${x.cat}, opened ${x.opened}${x.status!=="done"&&(TODAY_DAY-(parseInt(lastUpdate(x).split(" ")[1])||TODAY_DAY))>=1?` <span class="age late">no update in ${TODAY_DAY-(parseInt(lastUpdate(x).split(" ")[1])||TODAY_DAY)} day${(TODAY_DAY-(parseInt(lastUpdate(x).split(" ")[1])||TODAY_DAY))>1?"s":""}</span>`:""}</div></td><td>${x.owner||"<span class='muted'>front desk</span>"}<div class="muted small">${x.dept||(ROUTE[x.cat]||["Front desk"])[0]}</div></td><td>${chip(x.status)}</td></tr>`).join("")}
+    </tbody></table></div>
+    ${r?`<div class="panel"><h3>#${r.id} ${chip(r.status)}</h3><p>${r.text}</p><div class="kv" style="margin:12px 0"><div>Agent</div><div>${r.agent}</div><div>Category</div><div>${r.cat}</div><div>Department</div><div>${r.dept||(ROUTE[r.cat]||["Front desk"])[0]}</div><div>Owner</div><div><select onchange="assign(${r.id},this.value)"><option ${!r.owner?"selected":""} value="">Front desk</option>${["Seth","Natalie","Ashley","Grace","Sue"].map(o=>`<option ${r.owner===o?"selected":""}>${o}</option>`).join("")}</select></div><div>Status</div><div><select onchange="setStatus(${r.id},this.value)">${["new","doing","waiting","done"].map(s=>`<option value="${s}" ${r.status===s?"selected":""}>${CHIP[s]}</option>`).join("")}</select></div></div>
+    <h3>Internal notes <span class="muted small">staff only</span></h3><div class="timeline">${r.notes.length?r.notes.map(u=>`<div class="tl done"><div class="dot"></div><div>${u}</div></div>`).join(""):`<p class="muted small">No notes yet.</p>`}</div>
+    <form onsubmit="return addNote(event,${r.id})" style="margin-top:8px;display:grid;gap:8px"><input name="u" placeholder="Note for the team. The agent never sees this." required><button class="btn quiet small" type="submit">Add note</button></form>
+    <h3 style="margin-top:16px">Updates <span class="muted small">the agent sees these</span></h3><div class="timeline">${r.updates.map(u=>`<div class="tl done"><div class="dot"></div><div>${u}</div></div>`).join("")}</div>
+    <form onsubmit="return addUpdate(event,${r.id})" style="margin-top:8px;display:grid;gap:8px"><select onchange="this.form.u.value=this.value;this.selectedIndex=0"><option value="">Pick a saved reply...</option>${TEMPLATES.map(t=>`<option>${t}</option>`).join("")}</select><input name="u" placeholder="Or write a plain-language update for the agent" required><button class="btn small" type="submit">Send update to agent</button></form></div>`:""}
+  </div>`;
+};
+function assign(id,v){ const r=S.requests.find(x=>x.id===id); r.owner=v; if(v&&r.status==="new") r.status="doing"; r.notes.push("Nov 4: Assigned to "+(v||"no one")); render(); }
+function setStatus(id,v){ const r=S.requests.find(x=>x.id===id); r.status=v; r.notes.push("Nov 4: Status set to "+CHIP[v]); render(); }
+function addUpdate(e,id){ e.preventDefault(); const r=S.requests.find(x=>x.id===id); r.updates.push("Nov 4: "+new FormData(e.target).get("u")); render(); toast("Update sent. The agent gets a text."); return false; }
+function callMe(id){ const r=S.requests.find(x=>x.id===id); r.notes.push("Nov 4: Agent asked for a call at "+me().phone+"."); r.updates.push("Nov 4: Got it. "+(r.owner||"The front desk")+" will call you at "+me().phone+"."); render(); toast("Asked for a call."); }
+function addNote(e,id){ e.preventDefault(); const r=S.requests.find(x=>x.id===id); r.notes.push("Nov 4: "+new FormData(e.target).get("u")); render(); toast("Note saved. Staff only."); return false; }
+function newRequestStaff(){ return `<div class="pagehead"><div><h1>Log a request</h1><p>For a call, a text, or a hallway ask. It gets a number like everything else.</p></div></div>${requestForm(true)}`; }
+function requestForm(staff){ return `<form class="form" onsubmit="return addRequest(event,${staff})">
+  ${staff?`<label>Agent<select name="agent">${S.agents.map(a=>`<option>${a.name}</option>`).join("")}</select></label>`:""}
+  <label>What is it about<select name="cat"><option>Email and Microsoft 365</option><option>SkySlope</option><option>BoldTrail</option><option>Printing</option><option>Website or marketing</option><option>Pay or commission</option><option>Something else</option></select></label>
+  <label>What do you need<textarea name="text" required placeholder="Say what is happening and what you have tried"></textarea></label>
+  ${staff?"":`<label>Best way to reach you<select name="reach"><option>Text my cell</option><option>Call my cell</option><option>Email</option></select></label><label class="check"><input type="checkbox" name="callme"> I would rather talk it through. Call me first.</label>`}
+  <div class="actions"><button class="btn" type="submit">${staff?"Log it":"Send request"}</button><button class="btn quiet" type="button" onclick="go('${staff?"requests":"home"}',{req:1041})">Cancel</button></div></form>`; }
+function addRequest(e,staff){ e.preventDefault(); const f=new FormData(e.target); const id=Math.max(...S.requests.map(r=>r.id))+1; const cat=f.get("cat"); const callme=!staff&&f.get("callme"); const [dept,owner]=ROUTE[cat]||["Front desk",""];
+  S.requests.unshift({id,agent:staff?f.get("agent"):me().name,cat,dept,text:f.get("text"),status:owner?"doing":"new",owner,opened:"Nov 4",updates:owner?["Nov 4: We have your request. "+owner+" in "+dept+" has it."]:["Nov 4: We have your request. The front desk is finding the right person."],notes:["Nov 4: Opened "+(staff?"by staff":"from the agent portal")+". Routed to "+dept+(owner?", "+owner:", no default owner")+"."+(callme?" Agent asked for a call first.":"")]});
+  toast("Request #"+id+" is in. "+(owner?"Routed to "+owner+".":"Waiting for the front desk to route it.")); go(staff?"requests":"home",{req:id}); return false; }
+
+PAGES.agents = () => {
+  const a=S.agents.find(x=>x.id===S.sel.agent)||S.agents[0];
+  return `<div class="pagehead"><div><h1>Agents</h1><p>One record per agent: contact, systems, documents on file, and everything they have asked for. Today this does not exist anywhere.</p></div></div>
+  <div class="split">
+    <div class="list">${S.agents.map(x=>`<div class="item ${x.id===a.id?"on":""}" onclick="go('agents',{agent:${x.id}})"><div class="t">${x.name}</div><div class="m"><span>${x.office}</span><span>${x.status}</span></div></div>`).join("")}</div>
+    ${record(a,true)}
+  </div>`;
+};
+function record(a,staff){
+  const reqs=S.requests.filter(r=>r.agent===a.name), files=S.files.filter(f=>f.agent===a.name);
+  const sys=[["Company email",a.done.tech&&a.done.tech.includes(0)],["Authenticator",a.done.tech&&a.done.tech.includes(2)],["SkySlope",a.done.natalie&&a.done.natalie.includes(2)],["BoldTrail",a.done.ashley&&a.done.ashley.includes(1)],["Pl@tform",a.done.grace&&a.done.grace.includes(0)],["MyQ printing",a.done.tech&&a.done.tech.includes(3)]];
+  return `<div class="grid" style="gap:16px">
+    <div class="panel"><div class="pagehead" style="margin-bottom:10px"><h2>${a.name}</h2>${staff?`<button class="btn quiet small" onclick="go('onboarding',{agent:${a.id}})">Onboarding checklist</button>`:`<button class="btn quiet small" onclick="toast('Change request sent to Natalie.')">Request a change</button>`}</div>
+      <div class="kv"><div>Office</div><div>${a.office}</div><div>Started</div><div>${a.start}</div><div>Email</div><div>${a.email||"<span class='muted'>not created yet</span>"}</div><div>Cell</div><div>${a.phone}</div><div>License</div><div>${a.license}</div><div>Status</div><div>${a.status}</div></div></div>
+    <div class="grid c2">
+      <div class="panel"><h3>Systems</h3>${sys.map(([n,ok])=>`<div class="step" style="padding:6px 0;cursor:default"><span class="box ${ok?"":""}" style="${ok?"background:var(--marsh);border-color:var(--marsh)":""}">${ok?"✓":""}</span><span class="lbl">${n}</span></div>`).join("")}</div>
+      <div class="panel"><h3>Documents on file</h3><div class="small">${["W-9","Direct deposit form","Compensation agreement","Team agreement, if any","Signed handbook acknowledgment"].map(d=>`<div class="step" style="padding:6px 0;cursor:default"><span class="box" style="${a.done.natalie&&a.done.natalie.includes(4)?"background:var(--marsh);border-color:var(--marsh)":""}">${a.done.natalie&&a.done.natalie.includes(4)?"✓":""}</span><span class="lbl">${d}</span></div>`).join("")}</div><p class="muted small" style="margin-top:8px">Where these get signed and stored is still a company decision.</p></div>
+    </div>
+    <div class="grid c2">
+      <div class="panel"><h3>Requests</h3>${reqs.length?reqs.map(r=>`<div class="item" onclick="go('${staff?"requests":"home"}',{req:${r.id}})"><div class="t">#${r.id} ${r.text}</div><div class="m"><span>${r.cat}</span>${chip(r.status)}</div></div>`).join(""):`<div class="empty">No requests yet.</div>`}</div>
+      <div class="panel"><h3>Concierge files</h3>${files.length?files.map(f=>`<div class="item" onclick="go('${staff?"concierge":"myconcierge"}',{file:'${f.id}'})"><div class="t">${f.prop}</div><div class="m"><span>${f.side} side, closes ${f.close}</span>${chip(f.status)}</div></div>`).join(""):`<div class="empty">No concierge files.</div>`}</div>
+    </div>
+  </div>`;
+}
+
+PAGES.concierge = () => {
+  const f=S.files.find(x=>x.id===S.sel.file)||S.files[0];
+  if(S.sel.file==="new") return `<div class="pagehead"><div><h1>New concierge file</h1><p>Opened by staff when an agent asks for the service on a transaction. Everything the admin team needs comes from the body of the contract.</p></div></div>${fileForm(true)}`;
+  return `<div class="pagehead"><div><h1>Concierge</h1><p>Transactions where the agent has chosen the service. The contract sets every date; this keeps them in one place with the steps that follow.</p></div><button class="btn" onclick="go('concierge',{file:'new'})">Open a file</button></div>
+  <div class="split">
+    <div class="list">${S.files.map(x=>`<div class="item ${x.id===f.id?"on":""}" onclick="go('concierge',{file:'${x.id}'})"><div class="t">${x.prop}</div><div class="m"><span>${x.agent}, closes ${x.close}</span>${chip(x.status)}</div></div>`).join("")}</div>
+    ${fileDetail(f,true)}
+  </div>`;
+};
+function fileDetail(f,staff){
+  const done=f.steps.filter(s=>s[1]).length;
+  return `<div class="grid" style="gap:16px">
+    <div class="panel"><div class="pagehead" style="margin-bottom:10px"><div><h2>${f.prop}</h2><p class="small">${f.id}. ${f.agent}, ${f.side.toLowerCase()} side. ${f.county} County.</p></div>${chip(f.status)}</div>
+      <div class="kv"><div>Due diligence ends</div><div>${f.dd}</div><div>Closing</div><div>${f.close}</div><div>CL-100</div><div>${f.cl100}</div><div>CL-100 need date</div><div>${f.need||"<span class='muted'>not set until the contract names a company</span>"}</div></div>
+      ${f.flag?`<div class="note" style="margin-top:12px">${f.flag}</div>`:""}
+      ${(f.log||[]).length?`<div class="timeline" style="margin-top:10px">${f.log.map(u=>`<div class="tl done"><div class="dot"></div><div>${u}</div></div>`).join("")}</div>`:""}
+      ${f.county==="Georgetown"?`<p class="muted small" style="margin-top:10px">Georgetown County: the attorney's office does not order the CL-100. The admin team orders it.</p>`:f.county==="Horry"?`<p class="muted small" style="margin-top:10px">Horry County: the attorney's office orders the CL-100.</p>`:""}
+    </div>
+    <div class="panel"><h3>Steps <span class="muted small">${done} of ${f.steps.length}</span></h3>
+      ${f.steps.map((s,i)=>`<div class="step ${s[1]?"done":""}" ${staff?`onclick="toggleFile('${f.id}',${i})" role="checkbox" aria-checked="${s[1]}" tabindex="0"`:`style="cursor:default"`}><span class="box"></span><span class="lbl">${s[0]}</span></div>`).join("")}
+      ${f.status!=="done"?`<div class="actions" style="margin-top:12px"><button class="btn quiet small" onclick="orderFrom('${f.id}','CL-100')">Order the CL-100</button><button class="btn quiet small" onclick="orderFrom('${f.id}','inspection')">Order an inspection</button></div>`:""}
+      ${staff?`<p class="muted small" style="margin-top:10px">Click a step to mark it done. The agent sees the same list from their side, read only.</p>`:`<p class="muted small" style="margin-top:10px">You will get a text at each step. Call the office if a date in the contract changes.</p>`}
+    </div>
+  </div>`;
+}
+function orderFrom(id,what){ const f=S.files.find(x=>x.id===id); if(what==="CL-100"&&f.cl100.startsWith("Not chosen")){toast("The contract names no CL-100 company. Amend the contract or sign the waiver first."); return;} f.log=f.log||[]; f.log.push("Nov 4: "+(what==="CL-100"?"CL-100 ordered from "+f.cl100.split(" (")[0]+" for after due diligence ("+f.dd+")":"Inspection request sent to the agent's chosen inspector; showing instructions attached")); if(what==="CL-100") f.steps[3][1]=true; else f.steps[4][1]=true; render(); toast(what==="CL-100"?"CL-100 ordered.":"Inspection requested."); }
+function toggleFile(id,i){ const f=S.files.find(x=>x.id===id); f.steps[i][1]=!f.steps[i][1]; const d=f.steps.filter(s=>s[1]).length; f.status = d===f.steps.length?"done":(d===0?"todo":(f.flag?"waiting":"doing")); render(); }
+function fileForm(staff){ return `<form class="form" onsubmit="return addFile(event,${staff})">
+  ${staff?`<label>Agent<select name="agent">${S.agents.map(a=>`<option>${a.name}</option>`).join("")}</select></label>`:""}
+  <label>Property address<input name="prop" required></label>
+  <div class="row2"><label>Which side<select name="side"><option>Buyer</option><option>Listing</option></select></label><label>County<select name="county"><option>Horry</option><option>Georgetown</option><option>Orangeburg</option><option>Clarendon</option><option>Charleston</option></select></label></div>
+  <div class="row2"><label>Due diligence ends<input name="dd" type="date"></label><label>Closing date<input name="close" type="date"></label></div>
+  <div class="row2"><label>CL-100 company named in the contract<input name="cl100" placeholder="Leave blank if the box is not checked"></label><label>CL-100 need date per contract<input name="need" placeholder="e.g. 14 days before closing"></label></div>
+  <label>Upload the signed contract<input type="file"></label>
+  <div class="actions"><button class="btn" type="submit">${staff?"Open the file":"Request the service"}</button><button class="btn quiet" type="button" onclick="go('${staff?"concierge":"myconcierge"}',{file:'C-2026-018'})">Cancel</button></div></form>`; }
+function addFile(e,staff){ e.preventDefault(); const f=new FormData(e.target); const id="C-2026-0"+(20+S.files.length-3); const steps=S.files[0].steps.map(s=>[s[0],false]); S.files.unshift({id,agent:staff?f.get("agent"):me().name,prop:f.get("prop"),side:f.get("side"),county:f.get("county"),dd:f.get("dd")||"",close:f.get("close")||"",cl100:f.get("cl100")||"Not chosen in the contract",need:f.get("need")||"",status:"todo",steps,flag:f.get("cl100")?"":"Termite box not checked in the contract. Waiver needs to be signed and added, or the contract amended, before this file moves."}); toast(staff?"File "+id+" opened.":"Request sent. The admin team will open the file and text you."); go(staff?"concierge":"myconcierge",{file:id}); return false; }
+
+PAGES.orders = () => {
+  const o=S.orders.find(x=>x.id===S.sel.order)||S.orders[0];
+  return `<div class="pagehead"><div><h1>Print orders</h1><p>Everything agents order from the portal, in one queue for marketing. Each order carries the agent, the items, where it goes, and what they have been told.</p></div></div>
+  <div class="split" style="grid-template-columns:1fr 420px">
+    <div class="panel" style="padding:0"><table><thead><tr><th>Order</th><th>Agent</th><th>Items</th><th>Deliver</th><th>Status</th></tr></thead><tbody>
+      ${S.orders.map(x=>`<tr class="row" onclick="go('orders',{order:'${x.id}'})"><td class="muted">${x.id}<div class="small">${x.placed}</div></td><td>${x.agent}</td><td>${x.items.map(i=>i[0]+" ("+i[1]+")").join("<br>")}</td><td>${x.deliver}</td><td>${chip(x.status)}</td></tr>`).join("")}
+    </tbody></table></div>
+    ${o?`<div class="panel"><h3>${o.id} ${chip(o.status)}</h3><div class="kv" style="margin:12px 0"><div>Agent</div><div>${o.agent}</div><div>Items</div><div>${o.items.map(i=>i[0]+", "+i[1]).join("<br>")}</div><div>Deliver</div><div>${o.deliver}</div><div>Owner</div><div>${o.owner}</div><div>Status</div><div><select onchange="setOrder('${o.id}',this.value)">${["new","doing","done"].map(st=>`<option value="${st}" ${o.status===st?"selected":""}>${{new:"Received",doing:"In production",done:"Ready or delivered"}[st]}</option>`).join("")}</select></div></div>
+    <h3>Updates <span class="muted small">the agent sees these</span></h3><div class="timeline">${o.updates.map(u=>`<div class="tl done"><div class="dot"></div><div>${u}</div></div>`).join("")}</div>
+    <form onsubmit="return orderUpdate(event,'${o.id}')" style="margin-top:8px;display:grid;gap:8px"><input name="u" placeholder="Proof sent, ready for pickup, shipped..." required><button class="btn small" type="submit">Send update to agent</button></form></div>`:""}
+  </div>`;
+};
+function setOrder(id,v){ const o=S.orders.find(x=>x.id===id); o.status=v; render(); }
+function orderUpdate(e,id){ e.preventDefault(); const o=S.orders.find(x=>x.id===id); o.updates.push("Nov 4: "+new FormData(e.target).get("u")); render(); toast("Update sent. The agent gets a text."); return false; }
+
+PAGES.print = () => {
+  if(S.sel.order==="checkout") return checkout();
+  const mine=S.orders.filter(o=>o.agent===me().name);
+  const groups=[...new Set(CATALOG.map(c=>c.group))];
+  return `<div class="pagehead"><div><h1>Print and order</h1><p>Company-branded print and items, ordered here and billed to your agent account. Add an item, then attach your photos and type the wording you want in the cart. Marketing sends a proof before anything custom prints.</p></div>${S.cart.length?`<button class="btn" onclick="go('print',{order:'checkout'})">Check out (${S.cart.length})</button>`:""}</div>
+  <div class="split" style="grid-template-columns:1fr 340px">
+    <div>${groups.map(g=>`<h3 style="margin:6px 0 12px">${g}</h3><div class="shop">${CATALOG.filter(c=>c.group===g).map(c=>`<div class="prod"><div class="img">${ART[c.id]}</div><div class="body"><div class="t">${c.name}</div><div class="d">${c.desc}</div><div class="ctl"><label style="display:flex;align-items:center;gap:8px;font-size:13px">${c.optLabel}<select id="opt-${c.id}">${c.opts.map(o=>`<option>${o}</option>`).join("")}</select></label><button class="btn small" onclick="addToCart('${c.id}')">Add</button></div></div></div>`).join("")}</div>`).join("")}</div>
+    <div>
+      <div class="panel"><h3>Your cart</h3>${S.cart.length?S.cart.map((i,n)=>`<div class="cartitem"><div class="h"><div><span class="t" style="font-weight:500">${i.name}</span> <span class="muted small">${i.optLabel}: ${i.opt}</span></div><button class="btn quiet small" onclick="S.cart.splice(${n},1);render()">Remove</button></div>
+      ${i.upload?`<label>${i.upload}<input type="file" multiple accept="image/*,.pdf" onchange="S.cart[${n}].files=[...this.files].map(f=>f.name);render()"></label>${(i.files||[]).length?`<div class="files">Attached: ${i.files.join(", ")}</div>`:""}`:`<label>Images or files, if any<input type="file" multiple accept="image/*,.pdf" onchange="S.cart[${n}].files=[...this.files].map(f=>f.name);render()"></label>${(i.files||[]).length?`<div class="files">Attached: ${i.files.join(", ")}</div>`:""}`}
+      <label>${i.content||"What should it say"}<textarea placeholder="Type the exact wording you want" oninput="S.cart[${n}].text=this.value">${i.text||""}</textarea></label></div>`).join("")+`<div class="actions" style="margin-top:14px"><button class="btn" onclick="go('print',{order:'checkout'})">Check out</button></div>`:`<div class="empty">Nothing in your cart yet. Add an item, then attach your images and the wording you want.</div>`}</div>
+      <div class="panel" style="margin-top:18px"><h3>Your orders</h3>${mine.length?mine.map(o=>`<div class="item" style="cursor:default"><div class="t">${o.id} <span class="muted small">${o.placed}</span></div><div class="muted small">${o.items.map(i=>i[0]+" ("+i[1]+")").join(", ")}</div><div class="m"><span>${o.updates[o.updates.length-1].replace(/^[A-Z][a-z]{2} \d+: /,"")}</span>${chip(o.status)}</div></div>`).join(""):`<div class="empty">No orders yet.</div>`}</div>
+    </div>
+  </div>`;
+};
+function addToCart(id){ const c=CATALOG.find(x=>x.id===id); const opt=document.getElementById("opt-"+id).value; S.cart.push({name:c.name,opt,optLabel:c.optLabel,upload:c.upload,content:c.content,files:[],text:""}); render(); toast(c.name+" added."); }
+function checkout(){
+  const m=me();
+  return `<div class="pagehead"><div><h1>Check out</h1><p>Confirm what you are ordering and where it should go. Marketing sends a proof for anything custom before it prints.</p></div></div>
+  <div class="split" style="grid-template-columns:1fr 380px">
+    <form class="form" onsubmit="return placeOrder(event)">
+      <div class="row2"><label>Name on cards and riders<input name="name" value="${m.name}"></label><label>Title<input name="title" placeholder="Realtor"></label></div>
+      <div class="row2"><label>Cell on cards<input name="phone" value="${m.phone}"></label><label>Email on cards<input name="email" value="${m.email}"></label></div>
+      <label>Deliver to<select name="deliver"><option>Pick up at ${m.office}</option><option>Ship to my home</option></select></label>
+            <label>Anything marketing should know<textarea name="notes" placeholder="Rush, a listing address for postcards, a different title..."></textarea></label>
+      <label class="check"><input type="checkbox" required> Bill this order to my agent account</label>
+      <div class="actions"><button class="btn" type="submit">Place order</button><button class="btn quiet" type="button" onclick="go('print',{order:''})">Back to cart</button></div>
+    </form>
+    <div class="panel"><h3>Order summary</h3>${S.cart.map(i=>`<div class="item" style="cursor:default"><div class="t">${i.name}</div><div class="muted small">${i.optLabel}: ${i.opt}</div>${(i.files||[]).length?`<div class="files">Attached: ${i.files.join(", ")}</div>`:""}${i.text?`<div class="small" style="margin-top:4px">${i.text}</div>`:""}</div>`).join("")||`<div class="empty">Your cart is empty.</div>`}<p class="muted small" style="margin-top:12px">Pricing follows the marketing price list and shows on your agent statement.</p></div>
+  </div>`;
+}
+function placeOrder(e){ e.preventDefault(); if(!S.cart.length){toast("Add something to the cart first."); return false;} const f=new FormData(e.target); const id="O-2026-0"+(42+S.orders.length-2); S.orders.unshift({id,agent:me().name,items:S.cart.map(i=>[i.name,i.opt+((i.files||[]).length?", "+i.files.length+" file"+(i.files.length>1?"s":""):"")+(i.text?", wording attached":"")]),deliver:f.get("deliver"),status:"new",placed:"Nov 4",owner:"Marketing",updates:["Nov 4: Order received. Marketing will send a proof for anything custom."]}); S.cart=[]; toast("Order "+id+" placed. You will get a text when there is a proof or it is ready."); go("print",{order:""}); return false; }
+
+// ---------- agent pages ----------
+PAGES.home = () => {
+  const m=me(); const reqs=S.requests.filter(r=>r.agent===m.name), files=S.files.filter(f=>f.agent===m.name), r=S.requests.find(x=>x.id===S.sel.req&&x.agent===m.name);
+  return `<div class="pagehead"><div><h1>Good morning, ${m.name.split(" ")[0]}</h1><p>Your systems in one row, your open requests and concierge files below, and one button to ask for help.</p></div><div class="actions"><button class="btn quiet" onclick="go('docs')">My documents</button><button class="btn quiet" onclick="go('content')">Company content</button><button class="btn quiet" onclick="go('dues')">Dues: $${DUES.balance.toFixed(2)}</button><button class="btn" onclick="go('help')">Request help</button></div></div>
+  <div class="tiles">${LINKS.map(l=>`<a class="tile ${l.wide?"wide":""}" href="${l.u}" title="${l.d}" target="_blank" rel="noopener" ${l.u==="#"?`onclick="toast('Opens ${l.n} with your Microsoft sign-in');return false"`:""}><div class="app-icon" style="background:${l.c};color:${l.c==="#ffffff"?"#161716":"#fff"}">${l.icon?`<img src="${l.icon}" alt="" onerror="this.parentNode.style.background='#121a16';this.parentNode.style.color='#fff';this.replaceWith('${l.m}')">`:l.m}</div><div class="n">${l.n}</div></a>`).join("")}</div>
+  <div class="grid c2">
+    <div class="panel"><h3>My requests</h3>${reqs.length?reqs.map(x=>`<div class="item ${r&&x.id===r.id?"on":""}" onclick="go('home',{req:${x.id}})"><div class="t">#${x.id} ${x.text}</div><div class="m"><span>${x.owner?"With "+x.owner:"Not picked up yet"}</span>${chip(x.status)}</div></div>`).join(""):`<div class="empty">Nothing open. Ask for help any time.</div>`}
+      ${r?`<div style="margin-top:14px"><h3>Updates on #${r.id}</h3><p class="muted small">Only the updates the team sends you show here.</p>${r.status!=="done"?`<div class="actions" style="margin:8px 0 10px"><button class="btn quiet small" onclick="callMe(${r.id})">Call me about this</button></div>`:""}<div class="timeline">${r.updates.map(u=>`<div class="tl done"><div class="dot"></div><div>${u}</div></div>`).join("")}</div></div>`:""}</div>
+    <div><div class="panel"><h3>My concierge files</h3>${files.length?files.map(f=>`<div class="item" onclick="go('myconcierge',{file:'${f.id}'})"><div class="t">${f.prop}</div><div class="m"><span>Closes ${f.close}</span>${chip(f.status)}</div></div>`).join(""):`<div class="empty">No files. Request the service on your next contract.</div>`}</div><div class="panel" style="margin-top:18px"><h3>My print orders</h3>${S.orders.filter(o=>o.agent===m.name).map(o=>`<div class="item" onclick="go('print',{order:''})"><div class="t">${o.items.map(i=>i[0]).join(", ")}</div><div class="m"><span>${o.updates[o.updates.length-1].replace(/^[A-Z][a-z]{2} \d+: /,"")}</span>${chip(o.status)}</div></div>`).join("")||`<div class="empty">No orders yet.</div>`}</div></div>
+  </div>`;
+};
+PAGES.docs = () => `<div class="pagehead"><div><h1>Documents</h1><p>Your transaction files from SkySlope and every company form, in one place. You signed in once with your Microsoft account, so there is nothing else to log in to.</p></div></div>
+  <div class="grid c2">
+    <div class="panel"><h3>My transaction files <span class="muted small">from SkySlope, updated nightly</span></h3>
+      ${SKY.map(t=>`<div class="item" style="cursor:default"><div class="t">${t.prop}</div><div class="muted small">${t.type}. Updated ${t.updated}.</div><div class="small" style="margin-top:6px">${t.docs.map(d=>`<a href="#" onclick="toast('Opening ${d} (demo)');return false">${d}</a>`).join(" &middot; ")}</div></div>`).join("")}
+      <p class="muted small" style="margin-top:10px">Need to add or sign something? That still happens in SkySlope. <a href="#" onclick="toast('Opens SkySlope with your Microsoft sign-in (demo)');return false">Open SkySlope</a></p></div>
+    <div class="panel"><h3>Company forms and references</h3>
+      ${FORMS.map(([n,d])=>`<div class="item" style="cursor:default"><div class="t"><a href="#" onclick="toast('Opening ${n} (demo)');return false">${n}</a></div><div class="muted small">${d}</div></div>`).join("")}</div>
+  </div>`;
+PAGES.content = () => `<div class="pagehead"><div><h1>Company content</h1><p>Logos, photos, templates, and copy the company owns. Everything here is cleared for your marketing, so there is nothing to license and nothing to worry about. Use it as is.</p></div></div>
+  ${CONTENT.map(sec=>`<h3 style="margin:6px 0 12px">${sec.g}</h3><div class="shop" style="grid-template-columns:repeat(4,1fr)">${sec.items.map(it=>`<div class="asset"><div class="img">${CART_ART[it[2]]}</div><div class="body"><div class="t">${it[0]}</div><div class="d">${it[1]}</div><div class="a"><a href="#" onclick="toast('${it[0]} downloaded (demo)');return false">Download</a>${sec.g==="Templates"?`<a href="#" onclick="toast('Opens in the editor with your name filled in (demo)');return false">Customize</a>`:""}</div><span class="okmark">Company owned, cleared for use</span></div></div>`).join("")}</div>`).join("")}`;
+PAGES.library = () => `<div class="pagehead"><div><h1>Content library</h1><p>What agents see under Company content. Add a file here and it is live for everyone; retire it and it comes down everywhere.</p></div><button class="btn" onclick="toast('Upload opens (demo)')">Add content</button></div>
+  <div class="panel" style="padding:0"><table><thead><tr><th>Item</th><th>Group</th><th>Formats</th><th>Rights</th><th></th></tr></thead><tbody>${CONTENT.flatMap(sec=>sec.items.map(it=>`<tr><td>${it[0]}</td><td>${sec.g}</td><td class="muted small">${it[1]}</td><td><span class="chip done">Company owned</span></td><td><button class="btn quiet small" onclick="toast('Replaced (demo)')">Replace</button></td></tr>`)).join("")}</tbody></table></div>
+  <p class="muted small" style="margin-top:12px">Anything marketing puts here should be company owned or licensed to the company for agent use. That is what makes it safe for agents to grab without asking.</p>`;
+PAGES.dues = () => {
+  const total=DUES.lines.reduce((a,l)=>a+l[2],0);
+  return `<div class="pagehead"><div><h1>Dues and fees</h1><p>What you owe the brokerage and what makes up this month. Pulled from Broker Wolf, the same numbers accounting sees.</p></div><button class="btn quiet" onclick="toast('Statement PDF downloaded (demo)')">Download statement</button></div>
+  <div class="grid c4" style="margin-bottom:24px">
+    <div class="stat"><div class="k">$${DUES.balance.toFixed(2)}</div><div class="l">balance owed</div></div>
+    <div class="stat"><div class="k">${DUES.nextDraft.replace(", 2026","")}</div><div class="l">next draft date</div></div>
+    <div class="stat"><div class="k">$${total.toFixed(2)}</div><div class="l">${DUES.month} charges</div></div>
+    <div class="stat"><div class="k">${DUES.history.length}</div><div class="l">statements on file</div></div>
+  </div>
+  <div class="grid c2">
+    <div class="panel"><h3>${DUES.month}</h3><table><tbody>${DUES.lines.map(l=>`<tr><td class="muted small" style="width:60px">${l[0]}</td><td>${l[1]}</td><td class="amount">$${l[2].toFixed(2)}</td></tr>`).join("")}</tbody></table><div class="total"><span>Total this month</span><span>$${total.toFixed(2)}</span></div>
+      <div class="actions" style="margin-top:14px"><button class="btn quiet small" onclick="askCharge()">Ask about a charge</button></div></div>
+    <div class="panel"><h3>Past statements</h3><table><tbody>${DUES.history.map(h=>`<tr><td>${h[0]}</td><td class="amount">$${h[1].toFixed(2)}</td><td class="muted small">${h[2]}</td></tr>`).join("")}</tbody></table><p class="muted small" style="margin-top:12px">Dues draft on the 15th. Print orders and other charges from the portal show here the day they are placed.</p></div>
+  </div>`;
+};
+function askCharge(){ const id=Math.max(...S.requests.map(r=>r.id))+1; S.requests.unshift({id,agent:me().name,cat:"Pay or commission",dept:"Accounting",text:"Question about a charge on my "+DUES.month+" statement.",status:"doing",owner:"Sue",opened:"Nov 4",updates:["Nov 4: We have your question. Sue in Accounting has it."],notes:["Nov 4: Opened from Dues and fees. Routed to Accounting, Sue."]}); toast("Request #"+id+" sent to Sue in Accounting."); go("home",{req:id}); }
+PAGES.numbers = () => `<div class="pagehead"><div><h1>My numbers</h1><p>Your production as of the ${NUMBERS.asOf}. Same figures as the company reports, so there is nothing to reconcile.</p></div></div>
+  <div class="grid c4" style="margin-bottom:24px">
+    <div class="stat"><div class="k">${NUMBERS.ytd.closed}</div><div class="l">closed this year</div></div>
+    <div class="stat"><div class="k">${NUMBERS.ytd.volume}</div><div class="l">closed volume, year to date</div></div>
+    <div class="stat"><div class="k">${NUMBERS.ytd.pending}</div><div class="l">pending, ${NUMBERS.ytd.pendingVolume}</div></div>
+    <div class="stat"><div class="k">${NUMBERS.ytd.active}</div><div class="l">active listings</div></div>
+  </div>
+  <div class="panel"><h3>This month</h3><div class="kv"><div>Closed</div><div>${NUMBERS.month.closed}, ${NUMBERS.month.volume}</div><div>Pending</div><div>${S.files.filter(f=>f.agent===me().name&&f.status!=="done").length} with the concierge service</div></div><p class="muted small" style="margin-top:12px">Updated when the weekly inventory and sales reports are pulled. See something off? <a href="#" onclick="go('help');return false">Send a request</a> and it goes to Accounting.</p></div>`;
+PAGES.directory = () => `<div class="pagehead"><div><h1>Who to call</h1><p>Who handles what, so you know where a request lands. Anything you send through Request help routes to these same people.</p></div></div>
+  <div class="panel" style="padding:0"><table><thead><tr><th>Department</th><th>Person</th><th>Handles</th><th>Reach</th></tr></thead><tbody>${DIRECTORY.map(d=>`<tr><td>${d[0]}</td><td>${d[1]}</td><td>${d[2]}</td><td>${d[3]||"Through Request help"}</td></tr>`).join("")}</tbody></table></div>`;
+PAGES.profile = () => `<div class="pagehead"><div><h1>My profile</h1><p>What the company has on file for you. Ask for a change and it goes to the right person.</p></div></div>${record(me(),false)}
+  <div class="panel" style="margin-top:18px"><h3>How to reach me</h3>
+    <div class="tog"><span>Text me when a request or order has an update</span><input type="checkbox" ${S.prefs.text?"checked":""} onchange="S.prefs.text=this.checked;toast('Saved.')"></div>
+    <div class="tog"><span>Email me a copy of each update</span><input type="checkbox" ${S.prefs.email?"checked":""} onchange="S.prefs.email=this.checked;toast('Saved.')"></div>
+    <div class="tog"><span>Send me a Friday summary of my open items</span><input type="checkbox" ${S.prefs.digest?"checked":""} onchange="S.prefs.digest=this.checked;toast('Saved.')"></div>
+    <p class="muted small" style="margin-top:10px">Texts go to ${me().phone}. Signing in uses your Microsoft work account, so your password is the same one as company email.</p></div>`;
+PAGES.help = () => `<div class="pagehead"><div><h1>Request help</h1><p>Say what you need. It gets a number, someone picks it up, and you can watch it move from Home.</p></div></div>${requestForm(false)}`;
+PAGES.myconcierge = () => {
+  const mine=S.files.filter(f=>f.agent===me().name); const f=mine.find(x=>x.id===S.sel.file)||mine[0];
+  if(S.sel.file==="new") return `<div class="pagehead"><div><h1>Request the concierge service</h1><p>For one transaction. Upload the signed contract and the admin team takes the paperwork from there.</p></div></div>${fileForm(false)}`;
+  return `<div class="pagehead"><div><h1>Concierge</h1><p>Your transactions where the admin team is handling the paperwork, with where each one stands.</p></div><button class="btn" onclick="go('myconcierge',{file:'new'})">Request the service</button></div>
+  ${f?`<div class="split"><div class="list">${mine.map(x=>`<div class="item ${x.id===f.id?"on":""}" onclick="go('myconcierge',{file:'${x.id}'})"><div class="t">${x.prop}</div><div class="m"><span>Closes ${x.close}</span>${chip(x.status)}</div></div>`).join("")}</div>${fileDetail(f,false)}</div>`:`<div class="empty">You have no concierge files. Request the service on your next contract.</div>`}`;
+};
+
+render();
+</script>
+</body>
+</html>
