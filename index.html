@@ -176,6 +176,33 @@ textarea{min-height:96px;resize:vertical}
 .asset .a{margin-top:8px;display:flex;gap:10px;font-size:13px}
 .asset .a a{color:var(--green)}
 .okmark{display:inline-block;font-size:11.5px;color:var(--green-ink);background:var(--green-tint);padding:2px 8px;border-radius:999px;margin-top:8px}
+.hero{background:#121a16;color:#e9efec;border-radius:var(--r);padding:36px 40px;display:grid;grid-template-columns:1.4fr 1fr;gap:32px;margin-bottom:26px}
+.hero h2{color:#fff;font-size:34px;margin-bottom:10px}
+.hero p{color:#c3cbc6;font-size:15.5px;max-width:52ch}
+.hero .price{font-size:40px;font-weight:500;letter-spacing:-.02em;color:#fff;line-height:1}
+.hero .price small{display:block;font-family:"Inter",sans-serif;font-size:13px;color:#9aa59f;margin-top:6px}
+.hero .side{border-left:1px solid rgba(255,255,255,.12);padding-left:32px;display:grid;align-content:space-between;gap:18px}
+.hero .btn{background:#fff;color:#121a16;border-color:#fff;justify-self:start}
+.hero .btn:hover{background:#e9efec}
+.cover{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-bottom:26px}
+.cover .panel h3{border:0;padding:0;margin-bottom:6px}
+.cover .lead{color:var(--mute);font-size:13.5px;margin-bottom:12px}
+.cover ul{list-style:none;margin:0;padding:0}
+.cover li{padding:8px 0;border-top:1px solid var(--line);font-size:14.5px}
+.journey{display:grid;grid-template-columns:28px 1fr;gap:0 16px}
+.journey .j{display:contents}
+.journey .dot{width:12px;height:12px;border-radius:50%;background:var(--line-strong);margin:6px auto 0;position:relative}
+.journey .line{width:2px;background:var(--line);margin:0 auto;min-height:26px}
+.journey .j.done .dot{background:var(--green)}
+.journey .j.now .dot{background:var(--amber);box-shadow:0 0 0 5px var(--amber-tint)}
+.journey .t{font-weight:500;font-size:15px}
+.journey .j.todo .t{color:var(--mute);font-weight:400}
+.journey .d{color:var(--mute);font-size:13.5px;margin-bottom:14px}
+.journey .j.now .d{color:var(--ink-2)}
+.filecard{display:grid;grid-template-columns:1fr 1fr;gap:22px;align-items:start}
+.quiet-kv{display:grid;grid-template-columns:150px 1fr;gap:8px 14px;font-size:14.5px}
+.quiet-kv div:nth-child(odd){color:var(--mute)}
+@media (max-width:980px){.hero,.cover,.filecard{grid-template-columns:1fr}.hero .side{border-left:0;padding-left:0;border-top:1px solid rgba(255,255,255,.12);padding-top:20px}}
 </style>
 </head>
 <body>
@@ -228,6 +255,17 @@ const CSTEPS = [
   "Closing statement checked: commission, admin fee, CL-100, home warranty, each on the right side",
   "Commission payment method confirmed: check, wire, or drop-off",
   "Final closing statement and check copy in SkySlope; file closed in SkySlope and Broker Wolf; EFT issued"
+];
+const STAGES = [
+  ["File received","Your paperwork is in SkySlope and your coordinator has it."],
+  ["Under review","We are checking every page, signature, and date. If anything is missing you will hear from us."],
+  ["Cleared for the MLS","Everything is green. Go ahead and enter the listing."],
+  ["Watching for changes","Price changes, extensions, and addenda get reviewed as they come in."],
+  ["Headed to the attorney","Your closing packet is with the attorney and we have a copy."],
+  ["CL-100 handled","Need date set from the contract and the inspection ordered after due diligence."],
+  ["Closing statement checked","Commission, admin fee, CL-100, and home warranty verified, each on the right side."],
+  ["Payment set","We know whether your commission comes by check, wire, or drop-off."],
+  ["Closed and paid","Final statement in SkySlope, file closed in Broker Wolf, EFT issued."]
 ];
 const mk = n => CSTEPS.map((t,i)=>[t,i<n]);
 const S = {
@@ -629,14 +667,27 @@ PAGES.profile = () => `<div class="pagehead"><div><h1>My profile</h1><p>What the
 PAGES.help = () => `<div class="pagehead"><div><h1>Request help</h1><p>Say what you need. It gets a number, someone picks it up, and you can watch it move from Home.</p></div></div>${requestForm(false)}`;
 PAGES.myconcierge = () => {
   const mine=S.files.filter(f=>f.agent===me().name); const f=mine.find(x=>x.id===S.sel.file)||mine[0];
-  if(S.sel.file==="new") return `<div class="pagehead"><div><h1>Request the concierge service</h1><p>For one listing or contract. Upload the signed paperwork and your coordinator takes the file from there. Your paperwork has to be in SkySlope before the file can be reviewed.</p></div></div>${fileForm(false)}`;
-  return `<div class="pagehead"><div><h1>Concierge</h1><p>For $125 per listing, a compliance coordinator carries your file from SkySlope to closing. Request it one file at a time.</p></div><button class="btn" onclick="go('myconcierge',{file:'new'})">Request the service</button></div>
-  <div class="grid c2" style="margin-bottom:22px">
-    <div class="panel"><h3>What the service covers</h3><div class="small">${["Your SkySlope checklist reviewed and kept green through closing","Missing pages, signatures, and dates chased with you until fixed","CL-100 need date tracked and ordered after due diligence (Georgetown County)","Closing statement checked line by line: commission, admin fee, CL-100, home warranty","File closed out in SkySlope and Broker Wolf, EFT issued"].map(t=>`<div class="step" style="padding:6px 0;cursor:default"><span class="box" style="background:var(--green);border-color:var(--green)">\u2713</span><span class="lbl">${t}</span></div>`).join("")}</div></div>
-    <div class="panel"><h3>What stays with you</h3><div class="small">${["Entering and updating the MLS, and closing it out","Ordering home inspections and the home warranty","Giving your client three or more pest companies to choose from","Sending the closing packet to the attorney (copy the admin team)","Talking to your clients and getting signatures"].map(t=>`<div class="step" style="padding:6px 0;cursor:default"><span class="box"></span><span class="lbl">${t}</span></div>`).join("")}</div><p class="muted small" style="margin-top:8px">The $125 shows with your admin fee on the closing statement. Agents in the Orangeburg and Manning offices are not charged.</p></div>
+  if(S.sel.file==="new") return `<div class="pagehead"><div><h1>Request the concierge service</h1><p>For one listing or contract. Upload the signed paperwork and your coordinator takes the file from there. Your paperwork has to be in SkySlope before review can start.</p></div></div>${fileForm(false)}`;
+  return `<div class="hero">
+    <div><h2>Concierge</h2><p>Hand us the file and keep selling. A compliance coordinator takes your listing or contract from SkySlope to closing, keeps it clean, checks the closing statement, and makes sure you get paid on time.</p>
+      <div class="price" style="margin-top:22px">$125<small>per listing, on the closing statement with your admin fee. Orangeburg and Manning agents are not charged.</small></div></div>
+    <div class="side"><div><div style="font-size:13px;color:#9aa59f;margin-bottom:6px">How it works</div><div style="font-size:15px;line-height:1.6">Request it on a file. Your coordinator reviews the paperwork, tells you what is missing, and carries it through closing. You get a text at each step.</div></div><button class="btn" onclick="go('myconcierge',{file:'new'})">Request concierge on a file</button></div>
   </div>
-  ${f?`<div class="split"><div class="list">${mine.map(x=>`<div class="item ${x.id===f.id?"on":""}" onclick="go('myconcierge',{file:'${x.id}'})"><div class="t">${x.prop}</div><div class="m"><span>Closes ${x.close}</span>${chip(x.status)}</div></div>`).join("")}</div>${fileDetail(f,false)}</div>`:`<div class="empty">You have no concierge files. Request the service on your next contract.</div>`}`;
+  <div class="cover">
+    <div class="panel"><h3>We take care of</h3><p class="lead">The paperwork side of the file, start to finish.</p><ul>${["Reviewing your SkySlope file and keeping every item green through closing","Chasing missing pages, signatures, and dates with you until they are fixed","Tracking the CL-100 need date and ordering it after due diligence (Georgetown County)","Checking the closing statement line by line: commission, admin fee, CL-100, home warranty","Closing the file in SkySlope and Broker Wolf and issuing your EFT"].map(t=>`<li>${t}</li>`).join("")}</ul></div>
+    <div class="panel"><h3>You keep</h3><p class="lead">The parts only you can do.</p><ul>${["Entering and updating the MLS, and closing it out","Ordering home inspections and the home warranty","Giving your client three or more pest companies to choose from","Sending the closing packet to the attorney, with us copied","Your clients, and every signature"].map(t=>`<li>${t}</li>`).join("")}</ul></div>
+  </div>
+  ${mine.length?`<h3 style="margin:8px 0 12px">Your files</h3><div class="filecard"><div class="list">${mine.map(x=>`<div class="item ${x.id===f.id?"on":""}" onclick="go('myconcierge',{file:'${x.id}'})"><div class="t">${x.prop}</div><div class="m"><span>${x.side} side, closes ${x.close}</span>${chip(x.status)}</div></div>`).join("")}</div>${agentFile(f)}</div>`:`<div class="empty">You have no concierge files yet. Request it on your next listing or contract.</div>`}`;
 };
+function agentFile(f){
+  const done=f.steps.filter(s=>s[1]).length; const now=Math.min(done,STAGES.length-1);
+  return `<div class="panel"><div class="pagehead" style="margin-bottom:12px"><div><h2 style="font-size:26px">${f.prop}</h2><p class="small">${f.side} side. Closes ${f.close}.</p></div>${chip(f.status)}</div>
+    <div class="quiet-kv" style="margin-bottom:16px"><div>Due diligence ends</div><div>${f.dd}</div><div>CL-100</div><div>${f.cl100}${f.need?", needed "+f.need:""}</div><div>Concierge fee</div><div>${f.fee||""}</div></div>
+    ${f.flag?`<div class="note" style="margin-bottom:16px">${f.flag}</div>`:""}
+    <div class="journey">${STAGES.map((st,i)=>{const cls=i<done?"done":(i===done&&f.status!=="done"?"now":"todo");return `<div class="j ${cls}"><div><div class="dot"></div>${i<STAGES.length-1?`<div class="line"></div>`:""}</div><div><div class="t">${st[0]}</div><div class="d">${cls==="todo"?"":st[1]}</div></div></div>`}).join("")}</div>
+    <div class="actions" style="margin-top:6px"><button class="btn quiet small" onclick="toast('Message sent to your coordinator. You will get a text back.')">Message my coordinator</button>${f.status!=="done"?`<button class="btn quiet small" onclick="toast('Call requested. Your coordinator will call '+me().phone+'.')">Call me about this file</button>`:""}</div>
+  </div>`;
+}
 
 render();
 </script>
