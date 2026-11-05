@@ -291,11 +291,13 @@ textarea{min-height:96px;resize:vertical}
 
 .split.w320{grid-template-columns:1fr 320px}.split.w380{grid-template-columns:1fr 380px}.split.w420{grid-template-columns:1fr 420px}
 .g4i{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.panel select,.panel textarea,.panel input{max-width:100%;box-sizing:border-box;min-width:0}
+.panel form select{width:100%}
 .rail .navs{display:flex;flex-direction:column;gap:2px}
 .m-only{display:none}
 @media (max-width:980px){.split.w320,.split.w380,.split.w420{grid-template-columns:1fr}.g4i{grid-template-columns:1fr 1fr}}
 @media (max-width:760px){
-  html{-webkit-text-size-adjust:100%}
+  html{-webkit-text-size-adjust:100%;scroll-padding-top:120px}
   .app{grid-template-columns:minmax(0,1fr)}
   .rail{display:block;position:sticky;top:0;z-index:20;height:auto;padding:0}
   .brand{display:flex;align-items:baseline;justify-content:space-between;gap:10px;padding:12px 16px 8px;margin:0;border:0}
@@ -325,7 +327,12 @@ textarea{min-height:96px;resize:vertical}
   .tiles{grid-template-columns:repeat(3,1fr);gap:10px}.tile.wide{grid-column:span 3}
   .split,.split.w320,.split.w380,.split.w420,.grid.c3,.grid.c2,.form .row2,.hero,.cover,.filecard{grid-template-columns:1fr}
   .cart-sticky{position:static}
-  table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .split>*,.grid>*,.panel,#view>*{min-width:0;max-width:100%}
+  .kv{grid-template-columns:104px minmax(0,1fr)}
+  .kv>div{min-width:0;overflow-wrap:anywhere}
+  .tw{overflow-x:auto;-webkit-overflow-scrolling:touch;max-width:100%;min-width:0;width:100%}
+  .split,.grid{grid-template-columns:minmax(0,1fr)}
+  .tw table{width:max-content;min-width:100%}
   .prod{gap:10px;padding:10px}
   .prod .img{width:96px;height:96px}
   .prod .img .stage{transform:scale(.375)}
@@ -338,7 +345,6 @@ textarea{min-height:96px;resize:vertical}
   .top .badge{grid-column:1 / -1}
   .signout{justify-self:end;grid-row:1;grid-column:2}
   .top .badge{grid-row:2}
-  table{width:max-content;min-width:100%}
   th,td{min-width:150px}
   th:first-child,td:first-child{min-width:60px}
 }
@@ -421,7 +427,7 @@ const S = {
   requests:[
     {id:1041,agent:"Tom Ellison",cat:"Email and Microsoft 365",text:"Outlook on my phone stopped syncing after the Authenticator setup.",status:"doing",owner:"Seth",opened:"Nov 3",updates:["Nov 3: We have your request. Seth is on it.","Nov 3: Can you text Seth a screenshot of the error?"],notes:["Nov 3: Came in from help@. Likely the modern auth switch; check the account in Entra first."]},
     {id:1042,agent:"Dana Whitfield",cat:"SkySlope",text:"Need the listing checklist for a land sale. The one in SkySlope is for homes.",status:"waiting",owner:"Natalie",opened:"Nov 3",updates:["Nov 3: We have your request. Natalie is pulling the land checklist."],notes:["Nov 3: No land checklist in SkySlope today. Natalie has an old one in OneDrive; needs the compliance coordinator to review before it goes out."]},
-    {id:1043,agent:"Priya Nair",cat:"Marketing",text:"Business cards came with the old office address.",status:"new",owner:"",opened:"Nov 4",updates:["Nov 4: We have your request."],notes:[]},
+    {id:1043,agent:"Priya Nair",cat:"Something else",text:"The lockbox cabinet at the Myrtle Beach office will not open.",status:"new",owner:"",opened:"Nov 4",updates:["Nov 4: We have your request."],notes:[]},
     {id:1040,agent:"Jordan Hale",cat:"BoldTrail",text:"Can't see my leads in the BoldTrail app.",status:"done",owner:"Ashley",opened:"Nov 2",updates:["Nov 2: We have your request.","Nov 2: Ashley reset your BoldTrail app login. Try signing in again.","Nov 2: Closed. Thanks for confirming."],notes:["Nov 2: App login was still on the old email."]}
   ],
   files:[
@@ -547,6 +553,7 @@ function render(){
     `<div class="navs">`+NAV[S.mode].map(([k,l])=>`<button class="${S.page===k?"on":""}" onclick="go('${k}')">${l}${c[k]?`<span class="n">${c[k]}</span>`:""}</button>`).join("")+`</div>` +
     `<div class="spacer"></div><div class="who">${S.mode==="staff"?"Signed in as staff":"Signed in as "+me().name}<br><button style="padding:4px 0;font-size:12.5px;color:#9aa59f" onclick="signOut()">Sign out</button></div>`;
   document.getElementById("view").innerHTML = PAGES[S.page]();
+  document.querySelectorAll("#view table").forEach(t=>{ if(t.parentElement.classList.contains("tw")) return; const w=document.createElement("div"); w.className="tw"; t.replaceWith(w); w.appendChild(t); });
   const on=document.querySelector(".rail .navs button.on"); if(on&&innerWidth<=760) on.scrollIntoView({block:"nearest",inline:"center"});
   if(innerWidth<=760) window.scrollTo(0,0);
 }
@@ -620,7 +627,7 @@ PAGES.requests = () => {
   return `<div class="pagehead"><div><h1>Requests</h1><p>Everything that comes in to help@ lands here with a number and routes itself by category: technology to Seth, SkySlope to Natalie, BoldTrail and marketing to Ashley, pay to Sue. Anything else waits at the front desk for a person to route it.</p></div><button class="btn" onclick="go('requests',{req:'new'})">Log a request</button></div>
   <div class="split w420">
     <div class="panel" style="padding:0"><table><thead><tr><th>#</th><th>Agent</th><th>Request</th><th>Routed to</th><th>Status</th></tr></thead><tbody>
-      ${S.requests.map(x=>`<tr class="row" onclick="go('requests',{req:${x.id}})"><td class="muted">${x.id}</td><td>${x.agent}</td><td>${x.text}<div class="muted small">${x.cat}, opened ${x.opened}${x.status!=="done"&&(TODAY_DAY-(parseInt(lastUpdate(x).split(" ")[1])||TODAY_DAY))>=1?` <span class="age late">no update in ${TODAY_DAY-(parseInt(lastUpdate(x).split(" ")[1])||TODAY_DAY)} day${(TODAY_DAY-(parseInt(lastUpdate(x).split(" ")[1])||TODAY_DAY))>1?"s":""}</span>`:""}</div></td><td>${x.owner||"<span class='muted'>front desk</span>"}<div class="muted small">${x.dept||(ROUTE[x.cat]||["Front desk"])[0]}</div></td><td>${chip(x.status)}</td></tr>`).join("")}
+      ${S.requests.map(x=>`<tr class="row" onclick="go('requests',{req:${x.id}})"><td class="muted">${x.id}</td><td>${x.agent}</td><td>${x.text}<div class="muted small">${x.cat}, opened ${x.opened}${x.status!=="done"&&(TODAY_DAY-(parseInt(lastUpdate(x).split(" ")[1])||TODAY_DAY))>=1?` <span class="age late">no update in ${TODAY_DAY-(parseInt(lastUpdate(x).split(" ")[1])||TODAY_DAY)} day${(TODAY_DAY-(parseInt(lastUpdate(x).split(" ")[1])||TODAY_DAY))>1?"s":""}</span>`:""}</div></td><td>${x.owner||"<span class='muted'>needs a person</span>"}<div class="muted small">${x.dept||(ROUTE[x.cat]||["Front desk"])[0]}</div></td><td>${chip(x.status)}</td></tr>`).join("")}
     </tbody></table></div>
     ${r?`<div class="panel"><h3>#${r.id} ${chip(r.status)}</h3><p>${r.text}</p><div class="kv" style="margin:12px 0"><div>Agent</div><div>${r.agent}</div><div>Category</div><div>${r.cat}</div><div>Department</div><div>${r.dept||(ROUTE[r.cat]||["Front desk"])[0]}</div><div>Owner</div><div><select onchange="assign(${r.id},this.value)"><option ${!r.owner?"selected":""} value="">Front desk</option>${["Seth","Natalie","Ashley","Grace","Sue"].map(o=>`<option ${r.owner===o?"selected":""}>${o}</option>`).join("")}</select></div><div>Status</div><div><select onchange="setStatus(${r.id},this.value)">${["new","doing","waiting","done"].map(s=>`<option value="${s}" ${r.status===s?"selected":""}>${CHIP[s]}</option>`).join("")}</select></div></div>
     <h3>Internal notes <span class="muted small">staff only</span></h3><div class="timeline">${r.notes.length?r.notes.map(u=>`<div class="tl done"><div class="dot"></div><div>${u}</div></div>`).join(""):`<p class="muted small">No notes yet.</p>`}</div>
@@ -781,7 +788,7 @@ function placeOrder(e){ e.preventDefault(); if(!S.cart.length){toast("Add someth
 PAGES.home = () => {
   const m=me(); const reqs=S.requests.filter(r=>r.agent===m.name), files=S.files.filter(f=>f.agent===m.name), r=S.requests.find(x=>x.id===S.sel.req&&x.agent===m.name);
   return `<div class="pagehead"><div><h1>Good morning, ${m.name.split(" ")[0]}</h1><p>Your systems in one row, your open requests and concierge files below, and one button to ask for help.</p></div><div class="actions"><button class="btn quiet" onclick="go('docs')">My documents</button><button class="btn quiet" onclick="go('content')">Company content</button><button class="btn quiet" onclick="go('dues')">Dues: $${DUES.balance.toFixed(2)}</button><button class="btn" onclick="go('help')">Request help</button></div></div>
-  <div class="tiles">${LINKS.map(l=>`<a class="tile ${l.wide?"wide":""}" href="${l.u}" title="${l.d}" target="_blank" rel="noopener" ${l.u==="#"?`onclick="toast('Opens ${l.n} with your Microsoft sign-in');return false"`:""}><div class="app-icon" style="background:${l.c};color:${l.c==="#ffffff"?"#161716":"#fff"}">${l.icon?`<img src="${l.icon}" alt="" onerror="this.parentNode.style.background='#121a16';this.parentNode.style.color='#fff';this.replaceWith('${l.m}')">`:l.m}</div><div class="n">${l.n}</div></a>`).join("")}</div>
+  <div class="tiles">${LINKS.map(l=>`<a class="tile ${l.wide?"wide":""}" href="${l.u}" title="${l.d}" target="_blank" rel="noopener" ${l.u==="#"?`onclick="toast('${l.n} link gets added when the login address is confirmed (demo)');return false"`:""}><div class="app-icon" style="background:${l.c};color:${l.c==="#ffffff"?"#161716":"#fff"}">${l.icon?`<img src="${l.icon}" alt="" onerror="this.parentNode.style.background='#121a16';this.parentNode.style.color='#fff';this.replaceWith('${l.m}')">`:l.m}</div><div class="n">${l.n}</div></a>`).join("")}</div>
   <div class="grid c2">
     <div class="panel"><h3>My requests</h3>${reqs.length?reqs.map(x=>`<div class="item ${r&&x.id===r.id?"on":""}" onclick="go('home',{req:${x.id}})"><div class="t">#${x.id} ${x.text}</div><div class="m"><span>${x.owner?"With "+x.owner:"Not picked up yet"}</span>${chip(x.status)}</div></div>`).join(""):`<div class="empty">Nothing open. Ask for help any time.</div>`}
       ${r?`<div style="margin-top:14px"><h3>Updates on #${r.id}</h3><p class="muted small">Only the updates the team sends you show here.</p>${r.status!=="done"?`<div class="actions" style="margin:8px 0 10px"><button class="btn quiet small" onclick="callMe(${r.id})">Call me about this</button></div>`:""}<div class="timeline">${r.updates.map(u=>`<div class="tl done"><div class="dot"></div><div>${u}</div></div>`).join("")}</div></div>`:""}</div>
@@ -797,13 +804,13 @@ PAGES.docs = () => `<div class="pagehead"><div><h1>Documents</h1><p>Your transac
       ${FORMS.map(([n,d])=>`<div class="item" style="cursor:default"><div class="t"><a href="#" onclick="toast('Opening ${n} (demo)');return false">${n}</a></div><div class="muted small">${d}</div></div>`).join("")}</div>
   </div>`;
 PAGES.content = () => `<div class="pagehead"><div><h1>Company content</h1><p>Logos, photos, templates, and copy the company owns. Everything here is cleared for your marketing, so there is nothing to license and nothing to worry about. Use it as is.</p></div></div>
-  ${CONTENT.map(sec=>`<h3 style="margin:6px 0 12px">${sec.g}</h3><div class="shop" class="g4i">${sec.items.map(it=>`<div class="asset"><div class="img">${CART_ART[it[2]]}</div><div class="body"><div class="t">${it[0]}</div><div class="d">${it[1]}</div><div class="a"><a href="#" onclick="toast('${it[0]} downloaded (demo)');return false">Download</a>${sec.g==="Templates"?`<a href="#" onclick="toast('Opens in the editor with your name filled in (demo)');return false">Customize</a>`:""}</div><span class="okmark">Company owned, cleared for use</span></div></div>`).join("")}</div>`).join("")}`;
+  ${CONTENT.map(sec=>`<h3 style="margin:6px 0 12px">${sec.g}</h3><div class="shop g4i">${sec.items.map(it=>`<div class="asset"><div class="img">${CART_ART[it[2]]}</div><div class="body"><div class="t">${it[0]}</div><div class="d">${it[1]}</div><div class="a"><a href="#" onclick="toast('${it[0]} downloaded (demo)');return false">Download</a>${sec.g==="Templates"?`<a href="#" onclick="toast('Opens in the editor with your name filled in (demo)');return false">Customize</a>`:""}</div><span class="okmark">Company owned, cleared for use</span></div></div>`).join("")}</div>`).join("")}`;
 PAGES.library = () => `<div class="pagehead"><div><h1>Content library</h1><p>What agents see under Company content. Add a file here and it is live for everyone; retire it and it comes down everywhere.</p></div><button class="btn" onclick="toast('Upload opens (demo)')">Add content</button></div>
   <div class="panel" style="padding:0"><table><thead><tr><th>Item</th><th>Group</th><th>Formats</th><th>Rights</th><th></th></tr></thead><tbody>${CONTENT.flatMap(sec=>sec.items.map(it=>`<tr><td>${it[0]}</td><td>${sec.g}</td><td class="muted small">${it[1]}</td><td><span class="chip done">Company owned</span></td><td><button class="btn quiet small" onclick="toast('Replaced (demo)')">Replace</button></td></tr>`)).join("")}</tbody></table></div>
   <p class="muted small" style="margin-top:12px">Anything marketing puts here should be company owned or licensed to the company for agent use. That is what makes it safe for agents to grab without asking.</p>`;
 PAGES.dues = () => {
   const total=DUES.lines.reduce((a,l)=>a+l[2],0);
-  return `<div class="pagehead"><div><h1>Dues and fees</h1><p>What you owe the brokerage and what makes up this month. Pulled from Broker Wolf, the same numbers accounting sees.</p></div><button class="btn quiet" onclick="toast('Statement PDF downloaded (demo)')">Download statement</button></div>
+  return `<div class="pagehead"><div><h1>Dues and fees</h1><p>What you owe the brokerage and what makes up this month, the same numbers accounting keeps in Broker Wolf.</p></div><button class="btn quiet" onclick="toast('Statement PDF downloaded (demo)')">Download statement</button></div>
   <div class="grid c4" style="margin-bottom:24px">
     <div class="stat"><div class="k">$${DUES.balance.toFixed(2)}</div><div class="l">balance owed</div></div>
     <div class="stat"><div class="k">${DUES.nextDraft.replace(", 2026","")}</div><div class="l">next draft date</div></div>
