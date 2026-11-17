@@ -1631,6 +1631,13 @@ table.cmp .no{color:var(--line-strong)}
   .tw table.fin.keep th:first-child,.tw table.fin.keep td:first-child{width:31%}
   .tw table.fin.keep th:last-child,.tw table.fin.keep td:last-child{padding-right:12px}
 }
+@media (max-width:760px){
+  .actions > .btn:only-child{grid-column:1 / -1}
+}
+/* long choices in a dropdown must not push the page wider than a phone */
+#view form label{min-width:0}
+#view form label:has(> select){overflow-x:clip}
+#view form select{max-width:100%;min-width:0;text-overflow:ellipsis}
 </style>
 </head>
 <body>
@@ -1646,7 +1653,7 @@ table.cmp .no{color:var(--line-strong)}
     <button class="btn quiet tourstart" onclick="tourStart()">Start the guided presentation</button>
     <div id="pick" style="display:none;margin-top:22px;border-top:1px solid var(--line);padding-top:18px">
       <p class="small muted" style="margin-bottom:10px">Demo environment with sample data. Pick who you are signing in as.</p>
-      <div class="actions" style="justify-content:center"><button class="btn" onclick="signIn('staff')">Litchfield staff</button><button class="btn quiet" onclick="signIn('agent')">Tom Ellison, agent</button></div>
+      <div class="actions" style="justify-content:center"><button class="btn" onclick="signIn('staff')">Litchfield staff</button><button class="btn quiet" onclick="signIn('agent')">Will Ellison, agent</button></div>
     </div>
   </div>
 </div>
@@ -1712,17 +1719,17 @@ const S = {
   agents:[
     {id:1,name:"Jordan Hale",office:"Litchfield",start:"Nov 2, 2026",email:"jhale@example.com",phone:"843-555-0141",license:"Transfer",riders:true,voltron:true,status:"Onboarding",done:{ops:[0,1,2],web:[0],platform:[],marketing:[],tech:[0,1]}},
     {id:2,name:"Priya Nair",office:"Myrtle Beach",start:"Oct 19, 2026",email:"pnair@example.com",phone:"843-555-0177",license:"Newly licensed",riders:false,voltron:false,status:"Onboarding",done:{ops:[0,1,2,3,4,5,6],web:[0,1],platform:[0,1,2],marketing:[0,1],tech:[0,1,2,3]}},
-    {id:3,name:"Tom Ellison",office:"Prince Creek",start:"Sep 8, 2026",email:"tellison@example.com",phone:"843-555-0102",license:"Transfer",riders:true,voltron:true,status:"Active",done:{ops:[0,1,2,3,4,5,6],web:[0,1,2,3],platform:[0,1,2],marketing:[0,1,2],tech:[0,1,2,3]}},
+    {id:3,name:"Will Ellison",office:"Prince Creek",start:"Sep 8, 2026",email:"wellison@example.com",phone:"843-555-0102",license:"Transfer",riders:true,voltron:true,status:"Active",done:{ops:[0,1,2,3,4,5,6],web:[0,1,2,3],platform:[0,1,2],marketing:[0,1,2],tech:[0,1,2,3]}},
     {id:4,name:"Dana Whitfield",office:"Orangeburg",start:"Aug 25, 2026",email:"dwhitfield@example.com",phone:"803-555-0160",license:"Transfer",riders:false,voltron:false,status:"Active",done:{ops:[0,1,2,3,4,5,6],web:[0,1,2,3],platform:[0,1,2],marketing:[0,1,2],tech:[0,1,2,3]}}
   ],
   requests:[
-    {id:1041,agent:"Tom Ellison",cat:"Email and Microsoft 365",text:"Outlook on my phone stopped syncing after the Authenticator setup.",status:"doing",owner:"Marcus",opened:"Nov 3",updates:["Nov 3: We have your request. Marcus is on it.","Nov 3: Can you text Marcus a screenshot of the error?"],notes:["Nov 3: Came in from help@. Likely the modern auth switch; check the account in Entra first."]},
+    {id:1041,agent:"Will Ellison",cat:"Email and Microsoft 365",text:"Outlook on my phone stopped syncing after the Authenticator setup.",status:"doing",owner:"Marcus",opened:"Nov 3",updates:["Nov 3: We have your request. Marcus is on it.","Nov 3: Can you text Marcus a screenshot of the error?"],notes:["Nov 3: Came in from help@. Likely the modern auth switch; check the account in Entra first."]},
     {id:1042,agent:"Dana Whitfield",cat:"SkySlope",text:"Need the listing checklist for a land sale. The one in SkySlope is for homes.",status:"waiting",owner:"Elena",opened:"Nov 3",updates:["Nov 3: We have your request. Elena is pulling the land checklist."],notes:["Nov 3: No land checklist in SkySlope today. Elena has an old one in OneDrive; needs the compliance coordinator to review before it goes out."]},
     {id:1043,agent:"Priya Nair",cat:"Something else",text:"The lockbox cabinet at the Myrtle Beach office will not open.",status:"new",owner:"",opened:"Nov 4",updates:["Nov 4: We have your request."],notes:[]},
     {id:1040,agent:"Jordan Hale",cat:"BoldTrail",text:"Can't see my leads in the BoldTrail app.",status:"done",owner:"Hannah",opened:"Nov 2",updates:["Nov 2: We have your request.","Nov 2: Hannah reset your BoldTrail app login. Try signing in again.","Nov 2: Closed. Thanks for confirming."],notes:["Nov 2: App login was still on the old email."]}
   ],
   files:[
-    {id:"C-2026-018",agent:"Tom Ellison",prop:"412 Marsh Hen Lane, Pawleys Island",side:"Buyer",county:"Georgetown",dd:"Nov 10, 2026",close:"Dec 1, 2026",cl100:"Palmetto Pest (per contract, buyer pays)",need:"14 days before closing (Nov 17)",fee:"$125, billed with the admin fee on the closing statement",status:"doing",steps:mk(5)},
+    {id:"C-2026-018",agent:"Will Ellison",prop:"412 Marsh Hen Lane, Pawleys Island",side:"Buyer",county:"Georgetown",dd:"Nov 10, 2026",close:"Dec 1, 2026",cl100:"Palmetto Pest (per contract, buyer pays)",need:"14 days before closing (Nov 17)",fee:"$125, billed with the admin fee on the closing statement",status:"doing",steps:mk(5)},
     {id:"C-2026-019",agent:"Dana Whitfield",prop:"88 Cedar Row, Orangeburg",side:"Listing",county:"Orangeburg",dd:"Nov 6, 2026",close:"Nov 25, 2026",cl100:"Not chosen in the contract",need:"",fee:"Not charged (inland office)",status:"waiting",steps:mk(2),flag:"Termite box not checked in the contract. Waiver needs to be signed and added, or the contract amended, before this file moves."},
     {id:"C-2026-016",agent:"Priya Nair",prop:"2201 Ocean Blvd, Unit 9C, Myrtle Beach",side:"Buyer",county:"Horry",dd:"Oct 24, 2026",close:"Nov 14, 2026",cl100:"Coastal Termite (attorney's office orders in Horry)",need:"10 days before closing (Nov 4)",fee:"$125, billed with the admin fee on the closing statement",status:"done",steps:mk(9)}
   ],
@@ -2011,18 +2018,18 @@ Object.assign(ART,{
 });
 const mkOrder = (id,agent,items,o) => { const lines=items.map(([pid,qty,opt,custom])=>{const p=PROD[pid]; return {pid,name:p.name,opt:opt||"",qty,price:p.price,per:p.per,custom:custom||"",listing:(o&&o.listing)||"",kit:""};}); return Object.assign({id,agent,items:lines,total:lines.reduce((t,l)=>t+l.price*l.qty,0),owner:"Marketing",stage:0,pay:"statement",listing:"",notes:[]},o); };
 S.orders = [
-  mkOrder("O-2026-041","Tom Ellison",[["cards",2,"","Tom Ellison, Realtor, 843-555-0102"],["riders",1,"","TOM ELLISON, 843-555-0102"]],{deliver:"Pick up at Prince Creek",placed:"Nov 3",stage:1,updates:["Nov 3: Order received. Marketing is laying out your cards.","Nov 4: Proof sent to your email. Reply approve and it goes to print."]}),
-  mkOrder("O-2026-040","Tom Ellison",[["brochure",2,"","19 Heron Point, Murrells Inlet"],["jlpost",1,"","19 Heron Point, Murrells Inlet"]],{deliver:"Pick up at Prince Creek",placed:"Oct 30",stage:2,listing:"L-2026-011",updates:["Oct 30: Order received for 19 Heron Point.","Nov 2: In production. The brochures print when the proof is approved."]}),
+  mkOrder("O-2026-041","Will Ellison",[["cards",2,"","Will Ellison, Realtor, 843-555-0102"],["riders",1,"","WILL ELLISON, 843-555-0102"]],{deliver:"Pick up at Prince Creek",placed:"Nov 3",stage:1,updates:["Nov 3: Order received. Marketing is laying out your cards.","Nov 4: Proof sent to your email. Reply approve and it goes to print."]}),
+  mkOrder("O-2026-040","Will Ellison",[["brochure",2,"","19 Heron Point, Murrells Inlet"],["jlpost",1,"","19 Heron Point, Murrells Inlet"]],{deliver:"Pick up at Prince Creek",placed:"Oct 30",stage:2,listing:"L-2026-011",updates:["Oct 30: Order received for 19 Heron Point.","Nov 2: In production. The brochures print when the proof is approved."]}),
   mkOrder("O-2026-039","Priya Nair",[["badge",1,"Finish: Gold"],["polo",1,"Size: M, Color: Black"]],{deliver:"Pick up at Myrtle Beach",placed:"Oct 28",stage:4,pay:"paynow",updates:["Oct 28: Order received.","Nov 2: Ready for pickup at the Myrtle Beach front desk."]})
 ];
 S.listings = [
-  {id:"L-2026-011",agent:"Tom Ellison",addr:"19 Heron Point",city:"Murrells Inlet",zip:"29576",type:"Single-family home",price:1295000,beds:4,baths:3.5,sqft:3180,target:"Nov 9, 2026",opened:"Oct 27",
+  {id:"L-2026-011",agent:"Will Ellison",addr:"19 Heron Point",city:"Murrells Inlet",zip:"29576",type:"Single-family home",price:1295000,beds:4,baths:3.5,sqft:3180,target:"Nov 9, 2026",opened:"Oct 27",
    desc:"A marsh-front home with a private dock and long views across the creek.",features:"Private dock, screened porch, chef's kitchen, first-floor primary suite",goals:"Launch with full media and a strong first week.",instr:"",art:"marsh",photos:[],pkg:"signature",coord:"Avery Lang",st:4,
    services:[{sid:"photo",st:5,vendor:"Media partner A"},{sid:"lifestyle",st:5,vendor:"Media partner A"},{sid:"launch",st:5},{sid:"brochure",st:4},{sid:"socialg",st:3},{sid:"socialc",st:1},{sid:"video",st:2,appt:"Nov 7, 2026",vendor:"Media partner B"},{sid:"ohflyer",st:0},{sid:"ohsocial",st:0}],
    deliverables:[{id:1,sid:"launch",kind:"checklist",st:"approved",d:"Oct 29"},{id:2,sid:"photo",kind:"photos",st:"approved",d:"Nov 1"},{id:3,sid:"brochure",kind:"brochure",st:"awaiting",d:"Nov 4"}],
    activity:["Oct 27: Listing project submitted with the Signature Marketing package.","Oct 28: Avery Lang is your Concierge Specialist.","Oct 29: Listing launch checklist approved.","Oct 31: Photography and lifestyle images completed.","Nov 1: Photography preview approved.","Nov 4: The property brochure proof is ready for your approval.","Nov 4: Video tour scheduled for Nov 7."],
    notes:["Oct 28: Seller prefers afternoon appointments.","Oct 31: Photographer can return for a twilight set if the weather holds."],orders:["O-2026-040"],reportNote:""},
-  {id:"L-2026-012",agent:"Tom Ellison",addr:"140 Egret Landing",city:"Pawleys Island",zip:"29585",type:"Single-family home",price:849000,beds:3,baths:2.5,sqft:2310,target:"Nov 24, 2026",opened:"Nov 3",
+  {id:"L-2026-012",agent:"Will Ellison",addr:"140 Egret Landing",city:"Pawleys Island",zip:"29585",type:"Single-family home",price:849000,beds:3,baths:2.5,sqft:2310,target:"Nov 24, 2026",opened:"Nov 3",
    desc:"A classic coastal home under mature trees, a short walk from the creek.",features:"Wraparound porch, renovated kitchen, detached workshop",goals:"A clean launch with strong photography.",instr:"",art:"oak",photos:[],pkg:"essential",coord:"",st:1,
    services:[{sid:"photo",st:1},{sid:"desc",st:1},{sid:"feature",st:0},{sid:"justlisted",st:0},{sid:"launch",st:1}],deliverables:[],
    activity:["Nov 3: Listing project submitted with the Essential Listing Launch package.","Nov 4: Your project is under review. A Concierge Specialist will be assigned."],notes:[],orders:[],reportNote:""},
@@ -2043,7 +2050,7 @@ S.announcements = [
 ];
 S.prodEdits = {}; S.draft = null; S.pick = []; S.kitQty = {}; S.tour = {on:false,i:0};
 S.calc = {price:500000,rate:3,split:70,ref:0,tx:0,other:0,cap:0,paid:0};
-S.pz = {name:"Tom Ellison",title:"Realtor",phone:"843-555-0102",email:"tellison@example.com",office:"Prince Creek",addr:"19 Heron Point, Murrells Inlet",price:"$1,295,000",art:"marsh"};
+S.pz = {name:"Will Ellison",title:"Realtor",phone:"843-555-0102",email:"wellison@example.com",office:"Prince Creek",addr:"19 Heron Point, Murrells Inlet",price:"$1,295,000",art:"marsh"};
 Object.assign(S.sel,{lcTab:"home",lcView:"",lcId:"L-2026-011",svcCat:"",svcFor:"new",shopView:"home",shopCat:"",pid:"",kit:"",qty:1,finTab:"home",stmt:"",pay:false,resTab:"docs",resCat:"",helpTab:"new",cTab:"projects",mTab:"orders",mCat:"",edit:"",order:"O-2026-041"});
 function seedFin(){
   const mine=S.orders.filter(o=>o.agent===me().name&&o.pay==="statement");
@@ -2353,8 +2360,8 @@ PAGES.myconcierge = () => {
     <div class="side"><div><div class="eyebrow">How it works</div><div style="font-size:15px;line-height:1.6">Request it on a file. Your coordinator reviews the paperwork, tells you what is missing, and carries it through closing. You get a text at each step.</div></div><button class="btn" onclick="go('myconcierge',{file:'new'})">Request concierge on a file</button></div>
   </div>
   <div class="cover">
-    <div class="panel"><h3>We take care of</h3><p class="lead">The paperwork side of the file, start to finish.</p><ul>${["Reviewing your SkySlope file and keeping every item green through closing","Chasing missing pages, signatures, and dates with you until they are fixed","Tracking the CL-100 need date and ordering it after due diligence (Georgetown County)","Checking the closing statement line by line: commission, admin fee, CL-100, home warranty","Closing the file in SkySlope and Broker Wolf and issuing your EFT"].map(t=>`<li>${t}</li>`).join("")}</ul></div>
-    <div class="panel"><h3>You keep</h3><p class="lead">The parts only you can do.</p><ul>${["Entering and updating the MLS, and closing it out","Ordering home inspections and the home warranty","Giving your client three or more pest companies to choose from","Sending the closing packet to the attorney, with us copied","Your clients, and every signature"].map(t=>`<li>${t}</li>`).join("")}</ul></div>
+    <div class="panel"><h3>We take care of</h3><p class="lead">The paperwork side of the file, start to finish.</p><ul>${["Reviewing your SkySlope file and keeping every item green through closing","Chasing missing pages, signatures, and dates with you until they are fixed","Tracking the CL-100 need date and ordering it after due diligence (Georgetown County)","Ordering the inspections you request for the file","Checking the closing statement line by line: commission, admin fee, CL-100, home warranty","Closing the file in SkySlope and Broker Wolf and issuing your EFT"].map(t=>`<li>${t}</li>`).join("")}</ul></div>
+    <div class="panel"><h3>You keep</h3><p class="lead">The parts only you can do.</p><ul>${["Entering and updating the MLS, and closing it out","Ordering the home warranty","Giving your client three or more pest companies to choose from","Sending the closing packet to the attorney, with us copied","Your clients, and every signature"].map(t=>`<li>${t}</li>`).join("")}</ul></div>
   </div>
   ${mine.length?`<h3 style="margin:8px 0 12px">Your files</h3><div class="filecard"><div class="list">${mine.map(x=>`<div class="item ${x.id===f.id?"on":""}" onclick="go('myconcierge',{file:'${x.id}'})"><div class="t">${x.prop}</div><div class="m"><span>${x.side} side, closes ${x.close}</span>${chip(x.status)}</div></div>`).join("")}</div>${agentFile(f)}</div>`:`<div class="empty">You have no concierge files yet. Request it on your next listing or contract.</div>`}`;
 };
@@ -2363,6 +2370,7 @@ function agentFile(f){
   return `<div class="panel"><div class="pagehead" style="margin-bottom:12px"><div><h2 style="font-size:26px">${f.prop}</h2><p class="small">${f.side} side. Closes ${f.close}.</p></div>${chip(f.status)}</div>
     <div class="quiet-kv" style="margin-bottom:16px"><div>Due diligence ends</div><div>${f.dd}</div><div>CL-100</div><div>${f.cl100}${f.need?", needed "+f.need:""}</div><div>Concierge fee</div><div>${f.fee||""}</div></div>
     ${f.flag?`<div class="note" style="margin-bottom:16px">${f.flag}</div>`:""}
+    ${f.status!=="done"?`<div class="actions" style="margin:0 0 16px"><button class="btn quiet" onclick="go('help',{helpTab:'inspect',inspFile:'${f.id}'})">Order an inspection for this file</button></div>`:""}
     <div class="journey">${STAGES.map((st,i)=>{const cls=i<done?"done":(i===done&&f.status!=="done"?"now":"todo");return `<div class="j ${cls}"><div><div class="dot"></div>${i<STAGES.length-1?`<div class="line"></div>`:""}</div><div><div class="t">${st[0]}</div><div class="d">${cls==="todo"?"":st[1]}</div></div></div>`}).join("")}</div>
     <div class="actions" style="margin-top:6px"><button class="btn quiet small" onclick="toast('Message sent to your coordinator. You will get a text back.')">Message my coordinator</button>${f.status!=="done"?`<button class="btn quiet small" onclick="toast('Call requested. Your coordinator will call '+me().phone+'.')">Call me about this file</button>`:""}</div>
   </div>`;
@@ -2636,7 +2644,7 @@ PAGES.help = () => { const t=S.sel.helpTab||"new"; const open=S.requests.filter(
   return tabs([["new","Request Assistance"],["inspect","Order an Inspection"],["mine","My requests",open],["who","Who to call"]],t,"helpTab")+(t==="inspect"?helpInspect():t==="mine"?`<div class="pagehead"><div><h1>My requests</h1><p>Every request has a number, an owner, and the updates the team has sent you.</p></div></div>${requestsPanel()}`:t==="who"?PAGES.directory():`<div class="pagehead"><div><div class="eyebrow">Brokerage support</div><h1>Request Assistance</h1><p>Tell us what you need. Each request receives a number and a named owner, and you can follow it under My requests.</p></div></div>
   <div class="grid c2" style="margin-bottom:24px"><div class="choice on"><span class="ic">${ico("help")}</span><span><span class="t">General brokerage support</span><span class="d">Technology, accounts, paperwork systems, pay questions, and anything about working with the company. Use the form below.</span></span></div>
   <button class="choice" onclick="go('lc',{lcTab:'home',lcView:''})"><span class="ic">${ico("concierge")}</span><span><span class="t">Listing Concierge</span><span class="d">Marketing, media, and preparation for a specific property. Begin or open a listing project.</span></span></button>
-  <button class="choice" onclick="go('help',{helpTab:'inspect'})"><span class="ic">${ico("home")}</span><span><span class="t">Order an inspection</span><span class="d">A home inspection, a wood infestation report, or another inspection for a buyer or a seller.</span></span></button>
+  <button class="choice" onclick="go('help',{helpTab:'inspect'})"><span class="ic">${ico("home")}</span><span><span class="t">Order an inspection</span><span class="d">For transactions in the Transaction Concierge service. The office places the order and you follow it here.</span></span></button>
   <button class="choice" onclick="go('res',{resTab:'bank'})"><span class="ic">${ico("help")}</span><span><span class="t">Document bank</span><span class="d">The current forms and company documents, in one place.</span></span></button></div>${requestForm(false)}`); };
 
 // ---------- agent: Resources ----------
@@ -3049,7 +3057,7 @@ const COM = { rev:{apparel:[2140,2380,2260,2710,3050,3420],brand:[1620,1540,1710
   orders:[58,63,61,70,76,84], refunds:1286, refundN:9, repeat:46,
   units:{jlpost:41,cards:38,brochure:33,polo:29,gift:27,farm:24,yardsign:22,riders:21,holiday:18,folders:17,svcdesign:14,svcvideo:9},
   segs:[["Top producers",212,18],["Teams",164,22],["Established agents",88,71],["Agents in their first year",121,26]],
-  reorder:[["Dana Whitfield","Orangeburg",11],["Tom Ellison","Prince Creek",9],["Marcus Reyes","Litchfield",8],["Elena Brandt","Myrtle Beach",7],["Priya Nair","Myrtle Beach",6]],
+  reorder:[["Dana Whitfield","Orangeburg",11],["Will Ellison","Prince Creek",9],["Marcus Reyes","Litchfield",8],["Elena Brandt","Myrtle Beach",7],["Priya Nair","Myrtle Beach",6]],
   office:[["Litchfield",31],["Myrtle Beach",27],["Prince Creek",24],["Orangeburg",18]] };
 const VENDORS = [
   {n:"Alder and Finch Apparel",d:["apparel"],what:"Embroidered apparel, headwear, and bags",lead:"10 business days",how:"Ships to the office",on:96,ok:98},
@@ -3123,14 +3131,17 @@ function resBank(){ return `<div class="pagehead"><div><div class="eyebrow">Reso
   <div id="bank">${DOCBANK.map(([g,items])=>`<div class="panel bankg" style="margin-bottom:18px"><h3>${g}</h3>${items.map(([n,d])=>`<div class="bankrow" data-q="${(n+" "+d+" "+g).toLowerCase()}"><div><div class="t">${n}</div><div class="small muted">${d}</div></div><button class="btn quiet small" onclick="toast('Sample document. In the live portal this opens the current file.')" aria-label="Open ${n}">Open</button></div>`).join("")}</div>`).join("")}</div><div class="empty" id="bank-none" style="display:none">Nothing in the document bank matches that search.</div>`; }
 function bankSearch(q){ q=q.trim().toLowerCase(); let n=0; document.querySelectorAll("#bank .bankrow").forEach(r=>{ const ok=!q||r.dataset.q.includes(q); r.style.display=ok?"":"none"; if(ok) n++; }); document.querySelectorAll("#bank .bankg").forEach(g=>{ g.style.display=[...g.querySelectorAll(".bankrow")].some(r=>r.style.display!=="none")?"":"none"; }); document.getElementById("bank-none").style.display=n?"none":""; }
 const INSPECT = ["Home inspection","Wood infestation report (CL-100)","HVAC inspection","Roof inspection","Septic inspection","Pool inspection"];
-function helpInspect(){ const mine=myListings();
-  return `<div class="pagehead"><div><div class="eyebrow">Transaction support</div><h1>Order an Inspection ${sampleTag("Proposed concept")}</h1><p>Tell the office what you need and when. The order receives a number and an owner, and you can follow it under My requests. No inspector is contacted in this demo.</p></div></div>
-  <form class="panel form" onsubmit="return addInspection(event)"><div class="row2"><label>Property address<input name="addr" list="insp-addr" required autocomplete="off" value="${mine[0]?mine[0].addr:""}"><datalist id="insp-addr">${mine.map(l=>`<option value="${l.addr}">`).join("")}</datalist></label><label>Inspection<select name="type">${INSPECT.map(t=>`<option>${t}</option>`).join("")}</select></label></div>
-    <div class="row3"><label>Ordered for<select name="who"><option>My buyer</option><option>My seller, before listing</option></select></label><label>Preferred date<input type="date" name="date" required></label><label>Preferred inspector, if any<input name="insp" autocomplete="off"></label></div>
+function inspFiles(){ return S.files.filter(f=>f.agent===me().name&&f.status!=="done"); }
+function helpInspect(){ const files=inspFiles(), cur=files.find(f=>f.id===S.sel.inspFile)||files[0];
+  const head=`<div class="pagehead"><div><div class="eyebrow">Transaction Concierge</div><h1>Order an Inspection ${sampleTag("Proposed concept")}</h1><p>The office orders inspections only for transactions in the Transaction Concierge service. Choose your Concierge file, then tell the office what you need and when. The order receives a number and an owner, and you can follow it under My requests. No inspector is contacted in this demo.</p></div></div>`;
+  if(!files.length) return head+`<div class="panel" id="insp-gate"><h3>Available with Transaction Concierge</h3><p class="lead">You have no open Concierge file. Once the concierge service is on a listing or contract, the office can order inspections for that transaction.</p><div class="actions"><button class="btn" onclick="go('lc',{lcTab:'tx',lcView:''})">Go to Transaction Concierge</button></div></div>`;
+  return head+`<form class="panel form" onsubmit="return addInspection(event)"><div class="row2"><label>Concierge file<select name="file">${files.map(f=>`<option value="${f.id}" ${f.id===cur.id?"selected":""}>${f.prop} (${f.id})</option>`).join("")}</select></label><label>Inspection<select name="type">${INSPECT.map(t=>`<option>${t}</option>`).join("")}</select></label></div>
+    <div class="row3"><label>Ordered for<select name="who"><option ${cur.side==="Buyer"?"selected":""}>My buyer</option><option ${cur.side==="Buyer"?"":"selected"}>My seller</option></select></label><label>Preferred date<input type="date" name="date" required></label><label>Preferred inspector, if any<input name="insp" autocomplete="off"></label></div>
     <label>Access and notes<textarea name="notes" rows="3" placeholder="Lockbox, pets, occupied or vacant, anything the inspector should know"></textarea></label>
     <div class="actions"><button class="btn" type="submit">Send the order to the office</button></div></form>`; }
-function addInspection(e){ e.preventDefault(); const f=formData(e.target), id=Math.max(...S.requests.map(r=>r.id))+1, d=fromIso(f.get("date")); ROUTE["Inspection order"]=["Operations","Elena"];
-  S.requests.unshift({id,agent:me().name,cat:"Inspection order",dept:"Operations",text:f.get("type")+" at "+f.get("addr")+". Ordered for: "+String(f.get("who")).toLowerCase()+". Preferred date: "+(d?fmtD(d,true):f.get("date"))+"."+(f.get("insp")?" Preferred inspector: "+f.get("insp")+".":"")+(f.get("notes")?" Notes: "+f.get("notes"):""),status:"doing",owner:"Elena",opened:TODAY,updates:[TODAY+": We have your inspection order. Elena in Operations is scheduling it."],notes:[TODAY+": Inspection order from the agent portal. Routed to Operations, Elena."]});
+function addInspection(e){ e.preventDefault(); const f=formData(e.target), file=inspFiles().find(x=>x.id===f.get("file")); if(!file){ toast("Choose a Concierge file first."); return false; }
+  const id=Math.max(...S.requests.map(r=>r.id))+1, d=fromIso(f.get("date")); ROUTE["Inspection order"]=["Operations","Elena"];
+  S.requests.unshift({id,agent:me().name,cat:"Inspection order",dept:"Operations",text:f.get("type")+" at "+file.prop+". Concierge file "+file.id+". Ordered for: "+String(f.get("who")).toLowerCase()+". Preferred date: "+(d?fmtD(d,true):f.get("date"))+"."+(f.get("insp")?" Preferred inspector: "+f.get("insp")+".":"")+(f.get("notes")?" Notes: "+f.get("notes"):""),status:"doing",owner:"Elena",opened:TODAY,updates:[TODAY+": We have your inspection order. Elena in Operations is scheduling it."],notes:[TODAY+": Inspection order from the agent portal on Concierge file "+file.id+". Routed to Operations, Elena."]});
   toast("Inspection order #"+id+" is in. Routed to Elena."); go("help",{helpTab:"mine",req:id}); return false; }
 
 // ---------- staff: Collection Commerce (dashboard, orders, products, vendors, programs, insights, simulator, operating model) ----------
@@ -3369,7 +3380,7 @@ function addAnnounce(e){ e.preventDefault(); const f=formData(e.target); S.annou
 // ---------- presentation mode ----------
 function tourListing(){ return (S.listings.find(l=>l.id==="L-2026-011")||myListings()[0]||S.listings[0]).id; }
 function tourDraft(step){ if(!S.draft||S.draft.forListing) newDraft(); const d=S.draft; if(!d.addr) sampleInto(d); if(step>=2&&!d.services.length) d.services=["staging","photo","video","socialc","ohflyer"]; if(step>=3&&!d.pkg) addPkg("signature"); if(step>=4&&!Object.keys(d.items).length) d.items={brochure:2,jlpost:1,riders:1,openhouse:1}; d.step=step; go("lc",{lcView:"new"}); }
-function tourCart(){ if(S.cart.length) return; [["polo","Size: L, Color: Black",1,""],["cards","",2,"Tom Ellison, Realtor, 843-555-0102, tellison@example.com"]].forEach(([pid,opt,qty,custom])=>{ const p=prod(pid); S.cart.push({pid,name:p.name,opt,qty,price:p.price,per:p.per,custom,listing:"",kit:""}); }); }
+function tourCart(){ if(S.cart.length) return; [["polo","Size: L, Color: Black",1,""],["cards","",2,"Will Ellison, Realtor, 843-555-0102, wellison@example.com"]].forEach(([pid,opt,qty,custom])=>{ const p=prod(pid); S.cart.push({pid,name:p.name,opt,qty,price:p.price,per:p.per,custom,listing:"",kit:""}); }); }
 const TOUR = [
   ["Agent Command Center","An agent signs in to a personal welcome: what needs attention today, production, the fee balance, listing projects, and five services within reach.",0,()=>{ S.mode="agent"; go("home"); }],
   ["Start a Listing Concierge project","A new listing begins with a short, guided consultation. A sample property is filled in for the presentation.",1,()=>{ S.mode="agent"; tourDraft(0); }],
