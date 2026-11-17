@@ -1638,6 +1638,51 @@ table.cmp .no{color:var(--line-strong)}
 #view form label{min-width:0}
 #view form label:has(> select){overflow-x:clip}
 #view form select{max-width:100%;min-width:0;text-overflow:ellipsis}
+/* ---------- concept mockups added in the image audit ---------- */
+.m-sheet{width:56%;height:74%;background:#fff;padding:7%;display:flex;flex-direction:column;gap:5%}
+.m-sheet .ph{height:36%;background:linear-gradient(160deg,#8fb0a3,#44695c 60%,#2a4a3f);flex:none}
+.m-sheet b,.m-note b{font-family:"Cormorant Garamond",Georgia,serif;font-size:14px;font-weight:600;line-height:1.1;color:#1d2a26}
+.m-sheet u,.m-note u,.m-inv u,.m-promo u{display:block;height:2px;background:#d9ddd8;text-decoration:none;flex:none}
+.m-sheet u.s,.m-note u.s{width:60%}
+.m-sheet .lg{width:50%;margin-top:auto}
+.m-sheet.let .lg{margin:0 0 4%;width:54%}
+.m-sheet.sgn{gap:0}.m-sheet.sgn u{height:1px;background:#b9c0ba;margin-top:11%}
+.m-note{width:72%;height:46%;background:#fff;padding:7% 8%;display:flex;flex-direction:column;gap:8%}
+.m-note span{font-size:8px;color:#6b7570}.m-note .lg{width:46%;margin-top:auto}
+.m-inv{width:52%;height:72%;background:#fbf8f1;border:1px solid #c9b88a;padding:10% 8%;display:flex;flex-direction:column;align-items:center;gap:6%;text-align:center}
+.m-inv small{font-size:6.5px;letter-spacing:.22em;text-transform:uppercase;color:#8a7a4f}
+.m-inv b{font-family:"Cormorant Garamond",Georgia,serif;font-size:21px;font-weight:500;color:#173d33;line-height:1}
+.m-inv u{width:30%;background:#c9b88a;height:1px}.m-inv span{font-size:8px;color:#55605b}.m-inv .lg{width:62%;margin-top:auto}
+.m-hol{width:54%;height:72%;background:#fbf8f1;display:grid;grid-template-rows:70% 30%}
+.m-hol .top{background:#173d33;color:#eadfc0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10%;padding:0 10%;text-align:center}
+.m-hol b{font-family:"Cormorant Garamond",Georgia,serif;font-size:19px;font-weight:500;line-height:1.05}.m-hol u{display:block;width:28%;height:1px;background:#b89b5e}
+.m-hol .bot{display:flex;align-items:center;justify-content:center}.m-hol .lg{width:62%}
+.m-cloth{width:84%;height:54%;background:#173d33;clip-path:polygon(6% 0,94% 0,100% 100%,0 100%);box-shadow:none}
+.m-cloth .pan{position:absolute;left:27%;right:27%;top:32%;background:#fbf8f1;padding:5% 6%}.m-cloth .lg{width:100%}
+.m-promo{width:70%;height:60%;box-shadow:none}
+.m-promo .pad{position:absolute;left:0;top:0;width:60%;height:100%;background:#fff;padding:9%;display:flex;flex-direction:column;gap:9%;box-shadow:0 10px 24px rgba(0,0,0,.14)}
+.m-promo .pad .lg{width:84%;margin-bottom:6%}
+.m-promo i{position:absolute;right:17%;top:5%;width:5%;height:90%;border-radius:4px;background:#173d33;transform:rotate(8deg);box-shadow:0 6px 12px rgba(0,0,0,.18)}
+.m-promo i.g{right:3%;background:#b89b5e;transform:rotate(-6deg)}
+.m-gbox{width:62%;height:62%;box-shadow:none}
+.m-gbox .b1,.m-gbox .b2{position:absolute;box-shadow:0 10px 24px rgba(0,0,0,.16)}
+.m-gbox .b1{left:0;right:0;bottom:0;height:56%;background:#173d33}.m-gbox .b2{left:18%;right:18%;top:0;height:44%;background:#efe7d6}
+.m-gbox s{position:absolute;left:46%;width:8%;top:0;bottom:0;background:#b89b5e}
+.m-gbox.one .b1{height:80%;background:#efe7d6}.m-gbox.one s{background:#173d33}
+.m-gbox .tg{position:absolute;right:-8%;top:4%;width:54%;background:#fff;padding:5% 6%;font-family:"Cormorant Garamond",Georgia,serif;font-size:11px;line-height:1.15;text-align:center;color:#173d33;box-shadow:0 6px 14px rgba(0,0,0,.16);transform:rotate(6deg)}
+.m-magz{width:54%;height:74%;background:linear-gradient(170deg,#b9cdc4,#58796c 55%,#2a4a3f);color:#fff;padding:9% 8%;display:flex;flex-direction:column;gap:3%;text-align:center}
+.m-magz b{font-family:"Cormorant Garamond",Georgia,serif;font-size:21px;font-weight:500;letter-spacing:.14em;text-transform:uppercase}
+.m-magz small{font-size:6px;letter-spacing:.22em;text-transform:uppercase;opacity:.85}.m-magz span{margin-top:auto;font-size:8px;text-align:left}
+/* ---------- quotes and price notes ---------- */
+.pnote{margin-top:8px;max-width:480px;color:var(--mute)}
+.qrow{display:flex;gap:18px;justify-content:space-between;align-items:flex-start;padding:14px 0;border-top:1px solid var(--line)}
+.qrow:first-of-type{border-top:0}.qrow .t{font-weight:600}.qrow .qact{text-align:right;min-width:180px}.qrow .amt{font-family:"Cormorant Garamond",Georgia,serif;font-size:24px}
+.qrow .actions{justify-content:flex-end;margin-top:8px}
+.qform{display:grid;grid-template-columns:repeat(3,minmax(0,1fr)) auto;gap:8px;align-items:end}
+.qform label{font-size:11.5px;color:var(--mute);display:grid;gap:3px}.qform input{width:100%;min-width:0;padding:7px 8px}
+@media (max-width:760px){ .qrow{flex-direction:column}.qrow .qact{text-align:left;min-width:0}.qrow .actions{justify-content:flex-start}.qform{grid-template-columns:1fr 1fr} }
+.m-magz b{font-size:15px;letter-spacing:.12em}
+.m-plan.cst b{font-size:19px}
 </style>
 </head>
 <body>
@@ -2548,7 +2593,7 @@ const MOCK2 = {
 MOCK2.tag=()=>`<div class="mock m-tag"><i></i><img class="lg" src="${LOGO}" alt=""><span>${(S.pz&&S.pz.mono)||"T.E."}</span></div>`;
 ["P","S","E"].forEach((k,i)=>{ MOCK2["plan"+k]=()=>`<div class="mock m-plan"><small>Marketing program</small><b>${PROGRAMS[i].name}</b><span>$${PROGRAMS[i].price} a month</span></div>`; });
 function photoKey(p){ if(p.ph&&PHOTOS[p.ph]) return p.ph; return PHOTOS["p_"+p.id]?"p_"+p.id:PHOTOS["a_"+p.art]?"a_"+p.art:""; }
-function productArt(p){ const k=photoKey(p); return (MOCK2[p.art]?`<div class="stage">${MOCK2[p.art]()}</div>`:MOCKED.includes(p.art)?`<div class="stage">${mock(p.art)}</div>`:(ART[p.art]||ART.custom))+(k?phImg(k,true,900):""); }
+function productArt(p){ const k=photoKey(p); return (MOCK2[p.art]?`<div class="stage">${MOCK2[p.art](p)}</div>`:MOCKED.includes(p.art)?`<div class="stage">${mock(p.art)}</div>`:(ART[p.art]||ART.custom))+(k?phImg(k,true,900):""); }
 
 
 // modal, used for previews
@@ -2963,7 +3008,7 @@ function pzPreview(t){ const z=S.pz, lg=`<img src="${LOGO}" alt="">`;
     case "mono": if(z.mono==null) z.mono=(z.name||"").split(" ").map(w=>w[0]).join(".")+"."; return `<div class="pzm mono"><span>${z.mono}</span><small>Embroidered or debossed beneath the company mark</small></div>`;
     case "card": return `<div class="pzm card">${lg}<div><div class="n">${z.name}</div><div class="s">${z.title}</div><div class="s">${z.phone}</div><div class="s">${z.email}</div></div></div>`;
     case "rider": return `<div class="pzm rider"><div class="n">${z.name}</div><div class="s">${z.phone}</div></div>`;
-    case "postcard": return `<div class="pzm post">${scene(z.art)}<div class="band">JUST LISTED</div><div class="ft"><div><div class="n">${z.addr}</div><div class="s">${z.name} &middot; ${z.phone}</div></div>${lg}</div></div>`;
+    case "postcard": return `<div class="pzm post">${scene(z.art)}<div class="band">${PC_HEAD[S.sel.pid]||"JUST LISTED"}</div><div class="ft"><div><div class="n">${z.addr}</div><div class="s">${z.name} &middot; ${z.phone}</div></div>${lg}</div></div>`;
     case "brochure": return `<div class="pzm bro">${scene(z.art)}<div class="n">${z.addr}</div><div class="s">${z.price}</div>${lg}</div>`;
     case "flyer": return `<div class="pzm fly">${scene(z.art)}<div class="n">${z.addr}</div><div class="s">${z.price}</div><div class="ln"><i></i><i></i><i></i></div>${lg}</div>`;
   }
@@ -2973,19 +3018,20 @@ function pzArt(k,t,el){ S.pz.art=k; document.getElementById("pzprev").innerHTML=
 function pzForm(t){ return `<div class="pz"><div class="lab" style="margin:0">Preview with your details ${sampleTag("Sample preview")}</div><div class="pzprev" id="pzprev">${pzPreview(t)}</div><div class="row2">${PZF[t].map(k=>`<label>${PZL[k]}<input value="${S.pz[k]}" oninput="pzSet('${k}',this.value,'${t}')" autocomplete="off"></label>`).join("")}</div>${["postcard","brochure","flyer"].includes(t)?`<div><div class="lab">Sample property image</div><div class="scenepick sm">${Object.keys(SCENES).map(k=>`<button type="button" class="${S.pz.art===k?"on":""}" aria-label="${k} image" onclick="pzArt('${k}','${t}',this)">${scene(k)}</button>`).join("")}</div></div>`:""}</div>`; }
 function pQty(dl,price){ S.sel.qty=Math.max(1,(S.sel.qty||1)+dl); document.getElementById("pqty").textContent=S.sel.qty; const t=document.getElementById("ptot"); if(t) t.textContent=money(price*S.sel.qty)+" illustrative total"; saveDemo(); }
 function shopProduct(){ const p=prod(S.sel.pid); if(!p) return shopHome(); const cat=SHOP_CATS.find(c=>c[0]===p.cat), mine=myListings().filter(l=>l.st<5), q=S.sel.qty||1;
+  if(p.q) return quotePage(p,cat);
   return `<a href="#" class="back" onclick="go('shop',{shopView:'cat',shopCat:'${p.cat}'});return false">&larr; ${cat[1]}</a>
   <div class="pdetail"><div class="pbig">${productArt(p)}</div>
     <div><div class="eyebrow">${cat[1]}</div><h1>${p.name}</h1><p class="lead2">${p.desc}</p>
-      <div class="bigprice">${p.price?money(p.price)+` <small>${p.per}</small>`:"Quoted by marketing"} ${sampleTag("Illustrative price")}${photoKey(p)?sampleTag("Sample image"):""}</div>
-      <p class="small muted" style="margin-top:4px">${stockOf(p)}</p>${p.f.includes("s")?`<p class="svcline">A purchased creative service. Listing Concierge coordination remains included by the brokerage. ${sampleTag("Proposed concept")}</p>`:""}
+      <div class="bigprice"><span id="punit">${money(p.price)}</span> <small>${p.px&&p.pxo==="Quantity"?"for the quantity selected":p.per}</small> ${sampleTag("Illustrative price")}${photoKey(p)?sampleTag("Sample image"):""}</div>
+      <p class="small muted" style="margin-top:4px">${stockOf(p)}</p>${p.note?`<p class="small pnote">${p.note}</p>`:""}${p.f.includes("s")?`<p class="svcline">A purchased creative service. Listing Concierge coordination remains included by the brokerage. ${sampleTag("Proposed concept")}</p>`:""}
       <div class="form" style="margin-top:18px;max-width:480px">
-        ${p.opts.map((o,i)=>`<label>${o[0]}<select id="popt-${i}">${o[1].map(v=>`<option>${v}</option>`).join("")}</select></label>`).join("")}
-        <div><div class="lab">Quantity</div><span class="qty"><button type="button" aria-label="Fewer" onclick="pQty(-1,${p.price})">&minus;</button><span id="pqty" aria-live="polite">${q}</span><button type="button" aria-label="More" onclick="pQty(1,${p.price})">+</button></span>${p.price?` <span class="muted small" id="ptot" style="margin-left:10px">${money(p.price*q)} illustrative total</span>`:""}</div>
+        ${p.opts.map((o,i)=>`<label>${o[0]}<select id="popt-${i}" onchange="pCalc()">${o[1].map(v=>`<option value="${v}">${optLabel(p,o[0],v)}</option>`).join("")}</select></label>`).join("")}
+        <div><div class="lab">${p.px&&p.pxo==="Quantity"?"Sets of this quantity":"Quantity"}</div><span class="qty"><button type="button" aria-label="Fewer" onclick="pQty(-1,${p.price})">&minus;</button><span id="pqty" aria-live="polite">${q}</span><button type="button" aria-label="More" onclick="pQty(1,${p.price})">+</button></span>${p.price?` <span class="muted small" id="ptot" style="margin-left:10px">${money(p.price*q)} illustrative total</span>`:""}</div>
         ${p.f.includes("l")&&mine.length?`<label>For a listing project<select id="plist"><option value="">Not for a specific listing</option>${mine.map(l=>`<option value="${l.id}">${l.addr}</option>`).join("")}</select></label>`:""}
-        ${p.pz?pzForm(p.pz):""}
+        ${p.pzfee?`<label class="check"><input type="checkbox" id="pzfee" onchange="pCalc()"> <span>Add personalization, ${money(p.pzfee)} each</span></label>`:""}${p.pz?pzForm(p.pz):""}
         <div class="actions"><button class="btn" ${stockOf(p)==="Out of stock"?"disabled":""} onclick="addProduct('${p.id}')">${stockOf(p)==="Out of stock"?"Currently unavailable":"Add to cart"}</button><button class="btn quiet" onclick="go('shop',{shopView:'cart'})">View cart</button></div>
       </div></div></div>
-  <div class="pinfo"><details class="disc" open><summary>Details</summary><p>${p.desc} Found in ${cat[1]}${subOf(p)?", under "+subOf(p):""}. Sold ${p.per==="quoted"?"by quote":p.per}.</p></details><details class="disc"><summary>Personalization and proofs</summary><p>${p.pz||p.f.includes("s")?"Anything that carries your name or your listing is proofed before it is produced. You approve the proof under My Purchases.":"This piece carries the company mark and needs no proof."}</p></details><details class="disc"><summary>Delivery</summary><p>${p.f.includes("s")?"Marketing schedules the work with you after checkout and delivers the finished files digitally.":"Pick up at your office, or have it shipped to an address you enter at checkout."} Timing in this demo is illustrative.</p></details></div>
+  <div class="pinfo"><details class="disc" open><summary>Details</summary><p>${p.desc} Found in ${cat[1]}${subOf(p)?", under "+subOf(p):""}. Sold ${p.per==="quoted"?"by quote":p.per}.</p></details><details class="disc"><summary>Personalization and proofs</summary><p>${p.pz||p.f.includes("s")?"Anything that carries your name or your listing is proofed before it is produced. You approve the proof under My Purchases.":"This piece carries the company mark and needs no proof."}</p></details><details class="disc"><summary>Delivery</summary><p>${p.f.includes("s")?"Marketing schedules the work with you after checkout and delivers the finished files digitally.":"Pick up at your office, or have it shipped to an address you enter at checkout."} Estimated production: ${leadOf(p)}. ${fulOf(p)}. Timing in this demo is illustrative.</p></details></div>
   <div class="also">${prow("You may also consider",PRODUCTS.filter(x=>x.cat===p.cat&&x.id!==p.id).slice(0,4),p.cat,cat[1])}</div>`; }
 function addProduct(pid){ const p=prod(pid), z=S.pz; const opt=p.opts.map((o,i)=>o[0]+": "+document.getElementById("popt-"+i).value).join(", "); const custom=p.pz?PZF[p.pz].map(k=>z[k]).filter(Boolean).join(", "):""; const ls=document.getElementById("plist");
   S.cart.push({pid,name:p.name,opt,qty:S.sel.qty||1,price:p.price,per:p.per,custom,listing:ls?ls.value:"",kit:""}); S.sel.qty=1; render.bump=true; toast(p.name+" added to your cart."); soft(); }
@@ -2995,7 +3041,7 @@ function shopKits(){ return `<div class="pagehead"><div><div class="eyebrow">The
   <div class="cards kits">${KITS.map(k=>`<div class="pcard kit" ${clk(`go('shop',{shopView:'kit',kit:'${k.id}'})`)}><span class="pimg kitimg">${k.items.slice(0,3).map(([pid])=>`<span>${productArt(prod(pid))}</span>`).join("")}${phImg("k_"+k.id,true,900)}</span><span class="pbody"><span class="pname">${k.name}</span><span class="muted small">${k.desc}</span><span class="pprice" style="margin-top:4px">${money(kitTotal(k))} <small>kit price, ${money(kitValue(k))} item value, ${k.items.length} items</small></span></span></div>`).join("")}</div>`; }
 function shopKit(){ const k=KITS.find(x=>x.id===S.sel.kit)||KITS[0], st=kitState(k);
   return `<a href="#" class="back" onclick="go('shop',{shopView:'kits'});return false">&larr; Curated Marketing Kits</a><div class="pagehead"><div><h1>${k.name} ${sampleTag("Illustrative contents and prices")}</h1><p>${k.desc}</p></div></div>
-  <div class="split w320"><div><div class="panel"><h3>Included in the kit</h3><div class="matlist flat">${k.items.map(([pid,q])=>{ const p=prod(pid), n=st.q[pid]!=null?st.q[pid]:q; return `<div class="mat"><div class="thumb">${productArt(p)}</div><div class="tx"><div class="t">${p.name}</div><div class="small">${money(p.price)} <span class="muted">${p.per}</span></div></div>${qtyCtl(n,`kitQ('${k.id}','${pid}',${n-1})`,`kitQ('${k.id}','${pid}',${n+1})`,p.name)}</div>`; }).join("")}</div></div>
+  <div class="split w320"><div><div class="panel"><h3>Included in the kit</h3><div class="matlist flat">${k.items.map(([pid,q])=>{ const p=prod(pid), n=st.q[pid]!=null?st.q[pid]:q; return `<div class="mat"><div class="thumb">${productArt(p)}</div><div class="tx"><div class="t">${p.name}</div><div class="small">${money(kitUnit(k,pid))} <span class="muted">${kitPer(k,pid)}</span></div></div>${qtyCtl(n,`kitQ('${k.id}','${pid}',${n-1})`,`kitQ('${k.id}','${pid}',${n+1})`,p.name)}</div>`; }).join("")}</div></div>
     <div class="panel" style="margin-top:18px"><h3>Optional upgrades</h3>${k.opt.map(pid=>{ const p=prod(pid); return `<label class="check opt"><input type="checkbox" ${st.o.includes(pid)?"checked":""} onchange="kitO('${k.id}','${pid}')"> <span>${p.name} <span class="muted small">${money(p.price)} ${p.per}</span></span></label>`; }).join("")}</div></div>
   <div class="cart-sticky">${kitSum(k)}</div></div>`; }
 function kitQ(kid,pid,n){ kitState(KITS.find(x=>x.id===kid)).q[pid]=Math.max(0,n); soft(); }
@@ -3005,7 +3051,7 @@ function kitAdd(kid){ const k=KITS.find(x=>x.id===kid), st=kitState(k); let n=0;
 function cartSum(){ return S.cart.reduce((t,i)=>t+i.price*i.qty,0); }
 function cartLines(edit){ return S.cart.map((i,n)=>{ const l=i.listing&&listing(i.listing); return `<div class="cline"><div class="thumb">${productArt(prod(i.pid)||PROD.custom)}</div><div class="tx"><div class="t">${i.name}</div><div class="muted small">${[i.opt,i.per,i.kit,l?"For "+l.addr:""].filter(Boolean).join(" &middot; ")}</div>${i.custom?`<div class="small">Personalized: ${i.custom}</div>`:""}</div>${edit?qtyCtl(i.qty,`cartQ(${n},-1)`,`cartQ(${n},1)`,i.name):`<span class="muted small">x ${i.qty}</span>`}<div class="amt">${i.price?money(i.price*i.qty):"Quoted"}</div>${edit?`<button class="x" aria-label="Remove: ${i.name}" onclick="S.cart.splice(${n},1);soft()">&times;</button>`:""}</div>`; }).join(""); }
 function cartQ(n,d){ const i=S.cart[n]; if(i.program){ toast("A program is billed once a month."); return; } i.qty=Math.max(1,i.qty+d); soft(); }
-function shopCart(){ return `<div class="pagehead"><div><h1>Your cart</h1><p>Review quantities and personalization before checkout.</p></div></div>${S.cart.length?`<div class="split w320"><div class="panel">${cartLines(true)}</div><div class="cart-sticky"><div class="panel"><h3>Order summary ${sampleTag("Illustrative")}</h3><div class="crow"><span>Items</span><span>${S.cart.reduce((a,i)=>a+i.qty,0)}</span></div><div class="total"><span>Sample subtotal</span><span>${money(cartSum())}</span></div><div class="actions" style="margin-top:14px"><button class="btn" onclick="go('shop',{shopView:'checkout'})">Check out</button></div><p class="muted small" style="margin-top:10px">Checkout is simulated. No payment details are collected.</p></div></div></div>`:`<div class="panel"><div class="empty">Your cart is waiting.</div><div class="actions" style="justify-content:center;display:flex"><button class="btn" onclick="go('shop',{shopView:'home'})">Explore the Collection</button></div></div>`}`; }
+function shopCart(){ return `<div class="pagehead"><div><h1>Your cart</h1><p>Review quantities and personalization before checkout.</p></div></div>${S.cart.length?`<div class="split w320"><div class="panel">${cartLines(true)}</div><div class="cart-sticky"><div class="panel"><h3>Order summary ${sampleTag("Illustrative")}</h3><div class="crow"><span>Items</span><span>${S.cart.reduce((a,i)=>a+i.qty,0)}</span></div><div class="total"><span>Sample subtotal</span><span>${money(cartSum())}</span></div><div class="actions" style="margin-top:14px"><button class="btn" onclick="go('shop',{shopView:'checkout'})">Check out</button></div><p class="muted small" style="margin-top:10px">Sales tax and shipping are not included in this sample total. Checkout is simulated. No payment details are collected.</p></div></div></div>`:`<div class="panel"><div class="empty">Your cart is waiting.</div><div class="actions" style="justify-content:center;display:flex"><button class="btn" onclick="go('shop',{shopView:'home'})">Explore the Collection</button></div></div>`}`; }
 function shopCheckout(){ const m=me(); if(!S.cart.length) return shopCart();
   return `<div class="pagehead"><div><h1>Check out ${sampleTag("Simulated checkout")}</h1><p>Confirm where the order goes and how it is paid. Marketing sends a proof for anything personalized before it prints.</p></div></div>
   <div class="split w380"><form class="form" onsubmit="return placeOrder(event)">
@@ -3015,7 +3061,7 @@ function shopCheckout(){ const m=me(); if(!S.cart.length) return shopCart();
       <label class="radio card"><input type="radio" name="pay" value="paynow"><span><strong>Simulated pay now</strong><span class="muted small">Uses the sample card on file. No card number is requested or stored.</span></span></label></fieldset>
     <label>Anything marketing should know<textarea name="notes" placeholder="Rush, wording, a different title..."></textarea></label>
     <div class="actions"><button class="btn" type="submit">Place the simulated order</button><button class="btn quiet" type="button" onclick="go('shop',{shopView:'cart'})">Back to cart</button></div></form>
-    <div class="panel"><h3>Order summary</h3>${cartLines(false)}<div class="total"><span>Sample total</span><span>${money(cartSum())}</span></div></div></div>`; }
+    <div class="panel"><h3>Order summary</h3>${cartLines(false)}<div class="total"><span>Sample total</span><span>${money(cartSum())}</span></div><p class="muted small" style="margin-top:8px">Sales tax and shipping are not included in this sample total.</p></div></div>`; }
 function orderSummary(o){ return o.items.map(i=>i.name).join(", "); }
 function createOrder(lines,o){ const id=nextId("O-2026-",S.orders), total=lines.reduce((t,l)=>t+l.price*l.qty,0);
   const ord=Object.assign({id,agent:me().name,items:lines,total,owner:"Marketing",stage:0,pay:"statement",listing:"",deliver:"Pick up at "+me().office,placed:TODAY,updates:[TODAY+": Order received. Marketing sends a proof for anything personalized."],notes:[]},o);
@@ -3036,7 +3082,7 @@ function orderDetail(o,staff){ const l=o.listing&&listing(o.listing);
     <h3 style="margin-top:18px">Updates ${staff?`<span class="muted small">the agent sees these</span>`:""}</h3><div class="timeline">${o.updates.map(u=>`<div class="tl done"><div class="dot"></div><div>${u}</div></div>`).join("")}</div>
     ${staff?`<form onsubmit="return orderUpdate(event,'${o.id}')" class="inline"><input name="u" placeholder="Proof sent, ready for pickup, shipped..." required aria-label="Update for the agent"><button class="btn small" type="submit">Send update to agent</button></form>`:`<div class="actions" style="margin-top:12px"><button class="btn quiet small" onclick="reorder('${o.id}')">Order these again</button></div>`}</div>`; }
 function shopOrders(){ const mine=S.orders.filter(o=>o.agent===me().name), o=mine.find(x=>x.id===S.sel.order)||mine[0];
-  return `<div class="pagehead"><div><div class="eyebrow">The Agent Collection</div><h1>My Purchases</h1><p>Every order, its status, and each update from marketing.</p></div></div>${mine.length?`<div class="split"><div class="list">${mine.map(x=>`<div class="item ${x.id===o.id?"on":""}" onclick="S.sel.order='${x.id}';soft()"><div class="t">${x.id} <span class="muted small">${x.placed}</span></div><div class="m"><span>${x.items.length} ${x.items.length>1?"items":"item"}, ${money(x.total)}</span>${ochip(x)}</div></div>`).join("")}</div>${orderDetail(o,false)}</div>`:`<div class="panel"><div class="empty">No purchases yet. The Collection is ready when you are.</div></div>`}`; }
+  return `<div class="pagehead"><div><div class="eyebrow">The Agent Collection</div><h1>My Purchases</h1><p>Every order, each quote, and each update from marketing.</p></div></div>${quoteList()}${mine.length?`<div class="split"><div class="list">${mine.map(x=>`<div class="item ${x.id===o.id?"on":""}" onclick="S.sel.order='${x.id}';soft()"><div class="t">${x.id} <span class="muted small">${x.placed}</span></div><div class="m"><span>${x.items.length} ${x.items.length>1?"items":"item"}, ${money(x.total)}</span>${ochip(x)}</div></div>`).join("")}</div>${orderDetail(o,false)}</div>`:`<div class="panel"><div class="empty">No purchases yet. The Collection is ready when you are.</div></div>`}`; }
 function reorder(id){ const o=S.orders.find(x=>x.id===id); o.items.forEach(i=>S.cart.push(Object.assign({},i,{listing:""}))); toast("Added to your cart."); go("shop",{shopView:"cart"}); }
 // ---------- The Agent Collection: commerce model (every figure here is fictional sample data) ----------
 const COSTR = {apparel:.55,brand:.42,listing:.45,growth:.40,gifts:.60,studio:.50};
@@ -3146,7 +3192,7 @@ function addInspection(e){ e.preventDefault(); const f=formData(e.target), file=
 
 // ---------- staff: Collection Commerce (dashboard, orders, products, vendors, programs, insights, simulator, operating model) ----------
 function comStats(){ const depts=SHOP_CATS.map(c=>c[0]), live={}, lc={}, c=CS(); depts.forEach(d=>{ live[d]=0; lc[d]=0; });
-  S.orders.forEach(o=>o.items.forEach(i=>{ if(i.program) return; const p=prod(i.pid), d=p&&live[p.cat]!=null?p.cat:"studio"; live[d]+=i.price*i.qty; lc[d]+=(p?costOf(p):i.price*.5)*i.qty; }));
+  S.orders.forEach(o=>o.items.forEach(i=>{ if(i.program) return; const p=prod(i.pid), d=p&&live[p.cat]!=null?p.cat:"studio"; live[d]+=i.price*i.qty; lc[d]+=lineCost(i,p); }));
   const rows=depts.map(d=>{ const base=COM.rev[d].reduce((a,b)=>a+b,0), rev=base+live[d], cogs=base*COSTR[d]+lc[d]; return {d,name:deptOf(d)[1],rev,cogs,gp:rev-cogs,m:(rev-cogs)/rev*100}; });
   const rev=rows.reduce((t,r)=>t+r.rev,0), cogs=rows.reduce((t,r)=>t+r.cogs,0), orders=COM.orders.reduce((a,b)=>a+b,0)+S.orders.length, liveAll=depts.reduce((t,d)=>t+live[d],0);
   const months=COM.orders.map((_,i)=>depts.reduce((t,d)=>t+COM.rev[d][i],0)+(i===5?liveAll:0)), labels=months.map((_,i)=>new Date(NOW.getFullYear(),NOW.getMonth()-5+i,1).toLocaleString("en-US",{month:"short"}));
@@ -3171,22 +3217,22 @@ function flowOf(o){ if(o.refund) return "refund"; const f=FLOW.find(x=>x[0]===o.
 function comFlow(id,k){ const o=S.orders.find(x=>x.id===id), f=FLOW.find(x=>x[0]===k); o.flow=k; o.stage=f[2]; o.updates.push(TODAY+": "+f[3]); toast(o.id+" moved to "+f[1].toLowerCase()+"."); soft(); }
 const vend = () => CS().vendors||(CS().vendors=VENDORS.map(v=>Object.assign({},v,{d:v.d.slice()})));
 function comOrders(){ const o=S.orders.find(x=>x.id===S.sel.order)||S.orders[0]; if(!o) return ""; const cur=flowOf(o), cells=FLOW.map(f=>[f[1]==="New order"?"New orders":f[1],S.orders.filter(x=>flowOf(x)===f[0]).length]).concat([["Refunds",S.orders.filter(x=>x.refund).length]]);
-  const lines=o.items.map(i=>{ const p=prod(i.pid), c=(p?costOf(p):i.price*.5)*i.qty, r=i.price*i.qty; return {n:i.name,q:i.qty,r,c,v:i.program?"Program fulfillment":p?(vend().find(v=>v.d.includes(p.cat))||{n:""}).n:""}; }), R=lines.reduce((t,l)=>t+l.r,0), C=lines.reduce((t,l)=>t+l.c,0);
-  return `<div class="ghead" style="margin-top:40px"><div><div class="eyebrow">Order workflow</div><h3>Where every order stands</h3></div></div><div class="pipe">${cells.map(([n,c])=>`<div><strong>${c}</strong><span>${n}</span></div>`).join("")}</div>
+  const lines=o.items.map(i=>{ const p=prod(i.pid), c=lineCost(i,p), r=i.price*i.qty; return {n:i.name,q:i.qty,r,c,v:i.program?"Program fulfillment":p?(vend().find(v=>v.d.includes(p.cat))||{n:""}).n:""}; }), R=lines.reduce((t,l)=>t+l.r,0), C=lines.reduce((t,l)=>t+l.c,0);
+  return comQuotes()+`<div class="ghead" style="margin-top:40px"><div><div class="eyebrow">Order workflow</div><h3>Where every order stands</h3></div></div><div class="pipe">${cells.map(([n,c])=>`<div><strong>${c}</strong><span>${n}</span></div>`).join("")}</div>
   <div class="panel flowp"><h3>Workflow, ${o.id}</h3><div class="flow">${FLOW.map(f=>`<button class="${cur===f[0]?"on":""}" ${o.refund?"disabled":""} aria-pressed="${cur===f[0]}" onclick="comFlow('${o.id}','${f[0]}')">${f[1]}</button>`).join("")}</div><p class="fine">${o.refund?"This order was refunded.":"Choose a step to move this order there. The agent sees an update each time."}</p></div>
   <div class="grid c2 com"><div class="panel" style="padding:0"><h3 class="pad">Order economics, ${o.id} ${fict("Illustrative costs")}</h3><div class="scrollx"><table class="fin"><thead><tr><th>Item</th><th>Qty</th><th>Retail</th><th>Vendor cost</th><th>Gross profit</th></tr></thead><tbody>${lines.map(l=>`<tr><td>${l.n}${l.v?`<span class="csub">${l.v}</span>`:""}</td><td>${l.q}</td><td>${money(l.r)}</td><td>${money(l.c)}</td><td>${money(l.r-l.c)}</td></tr>`).join("")}</tbody><tfoot><tr><td>Order total</td><td></td><td>${money(R)}</td><td>${money(C)}</td><td>${money(R-C)} <span class="muted small">${R?pct1((R-C)/R*100):""}</span></td></tr></tfoot></table></div></div>
     <div class="panel"><h3>Refunds and adjustments</h3>${o.refund?`<p class="small">A refund of ${money(o.refund.amt)} was recorded on ${o.refund.d}. ${o.refund.why}</p>`:`<form class="form" onsubmit="return comRefund(event,'${o.id}')"><div class="row2"><label>Amount<input name="amt" inputmode="decimal" value="${o.total}" required></label><label>Reason<input name="why" value="Reprint after a proof error" required></label></div><div class="actions"><button class="btn quiet small" type="submit">Simulate a refund on ${o.id}</button></div></form>`}<p class="fine" style="margin-top:12px">Simulated. Nothing is paid or refunded.</p></div></div>`; }
 function comRefund(e,id){ e.preventDefault(); const f=formData(e.target), o=S.orders.find(x=>x.id===id), amt=Math.min(o.total,Math.max(0,Math.round(num(f.get("amt"))*100)/100)); o.refund={amt,why:f.get("why"),d:TODAY}; CS().refunds.push({id,amt}); o.updates.push(TODAY+": A refund of "+money(amt)+" was recorded."); toast("Refund recorded on "+id+". This is a simulation."); soft(); return false; }
 const optStr = p => (p.opts||[]).map(o=>o[0]+":"+o[1].join("|")).join(";");
 function comCatalog(){ const cat=S.sel.mCat||"", list=PRODUCTS.map(p=>prod(p.id)).filter(p=>!cat||p.cat===cat), sel=(n,v)=>`<select name="${n}">${SHOP_CATS.map(c=>`<option value="${c[0]}" ${c[0]===v?"selected":""}>${c[1]}</option>`).join("")}</select>`;
-  const row=p=>{ const c=costOf(p), g=p.price-c; return S.sel.edit===p.id?`<tr><td colspan="8"><form class="editrow wide" onsubmit="return comSave(event,'${p.id}')"><label>Name<input name="name" value="${p.name}" required></label><label>Department${sel("cat",p.cat)}</label><label>Retail price<input name="price" inputmode="decimal" value="${p.price}"></label><label>Vendor cost<input name="cost" inputmode="decimal" value="${c}"></label><label class="span2">Description<input name="desc" value="${p.desc}"></label><label>Availability<select name="stock">${STOCKS.map(s=>`<option ${stockOf(p)===s?"selected":""}>${s}</option>`).join("")}</select></label><label>Variants<input name="opts" value="${optStr(p)}" placeholder="Size:S|M|L;Color:Black|White"></label><label class="check"><input type="checkbox" name="feat" ${p.f.includes("f")?"checked":""}> <span>Feature this product</span></label><div class="actions"><button class="btn small" type="submit">Save</button><button class="btn quiet small" type="button" onclick="S.sel.edit='';soft()">Cancel</button></div></form></td></tr>`
-    :`<tr><td>${p.name}</td><td>${deptOf(p.cat)[1]}</td><td>${p.price?money(p.price):"Quoted"}</td><td>${p.price?money(c):""}</td><td>${p.price?money(g):""}</td><td>${p.price?pct1(g/p.price*100):""}</td><td>${stockOf(p)==="Out of stock"?"Unavailable":stockOf(p)}${p.f.includes("f")?`<span class="csub">Featured</span>`:""}</td><td><button class="btn quiet small" onclick="S.sel.edit='${p.id}';soft()" aria-label="Edit ${p.name}">Edit</button>${/^np\d/.test(p.id)?` <button class="btn quiet small" onclick="comDel('${p.id}')" aria-label="Remove ${p.name}">Remove</button>`:""}</td></tr>`; };
+  const row=p=>{ const c=costOf(p), g=p.price-c; return S.sel.edit===p.id?`<tr><td colspan="8"><form class="editrow wide" onsubmit="return comSave(event,'${p.id}')"><label>Name<input name="name" value="${p.name}" required></label><label>Department${sel("cat",p.cat)}</label><label>Retail price<input name="price" inputmode="decimal" value="${p.price}"></label><label>Vendor cost<input name="cost" inputmode="decimal" value="${c}"></label><label class="span2">Description<input name="desc" value="${p.desc}"></label><label>Production time<input name="lead" value="${leadOf(p)}"></label><label>Fulfillment<input name="ful" value="${fulOf(p)}"></label><label>Availability<select name="stock">${STOCKS.map(s=>`<option ${stockOf(p)===s?"selected":""}>${s}</option>`).join("")}</select></label><label>Variants<input name="opts" value="${optStr(p)}" placeholder="Size:S|M|L;Color:Black|White"></label><label class="check"><input type="checkbox" name="feat" ${p.f.includes("f")?"checked":""}> <span>Feature this product</span></label><div class="actions"><button class="btn small" type="submit">Save</button><button class="btn quiet small" type="button" onclick="S.sel.edit='';soft()">Cancel</button></div></form></td></tr>`
+    :`<tr><td class="w">${p.name}<span class="csub">${pmethod(p)}</span></td><td>${deptOf(p.cat)[1]}</td><td>${p.price?money(p.price):"Quoted"}</td><td>${p.price?money(c):""}</td><td>${p.price?money(g):""}</td><td>${p.price?pct1(g/p.price*100):""}</td><td>${stockOf(p)==="Out of stock"?"Unavailable":stockOf(p)}${p.f.includes("f")?`<span class="csub">Featured</span>`:""}</td><td><button class="btn quiet small" onclick="S.sel.edit='${p.id}';soft()" aria-label="Edit ${p.name}">Edit</button>${/^np\d/.test(p.id)?` <button class="btn quiet small" onclick="comDel('${p.id}')" aria-label="Remove ${p.name}">Remove</button>`:""}</td></tr>`; };
   return comHead("Products, pricing, and margin","Set a retail price and record a vendor cost for each product. Unit gross profit and margin follow. Changes show in the agent view right away.",`<button class="btn quiet" onclick="S.sel.addProd=S.sel.addProd?'':'1';soft()">${S.sel.addProd?"Close":"Add a product"}</button>`)+
   (S.sel.addProd?`<form class="panel form" onsubmit="return comAdd(event)"><h3>Add a product</h3><div class="row3"><label>Name<input name="name" required></label><label>Department${sel("cat","apparel")}</label><label>Sold by<input name="per" value="each"></label></div><div class="row3"><label>Retail price<input name="price" inputmode="decimal" required></label><label>Vendor cost<input name="cost" inputmode="decimal" required></label><label>Description<input name="desc"></label></div><div class="row3"><label>Image<select name="img">${IMG_CHOICES.map(c=>`<option value="${c[0]}">${c[1]}</option>`).join("")}</select></label></div><div class="actions"><button class="btn small" type="submit">Add to the catalog</button></div></form>`:"")+
   `<div class="filterbar"><div class="pills">${[["","All"],...SHOP_CATS.map(c=>[c[0],c[1]])].map(([k,l])=>`<button class="${cat===k?"on":""}" onclick="S.sel.mCat='${k}';soft()">${l}</button>`).join("")}</div></div>
   <div class="panel" style="padding:0"><div class="scrollx"><table class="fin cat"><thead><tr><th>Product</th><th>Department</th><th>Retail</th><th>Vendor cost</th><th>Unit gross profit</th><th>Margin</th><th>Status</th><th></th></tr></thead><tbody>${list.map(row).join("")}</tbody></table></div></div>`; }
 function comSave(e,id){ e.preventDefault(); const f=formData(e.target), opts=String(f.get("opts")||"").split(";").map(x=>x.trim()).filter(x=>x.includes(":")).map(o=>{ const i=o.indexOf(":"); return [o.slice(0,i).trim(),o.slice(i+1).split("|").map(x=>x.trim()).filter(Boolean)]; });
-  S.prodEdits[id]={name:f.get("name"),desc:f.get("desc"),price:num(f.get("price")),cost:num(f.get("cost")),cat:f.get("cat"),stock:f.get("stock"),f:(PROD[id].f||"").replace("f","")+(f.get("feat")?"f":""),opts}; S.sel.edit=""; toast("Saved. Agents see the change now."); soft(); return false; }
+  S.prodEdits[id]={name:f.get("name"),desc:f.get("desc"),price:num(f.get("price")),cost:num(f.get("cost")),cat:f.get("cat"),lead:f.get("lead"),ful:f.get("ful"),stock:f.get("stock"),f:(PROD[id].f||"").replace("f","")+(f.get("feat")?"f":""),opts}; S.sel.edit=""; toast("Saved. Agents see the change now."); soft(); return false; }
 function comVendors(){ const vs=vend(), ed=S.sel.vEdit||"";
   const form=(v,i)=>`<form class="editrow wide" onsubmit="return comVendSave(event,${i})"><label>Supplier name<input name="n" value="${v?v.n:""}" required></label><label>What they supply<input name="what" value="${v?v.what:""}"></label><label>Lead time<input name="lead" value="${v?v.lead:""}"></label><label>Fulfillment method<input name="how" value="${v?v.how:""}"></label><div class="span2 dchk"><div class="lab">Departments</div>${SHOP_CATS.map(c=>`<label class="check"><input type="checkbox" name="d" value="${c[0]}" ${v&&v.d.includes(c[0])?"checked":""}> <span>${c[1]}</span></label>`).join("")}</div><label>On time, %<input name="on" inputmode="decimal" value="${v?v.on:""}"></label><label>Proof accuracy, %<input name="ok" inputmode="decimal" value="${v?v.ok:""}"></label><div class="actions"><button class="btn small" type="submit">Save</button><button class="btn quiet small" type="button" onclick="S.sel.vEdit='';soft()">Cancel</button>${v?`<button class="btn quiet small" type="button" onclick="comVendDel(${i})">Remove supplier</button>`:""}</div></form>`;
   const row=(v,i)=>{ if(ed===String(i)) return `<tr><td colspan="11">${form(v,i)}</td></tr>`; const p=PRODUCTS.map(x=>prod(x.id)).find(x=>v.d.includes(x.cat)&&x.price&&!x.f.includes("r")), os=S.orders.filter(o=>o.stage<4&&!o.refund&&o.items.some(q=>{ const z=prod(q.pid); return z&&v.d.includes(z.cat); })), by={}; os.forEach(o=>{ const n=FLOW.find(f=>f[0]===flowOf(o))[1].toLowerCase(); by[n]=(by[n]||0)+1; });
@@ -3406,6 +3452,118 @@ function tourStart(){ document.getElementById("signin").style.display="none"; to
 function tourGo(i){ if(i<0||i>=TOUR.length) return; S.tour.i=i; TOUR[i][3](); }
 function tourEnd(){ S.tour.on=false; soft(); }
 function tourReset(){ resetDemo(); S.tour={on:true,i:0}; TOUR[0][3](); }
+
+// ---------- pricing structure, quotes, and corrected product art (sample prices) ----------
+const PC_HEAD = {jlpost:"JUST LISTED",jspost:"JUST SOLD",prospect:"MARKET UPDATE",ppost:"A NOTE FOR YOU",farm:"LOCAL MARKET",svcprint:"DIRECT MAIL"};
+const POSTAGE = "Printing only. Postage is not included. USPS EDDM Retail postage is $0.26 a piece, the rate in effect since July 12, 2026.";
+(function(){
+  const Q="Quantity", T=(o,t,x)=>Object.assign({pxo:o,px:t},x||{});
+  const set={
+    cards:T(Q,[["250",45],["500",62],["1,000",89]]), thanks:T(Q,[["50",38],["100",62],["250",118]]), notecards:T(Q,[["50",36],["100",58],["250",110]]),
+    letterhead:T(Q,[["100",42],["250",78],["500",125]]), folders:T(Q,[["25",50],["50",88],["100",150]]), intro:T(Q,[["100",48],["250",92],["500",150]]),
+    mfolders:T(Q,[["25",85],["50",150],["100",260]]), lpfolders:T(Q,[["25",55],["50",96],["100",165]]),
+    yardsign:T("Format",[["Panel only",55],["Panel with steel frame",110]]), riders:T(Q,[["2",30],["4",54],["6",75]]), openhouse:T(Q,[["2",40],["4",72]]), dirsign:T(Q,[["2",28],["6",72],["10",110]]),
+    brochure:T(Q,[["25",75],["50",120],["100",195]]), featuresheet:T(Q,[["50",32],["100",52],["250",105]]), luxbro:T(Q,[["25",240],["50",410],["100",690]]),
+    jlpost:T(Q,[["100",95],["250",165],["500",255],["1,000",395]],{note:POSTAGE}), jspost:T(Q,[["100",95],["250",165],["500",255],["1,000",395]],{note:POSTAGE}),
+    prospect:T(Q,[["100",80],["250",145],["500",230],["1,000",360]],{note:POSTAGE}), ppost:T(Q,[["100",88],["250",155],["500",245]],{note:POSTAGE}), farm:T(Q,[["100",120],["250",215],["500",340],["1,000",520]],{note:POSTAGE}),
+    hello:T(Q,[["100",70],["250",140]]), buyerguide:T(Q,[["25",85],["50",145],["100",240]]), sellerguide:T(Q,[["25",85],["50",145],["100",240]]),
+    followup:T(Q,[["50",34],["100",54]]), referral:T(Q,[["100",30],["250",52],["500",78]]), community:T(Q,[["50",60],["100",98]]), hangers:T(Q,[["100",58],["250",110],["500",175]]),
+    holiday:T(Q,[["50",75],["100",125],["250",250]]), invites:T(Q,[["50",52],["100",88]]), regmat:T(Q,[["50",28],["100",46]]), collat:T(Q,[["25",64],["50",108],["100",180]]),
+    promo:T(Q,[["50",60],["100",105],["250",225]]), giveaway:T(Q,[["50",55],["100",95]]),
+    site:T("Package",[["Website",450],["Video",850],["Website and video",1200]]), banner:T("Size",[["2 x 6 ft",90],["3 x 8 ft",145],["4 x 10 ft",210]]),
+    svcvideo:T("Length",[["Up to one minute",850],["Up to three minutes",1400]]), svcsocial:T("Posts",[["Eight",325],["Twelve",450]]), svcdesign:T("Revisions",[["Two rounds",150],["Three rounds",195]])
+  };
+  Object.entries(set).forEach(([id,x])=>{ const p=PROD[id]; if(!p) return; Object.assign(p,x); p.price=x.px[0][1]; if(x.pxo===Q) p.per="for "+x.px[0][0]; p.opts=[[x.pxo,x.px.map(v=>v[0])]].concat(p.opts.filter(o=>o[0]!==x.pxo)); });
+  ["polo","dress","jacket","qzip","tee"].forEach(id=>{ PROD[id].adds={Size:{"2XL":4}}; });
+  PRODUCTS.forEach(p=>{ if(p.pz==="mono") p.pzfee=6; });
+  Object.assign(PROD.mag,{name:"Magazine feature",desc:"A listing feature in a luxury or regional publication, when an issue and a placement are available.",price:0,per:"quoted",q:"Placement depends on the publication's rates, deadlines, and approval. Nothing is reserved until you accept a written quote."});
+  Object.assign(PROD.svcbrand,{price:0,per:"quoted",q:"Scoped to the project. Marketing sends a written quote after a short conversation about what you need."});
+  Object.assign(PROD.custom,{desc:"Anything the templates do not cover. Custom work is billed by the hour and quoted before it starts.",q:"Billed by the hour. Marketing sends a written quote with the estimated hours before any work begins.",hourly:85});
+  KITS.forEach(k=>{ k.opt=k.opt.map(x=>x==="svcbrand"?"svcdesign":x); k.items.forEach(i=>{ if(i[0]==="cards"&&i[1]===2){ i[1]=1; i[2]="500"; } }); });
+  // product art: a correct photograph, or a branded concept mockup where no stock photograph fits
+  PHOTOS.p_dress=U("1579664531470-ac357f8f8e2b","Fallon Michael"); PHOTOS.p_qzip=U("1762232979295-47b301ef9782","Thomas Marquize","80% 40%"); PHOTOS.p_tumbler=U("1605539585404-a846f1193d19","Bluewater Sweden","70% 50%");
+  ["p_holiday","p_giftpack","p_tablecloth","p_signin","p_regmat","p_invites","p_anniv","p_followup","p_promo","p_farm"].forEach(k=>{ delete PHOTOS[k]; });
+  Object.entries({holiday:"hcard",invites:"invite",signin:"signin",regmat:"regcard",featuresheet:"flyer",community:"flyer",ohpack:"flyer",followup:"fcard",hello:"letter",referral:"refcard",farm:"postcards",tablecloth:"cloth",promo:"promopack",giftpack:"giftbox",anniv:"annivtag"}).forEach(([id,a])=>{ if(PROD[id]) PROD[id].art=a; });
+})();
+(function(){
+  const lg=()=>`<img class="lg" src="${LOGO}" alt="">`, who=()=>me()||{name:"",phone:""}, FLY={featuresheet:"19 Heron Point",community:"Community Guide",ohpack:"Open House"};
+  Object.assign(MOCK2,{
+    postcards:p=>`<div class="mock m-post"><div class="ph"><span>${PC_HEAD[p&&p.id]||"JUST LISTED"}</span></div><div class="ft">${lg()}<div class="s">${who().name}<br>${who().phone}</div></div></div>`,
+    flyer:p=>`<div class="mock m-sheet"><div class="ph"></div><b>${FLY[p&&p.id]||"19 Heron Point"}</b><u></u><u></u><u class="s"></u>${lg()}</div>`,
+    letter:()=>`<div class="mock m-sheet let">${lg()}<b>Hello, neighbor</b><u></u><u></u><u></u><u class="s"></u></div>`,
+    signin:()=>`<div class="mock m-sheet sgn"><b>Welcome. Please sign in.</b><u></u><u></u><u></u><u></u><u></u>${lg()}</div>`,
+    regcard:()=>`<div class="mock m-note"><b>Guest Registration</b><u></u><u></u><u class="s"></u>${lg()}</div>`,
+    fcard:()=>`<div class="mock m-note"><b>Thank you for visiting</b><span>19 Heron Point</span>${lg()}</div>`,
+    refcard:()=>`<div class="mock m-note"><b>Thank you for your referral</b><span>${who().name}</span>${lg()}</div>`,
+    invite:()=>`<div class="mock m-inv"><small>You are invited</small><b>Open House</b><u></u><span>Saturday, 1 to 4</span>${lg()}</div>`,
+    hcard:()=>`<div class="mock m-hol"><div class="top"><b>Season&rsquo;s Greetings</b><u></u></div><div class="bot">${lg()}</div></div>`,
+    cloth:()=>`<div class="mock m-cloth"><div class="pan">${lg()}</div></div>`,
+    promopack:()=>`<div class="mock m-promo"><div class="pad">${lg()}<u></u><u></u><u></u></div><i></i><i class="g"></i></div>`,
+    giftbox:()=>`<div class="mock m-gbox"><div class="b1"><s></s></div><div class="b2"><s></s></div></div>`,
+    annivtag:()=>`<div class="mock m-gbox one"><div class="b1"><s></s></div><div class="tg">Happy Home Anniversary</div></div>`,
+    custom:()=>`<div class="mock m-plan cst"><small>Marketing Studio</small><b>Custom request</b><span>Quoted before work begins</span></div>`,
+    mag:()=>`<div class="mock m-magz"><b>Magazine</b><small>Sample feature layout</small><span>The Marsh House, Pawleys Island</span></div>`,
+    tag:()=>`<div class="mock m-tag"><i></i>${lg()}<span>${(S.pz&&S.pz.mono)||who().name.split(" ").map(w=>w[0]).join(".")+"."}</span></div>`
+  });
+})();
+function tiersOf(p){ const b=PROD[p.id]; if(!p.px||!b) return null; const k=b.price?p.price/b.price:1; return p.px.map(([l,v])=>[l,Math.round(v*k*100)/100]); }
+function unitFor(p,sel,pz){ sel=sel||{}; let u=+p.price||0; const t=tiersOf(p); if(t){ u=(t.find(x=>x[0]===sel[p.pxo])||t[0])[1]; }
+  Object.entries(p.adds||{}).forEach(([o,m])=>{ u+=m[sel[o]]||0; }); if(pz&&p.pzfee) u+=p.pzfee; return Math.round(u*100)/100; }
+function optLabel(p,o,v){ const t=p.pxo===o&&tiersOf(p), h=t&&t.find(x=>x[0]===v), a=p.adds&&p.adds[o]&&p.adds[o][v]; return v+(h?", "+money(h[1]):"")+(a?", add "+money(a):""); }
+function pSel(p){ const s={}; p.opts.forEach((o,i)=>{ const e=document.getElementById("popt-"+i); if(e) s[o[0]]=e.value; }); return s; }
+function pCalc(){ const p=prod(S.sel.pid); if(!p) return; const z=document.getElementById("pzfee"), u=unitFor(p,pSel(p),z&&z.checked), q=S.sel.qty||1, a=document.getElementById("punit"), t=document.getElementById("ptot"); if(a) a.textContent=money(u); if(t) t.textContent=money(u*q)+" illustrative total"; }
+function pQty(dl){ S.sel.qty=Math.max(1,(S.sel.qty||1)+dl); document.getElementById("pqty").textContent=S.sel.qty; pCalc(); saveDemo(); }
+function perOf(p,tier){ return p.px&&p.pxo==="Quantity"?(tier?"for "+tier:""):p.per; }
+function addProduct(pid){ const p=prod(pid), z=S.pz, sel=pSel(p), fee=document.getElementById("pzfee"), on=!p.pzfee||!!(fee&&fee.checked);
+  const opt=p.opts.map(o=>o[0]+": "+sel[o[0]]).concat(p.pzfee&&on?["Personalization, add "+money(p.pzfee)+" each"]:[]).join(", ");
+  const custom=p.pz&&on?PZF[p.pz].map(k=>z[k]).filter(Boolean).join(", "):"", ls=document.getElementById("plist");
+  S.cart.push({pid,name:p.name,opt,qty:S.sel.qty||1,price:unitFor(p,sel,!!p.pzfee&&on),per:perOf(p),custom,listing:ls?ls.value:"",kit:""}); S.sel.qty=1; render.bump=true; toast(p.name+" added to your cart."); soft(); }
+function priceTag(p){ return p.q?"Request a quote":p.price?(p.px?"From ":"")+money(p.price)+` <small>${p.per}</small>`:"Quoted"; }
+function pcard(p){ p=prod(p.id); const tag=stockOf(p)==="Out of stock"?"Unavailable":p.f.includes("r")?"Program":p.f.includes("s")?"Service":p.f.includes("n")?"New":p.f.includes("p")?"Agent favorite":""; return `<div class="pcard" data-q="${pq(p)}" ${clk(p.f.includes("r")?`go('shop',{shopView:'programs',pgPick:'${p.id.slice(2)}'})`:`go('shop',{shopView:'product',pid:'${p.id}',qty:1})`)}>${tag?`<span class="ptag">${tag}</span>`:""}<span class="pimg">${productArt(p)}</span><span class="pbody"><span class="pname">${p.name}</span><span class="pprice">${priceTag(p)}</span></span></div>`; }
+function leadOf(p){ if(p.lead) return p.lead; const sign=["yardsign","rider","riders","openhouse","arrow","qr","box","banner"].includes(p.art); return p.f.includes("r")?"Starts with the next monthly cycle":p.f.includes("s")?"Scheduled with marketing after checkout":sign?"7 to 10 business days after proof approval":p.cat==="apparel"?"10 to 12 business days":p.cat==="gifts"?"3 to 5 business days":"5 to 7 business days after proof approval"; }
+function fulOf(p){ if(p.ful) return p.ful; return p.f.includes("r")?"Fulfilled by marketing each month":p.f.includes("s")?"Delivered digitally by marketing":p.cat==="apparel"?"Decorated by the apparel supplier and sent to your office":p.cat==="gifts"?"Assembled by the gifting supplier for pickup or shipping":"Produced by the print or sign supplier and sent to your office"; }
+function pmethod(p){ const t=tiersOf(p); return (p.q?(p.hourly?"Quote on request, hourly work at a sample rate of "+money(p.hourly)+" an hour":"Quote on request"):p.f.includes("r")?"Monthly program fee":t?p.pxo+" pricing: "+t.map(x=>x[0]+" "+money(x[1])).join(", "):"Unit price, "+p.per)+(p.adds?Object.entries(p.adds).map(([o,m])=>Object.entries(m).map(([v,a])=>". "+v+" adds "+money(a)).join("")).join(""):"")+(p.pzfee?". Personalization adds "+money(p.pzfee):""); }
+function lineCost(i,p){ return (p&&p.price?i.price*costOf(p)/p.price:i.price*((p&&COSTR[p.cat])||.5))*i.qty; }
+// kits priced from the same structure as single products
+function kitTier(k,pid){ const it=k.items.find(i=>i[0]===pid); return (it&&it[2])||""; }
+function kitUnit(k,pid){ const p=prod(pid), t=kitTier(k,pid); return unitFor(p,t?{[p.pxo]:t}:{}); }
+function kitPer(k,pid){ const p=prod(pid), t=kitTier(k,pid); return p.px&&p.pxo==="Quantity"?"for "+(t||p.px[0][0]):p.per; }
+function kitValue(k){ const st=S.kitQty[k.id]||{q:{},o:[]}; return Math.round(k.items.reduce((t,[pid,q])=>t+kitUnit(k,pid)*(st.q[pid]!=null?st.q[pid]:q),0)*100)/100; }
+function kitUp(k){ const st=S.kitQty[k.id]||{q:{},o:[]}; return st.o.reduce((t,pid)=>t+unitFor(prod(pid),{}),0); }
+function kitAdd(kid){ const k=KITS.find(x=>x.id===kid), st=kitState(k); let n=0; const add=(pid,qty,f,inKit)=>{ if(qty>0){ const p=prod(pid), t=inKit?kitTier(k,pid):"", tier=p.px?(t||p.px[0][0]):"", u=inKit?kitUnit(k,pid):unitFor(p,{}); S.cart.push({pid,name:p.name,opt:tier?p.pxo+": "+tier:"",qty,price:Math.round(u*(f||1)*100)/100,per:perOf(p),custom:"",listing:"",kit:k.name}); n++; } };
+  k.items.forEach(([pid,q])=>add(pid,st.q[pid]!=null?st.q[pid]:q,1-(KIT_SAVE[k.id]||0),true)); st.o.forEach(pid=>add(pid,1,1,false)); render.bump=true; toast(k.name+" added, "+n+" items."); go("shop",{shopView:"cart"}); }
+// quotes: custom and scoped work is quoted by staff before it becomes an order
+const QS = () => S.quotes||(S.quotes=[{id:"Q-2026-001",agent:"Dana Whitfield",pid:"custom",name:"Custom marketing request",opt:"",text:"A two-page neighborhood guide for a relocation client, with a simple map.",need:"Dec 4, 2026",listing:"",status:"Requested",amount:0,basis:"",order:"",placed:"Nov 16",updates:["Nov 16: Request received. Marketing will send a written quote."]}]);
+const QCHIP = {Requested:"amber",Quoted:"blue",Accepted:"green",Declined:"gray"};
+function quotePage(p,cat){ const mine=myListings().filter(l=>l.st<5);
+  return `<a href="#" class="back" onclick="go('shop',{shopView:'cat',shopCat:'${p.cat}'});return false">&larr; ${cat[1]}</a>
+  <div class="pdetail"><div class="pbig">${productArt(p)}</div><div><div class="eyebrow">${cat[1]}</div><h1>${p.name}</h1><p class="lead2">${p.desc}</p>
+    <div class="bigprice">Quoted on request ${sampleTag("Proposed concept")}</div><p class="small muted" style="margin-top:4px">${p.q}${p.hourly?" The sample rate in this demo is "+money(p.hourly)+" an hour.":""}</p>
+    <form class="form" style="margin-top:18px;max-width:480px" onsubmit="return addQuote(event,'${p.id}')">
+      ${p.opts.map(o=>`<label>${o[0]}<select name="o_${o[0]}">${o[1].map(v=>`<option>${v}</option>`).join("")}</select></label>`).join("")}
+      <label>What you need<textarea name="text" rows="4" required placeholder="The piece, the size or length, and where it will be used"></textarea></label>
+      <label>Needed by<input type="date" name="need"></label>
+      ${mine.length?`<label>For a listing project<select name="listing"><option value="">Not for a specific listing</option>${mine.map(l=>`<option value="${l.id}">${l.addr}</option>`).join("")}</select></label>`:""}
+      <div class="actions"><button class="btn" type="submit">Request a quote</button><button class="btn quiet" type="button" onclick="go('shop',{shopView:'orders'})">My quotes and purchases</button></div>
+      <p class="muted small">No charge is made until you accept a quote. Requests in this demo are simulated.</p></form></div></div>`; }
+function addQuote(e,pid){ e.preventDefault(); const f=formData(e.target), p=prod(pid), id=nextId("Q-2026-",QS()), d=fromIso(f.get("need"));
+  QS().unshift({id,agent:me().name,pid,name:p.name,opt:p.opts.map(o=>o[0]+": "+f.get("o_"+o[0])).join(", "),text:f.get("text"),need:d?fmtD(d,true):"",listing:f.get("listing")||"",status:"Requested",amount:0,basis:"",order:"",placed:TODAY,updates:[TODAY+": Request received. Marketing will send a written quote."]});
+  toast("Quote request "+id+" sent to marketing."); go("shop",{shopView:"orders",quote:id}); return false; }
+function quoteList(){ const mine=QS().filter(q=>q.agent===me().name); if(!mine.length) return "";
+  return `<div class="panel quotes" style="margin-bottom:22px"><h3>Quotes ${sampleTag("Simulated")}</h3>${mine.map(q=>`<div class="qrow"><div><div class="t">${q.id} &middot; ${q.name} <span class="chip ${QCHIP[q.status]}">${q.status}</span></div><div class="small muted">${[q.opt,q.need?"Needed by "+q.need:""].filter(Boolean).join(" &middot; ")}</div><div class="small">${q.text}</div><div class="small muted">${q.updates[q.updates.length-1]}</div></div><div class="qact">${q.status==="Quoted"?`<div class="amt">${money(q.amount)}</div><div class="small muted">${q.basis}</div><div class="actions"><button class="btn small" onclick="quoteAct('${q.id}',1)">Accept the quote</button><button class="btn quiet small" onclick="quoteAct('${q.id}',0)">Decline</button></div>`:q.status==="Accepted"?`<div class="amt">${money(q.amount)}</div><a href="#" class="small" onclick="go('shop',{shopView:'orders',order:'${q.order}'});return false">Order ${q.order}</a>`:q.status==="Declined"?`<div class="small muted">Declined</div>`:`<div class="small muted">Waiting on marketing</div>`}</div></div>`).join("")}</div>`; }
+function quoteAct(id,yes){ const q=QS().find(x=>x.id===id); if(!q||q.status!=="Quoted") return;
+  if(!yes){ q.status="Declined"; q.updates.push(TODAY+": You declined the quote. Nothing was charged."); toast("Quote declined."); soft(); return; }
+  const o=createOrder([{pid:q.pid,name:q.name,opt:"Quote "+q.id+(q.basis?", "+q.basis:""),qty:1,price:q.amount,per:"as quoted",custom:q.text,listing:q.listing,kit:""}],{pay:"statement",listing:q.listing});
+  q.status="Accepted"; q.order=o.id; q.updates.push(TODAY+": You accepted the quote. Order "+o.id+" was created."); toast("Quote accepted. Order "+o.id+" is placed."); go("shop",{shopView:"orders",order:o.id}); }
+function comQuotes(){ const qs=QS(), open=qs.filter(q=>q.status==="Requested").length;
+  return `<div class="panel" style="margin-top:26px"><h3>Quote requests ${sampleTag("Simulated")}</h3><p class="lead">Custom and scoped work is quoted here before it becomes an order. ${open?open+" waiting on a quote.":"Nothing is waiting on a quote."}</p><div class="scrollx"><table class="fin"><thead><tr><th>Quote</th><th>Agent</th><th>Request</th><th>Needed by</th><th>Status</th><th>Amount</th></tr></thead><tbody>${qs.map(q=>{ const p=prod(q.pid)||{}; return `<tr><td>${q.id}<span class="csub">${q.placed}</span></td><td>${q.agent}</td><td class="w">${q.name}${q.opt?`<span class="csub">${q.opt}</span>`:""}<span class="csub">${q.text}</span></td><td>${q.need||""}</td><td><span class="chip ${QCHIP[q.status]}">${q.status}</span></td><td class="w">${q.status==="Requested"?`<form class="qform" onsubmit="return comQuote(event,'${q.id}')"><label>Hours<input name="hours" inputmode="decimal" value=""></label><label>Hourly rate<input name="rate" inputmode="decimal" value="${p.hourly||""}"></label><label>Or a fixed amount<input name="flat" inputmode="decimal" value=""></label><button class="btn small" type="submit">Send the quote</button></form>`:money(q.amount)+`<span class="csub">${q.basis}</span>`+(q.order?`<span class="csub">Order ${q.order}</span>`:"")}</td></tr>`; }).join("")}</tbody></table></div></div>`; }
+function comQuote(e,id){ e.preventDefault(); const f=formData(e.target), q=QS().find(x=>x.id===id), h=num(f.get("hours")), r=num(f.get("rate")), flat=num(f.get("flat")), amt=Math.round((flat||h*r)*100)/100;
+  if(!q||!(amt>0)){ toast("Enter hours and a rate, or a fixed amount."); return false; }
+  q.amount=amt; q.basis=flat?"Fixed project quote":h+" hours at "+money(r)+" an hour, sample rate"; q.status="Quoted"; q.updates.push(TODAY+": Marketing sent a quote of "+money(amt)+". "+q.basis+"."); toast("Quote sent to "+q.agent+"."); soft(); return false; }
+
+function kitNet(k){ const st=S.kitQty[k.id]||{q:{},o:[]}, f=1-(KIT_SAVE[k.id]||0); return k.items.reduce((t,[pid,q])=>t+Math.round(kitUnit(k,pid)*f*100)/100*(st.q[pid]!=null?st.q[pid]:q),0); }
+function kitSave(k){ return Math.round((kitValue(k)-kitNet(k))*100)/100; }
+function kitTotal(k){ return Math.round((kitNet(k)+kitUp(k))*100)/100; }
 
 render();
 </script>
