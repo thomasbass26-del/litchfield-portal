@@ -1683,6 +1683,28 @@ table.cmp .no{color:var(--line-strong)}
 @media (max-width:760px){ .qrow{flex-direction:column}.qrow .qact{text-align:left;min-width:0}.qrow .actions{justify-content:flex-start}.qform{grid-template-columns:1fr 1fr} }
 .m-magz b{font-size:15px;letter-spacing:.12em}
 .m-plan.cst b{font-size:19px}
+/* ---------- phase 2 ---------- */
+.m-folder .fcap{position:absolute;left:6%;right:6%;top:34%;text-align:center;color:#eadfc0;font-family:"Cormorant Garamond",Georgia,serif;font-size:15px;line-height:1.1}
+.sw{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:-4px}
+.sw button{width:24px;height:24px;border-radius:50%;border:1px solid #b9bfb9;padding:0;cursor:pointer;box-shadow:inset 0 0 0 2px #fff;flex:none}
+.sw button.on{outline:2px solid #1f4a3d;outline-offset:2px}
+.sw button:focus-visible{outline:2px solid #b89b5e;outline-offset:2px}
+.sw span{flex:1 1 200px}
+@media (min-width:761px){ #view td input[placeholder="Vendor"]{min-width:150px} .qform{min-width:380px} }
+.m-note.ctr{align-items:center;justify-content:center;text-align:center;gap:12%}.m-note.ctr .lg{margin:0;width:56%}
+.m-sheet.let small{margin-top:auto;font-size:6px;color:#8a938e;letter-spacing:.14em;text-transform:uppercase;text-align:center}
+.m-set{width:76%;height:70%;box-shadow:none}
+.m-set .a{position:absolute;left:0;top:0;width:62%;height:100%;background:#fff;padding:9%;display:flex;flex-direction:column;gap:7%;box-shadow:0 10px 24px rgba(0,0,0,.14)}
+.m-set .a .lg{width:72%;margin-bottom:8%}.m-set .a u{display:block;height:2px;background:#d9ddd8}.m-set .a u.s{width:60%}
+.m-set .b{position:absolute;right:0;bottom:6%;width:54%;height:40%;background:#fbf8f1;display:flex;align-items:center;justify-content:center;box-shadow:0 10px 24px rgba(0,0,0,.16)}.m-set .b .lg{width:64%}
+/* a long tab strip scrolls inside the page instead of widening it (tablet widths) */
+.main,#view{min-width:0}
+.tabs{max-width:100%}
+/* tablet landscape and small laptops: side-by-side panels stack when the main column is narrow */
+.split > *{min-width:0}
+@media (max-width:1180px) and (min-width:761px){ #view .split{grid-template-columns:minmax(0,1fr)} }
+@media (max-width:1340px) and (min-width:761px){ #view .split:has(input[placeholder="Vendor"]){grid-template-columns:minmax(0,1fr)} }
+@media (min-width:761px){ #view .tw{max-width:100%;overflow-x:auto} }
 </style>
 </head>
 <body>
@@ -3025,7 +3047,7 @@ function shopProduct(){ const p=prod(S.sel.pid); if(!p) return shopHome(); const
       <div class="bigprice"><span id="punit">${money(p.price)}</span> <small>${p.px&&p.pxo==="Quantity"?"for the quantity selected":p.per}</small> ${sampleTag("Illustrative price")}${photoKey(p)?sampleTag("Sample image"):""}</div>
       <p class="small muted" style="margin-top:4px">${stockOf(p)}</p>${p.note?`<p class="small pnote">${p.note}</p>`:""}${p.f.includes("s")?`<p class="svcline">A purchased creative service. Listing Concierge coordination remains included by the brokerage. ${sampleTag("Proposed concept")}</p>`:""}
       <div class="form" style="margin-top:18px;max-width:480px">
-        ${p.opts.map((o,i)=>`<label>${o[0]}<select id="popt-${i}" onchange="pCalc()">${o[1].map(v=>`<option value="${v}">${optLabel(p,o[0],v)}</option>`).join("")}</select></label>`).join("")}
+        ${p.opts.map((o,i)=>`<label>${o[0]}<select id="popt-${i}" onchange="pCalc()">${o[1].map(v=>`<option value="${v}">${optLabel(p,o[0],v)}</option>`).join("")}</select></label>${o[0]==="Color"?swatches(i,o[1],!!photoKey(p)):""}`).join("")}
         <div><div class="lab">${p.px&&p.pxo==="Quantity"?"Sets of this quantity":"Quantity"}</div><span class="qty"><button type="button" aria-label="Fewer" onclick="pQty(-1,${p.price})">&minus;</button><span id="pqty" aria-live="polite">${q}</span><button type="button" aria-label="More" onclick="pQty(1,${p.price})">+</button></span>${p.price?` <span class="muted small" id="ptot" style="margin-left:10px">${money(p.price*q)} illustrative total</span>`:""}</div>
         ${p.f.includes("l")&&mine.length?`<label>For a listing project<select id="plist"><option value="">Not for a specific listing</option>${mine.map(l=>`<option value="${l.id}">${l.addr}</option>`).join("")}</select></label>`:""}
         ${p.pzfee?`<label class="check"><input type="checkbox" id="pzfee" onchange="pCalc()"> <span>Add personalization, ${money(p.pzfee)} each</span></label>`:""}${p.pz?pzForm(p.pz):""}
@@ -3564,6 +3586,25 @@ function comQuote(e,id){ e.preventDefault(); const f=formData(e.target), q=QS().
 function kitNet(k){ const st=S.kitQty[k.id]||{q:{},o:[]}, f=1-(KIT_SAVE[k.id]||0); return k.items.reduce((t,[pid,q])=>t+Math.round(kitUnit(k,pid)*f*100)/100*(st.q[pid]!=null?st.q[pid]:q),0); }
 function kitSave(k){ return Math.round((kitValue(k)-kitNet(k))*100)/100; }
 function kitTotal(k){ return Math.round((kitNet(k)+kitUp(k))*100)/100; }
+// ---------- phase 2: imagery standardized, color swatches ----------
+["k_newagent","k_launch","k_openhouse","k_farming","k_client","k_executive","k_luxury","cat_brand","cat_growth"].forEach(k=>{ delete PHOTOS[k]; });
+MOCK2.folders=p=>{ const cap=p&&p.id==="lpfolders"?"Listing Presentation":p&&p.id==="mfolders"?(me()||{name:""}).name:""; return `<div class="mock m-folder"><img class="lg" src="${LOGO}" alt="">${cap?`<span class="fcap">${cap}</span>`:""}</div>`; };
+function catTrio(c){ const pick={brand:["cards","folders","ppost"],growth:["farm","hangers","hello"]}[c]; if(pick) return trio(pick.map(id=>prod(id))); const seen=new Set(); return trio(PRODUCTS.map(p=>prod(p.id)).filter(p=>p.cat===c&&!seen.has(p.art)&&seen.add(p.art))); }
+const SWATCH={Black:"#1c1c1c",White:"#ffffff","Marsh green":"#2f5d4e","Light blue":"#a9c4dd",Charcoal:"#3c4044","Heather gray":"#a3a7ab",Stone:"#cfc6b4",Natural:"#e8dfc9",Saddle:"#a6713f"};
+function swatches(i,vals,photo){ return `<div class="sw" role="group" aria-label="Color">${vals.map((v,n)=>`<button type="button" class="${n?"":"on"}" title="${v}" aria-label="${v}" style="background:${SWATCH[v]||"#ccc"}" onclick="swPick(${i},'${v}')"></button>`).join("")}${photo?`<span class="small muted">The photograph shows one color. Your selection is recorded on the order.</span>`:""}</div>`; }
+function swSync(){ document.querySelectorAll(".sw").forEach(g=>{ const s=g.previousElementSibling&&g.previousElementSibling.querySelector("select"); if(s) g.querySelectorAll("button").forEach(b=>b.classList.toggle("on",b.title===s.value)); }); }
+function swPick(i,v){ const s=document.getElementById("popt-"+i); if(s){ s.value=v; pCalc(); } }
+function pCalc(){ const p=prod(S.sel.pid); if(!p) return; const z=document.getElementById("pzfee"), u=unitFor(p,pSel(p),z&&z.checked), q=S.sel.qty||1, a=document.getElementById("punit"), t=document.getElementById("ptot"); if(a) a.textContent=money(u); if(t) t.textContent=money(u*q)+" illustrative total"; swSync(); }
+(function(){ const lg=()=>`<img class="lg" src="${LOGO}" alt="">`, nm=()=>(me()||{name:""}).name;
+  Object.assign(MOCK2,{
+    lhead:()=>`<div class="mock m-sheet let">${lg()}<u></u><u></u><u></u><u class="s"></u><small>The Litchfield Company</small></div>`,
+    ncard:()=>`<div class="mock m-note ctr">${lg()}<span>${nm()}</span></div>`,
+    icard:()=>`<div class="mock m-note"><b>A pleasure to meet you</b><span>${nm()}, Realtor</span>${lg()}</div>`,
+    stset:()=>`<div class="mock m-set"><div class="a">${lg()}<u></u><u></u><u class="s"></u></div><div class="b">${lg()}</div></div>`
+  });
+  ["p_notecards","a_letterhead","p_stationery","p_intro"].forEach(k=>{ delete PHOTOS[k]; });
+  Object.entries({letterhead:"lhead",notecards:"ncard",intro:"icard",stationery:"stset"}).forEach(([id,a])=>{ PROD[id].art=a; });
+})();
 
 render();
 </script>
