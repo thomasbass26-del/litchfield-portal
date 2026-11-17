@@ -1708,6 +1708,11 @@ table.cmp .no{color:var(--line-strong)}
 /* ---------- phase 3 ---------- */
 .proofbox{border:1px solid #cfd3cd;background:#fbf8f1;padding:14px 16px;margin-top:14px}
 .proofbox .t{font-weight:600}.proofbox form.inline{margin-top:10px}
+/* ---------- phase 6: contrast ---------- */
+.lx-steps span,.wsteps .no{color:#86703f}
+.age.late{color:#a04f38}
+#view [role="button"]:focus-visible{outline:2px solid #b89b5e;outline-offset:2px}
+#view .grid > *,#view .panel{min-width:0}
 </style>
 </head>
 <body>
@@ -3645,6 +3650,11 @@ function comLedger(){ const by={}; S.orders.forEach(o=>{ const r=by[o.agent]||(b
   return `<div class="panel" id="ledger" style="margin-top:26px;padding:0"><h3 class="pad">Charges posted to agent statements ${fict("Illustrative")}</h3><div class="scrollx"><table class="fin"><thead><tr><th>Agent</th><th>Orders</th><th>Charged to statement</th><th>Paid at checkout</th><th>Refunds and credits</th><th>Net</th></tr></thead><tbody>${Object.entries(by).map(([a,r])=>`<tr><td>${a}</td><td>${r.n}</td><td>${money(r.st)}</td><td>${money(r.pd)}</td><td>${money(r.cr?-r.cr:0)}</td><td>${money(r.st+r.pd-r.cr)}</td></tr>`).join("")}</tbody></table></div><p class="fine" style="padding:0 18px 16px">Agent Collection orders only. Commission and brokerage fee records are not shown here.</p></div>`; }
 function comAnnual(){ const s=comStats(), pc=s.subs.reduce((t,x,i)=>t+(x.n||0)*((PROGRAMS[i]||{}).cost||0),0), opex=(CS().sim.opex||0)*12, gp=s.gp*2, pcon=(s.mrr-pc)*12, net=gp+pcon-opex, row=(a,b,c)=>`<tr${c?' class="tot"':""}><td>${a}</td><td>${b}</td></tr>`;
   return `<div class="panel" id="annual" style="grid-column:1 / -1;padding:0"><h3 class="pad">Annual view ${fict("Illustrative run rate")}</h3><div class="scrollx"><table class="fin"><tbody>${row("Average monthly merchandise sales",money(s.rev/6))}${row("Annualized merchandise sales",money(s.rev*2))}${row("Annualized merchandise gross profit",money(gp))}${row("Annual recurring program revenue",money(s.mrr*12))}${row("Annual program contribution after fulfillment",money(pcon))}${row("Operating expenses, from the simulator setting",money(-opex))}${row("Estimated operating contribution",money(net),1)}</tbody></table></div><p class="fine" style="padding:0 18px 16px">Six months of sample sales doubled. Program fees are counted once, under programs, and never in merchandise sales. Revenue, gross profit, and operating contribution are shown separately. These are scenarios, not results or forecasts.</p></div>`; }
+// ---------- phase 6: keyboard reach and field names for every control ----------
+function kbFix(){ document.querySelectorAll('#view [onclick]').forEach(e=>{ if(!['BUTTON','A','INPUT','SELECT','LABEL','SUMMARY','TEXTAREA','FORM'].includes(e.tagName)&&e.getAttribute('tabindex')==null){ e.setAttribute('tabindex','0'); if(!e.getAttribute('role')) e.setAttribute('role','button'); } });
+  document.querySelectorAll('#view input, #view select, #view textarea').forEach(e=>{ if(e.type==='hidden'||e.getAttribute('aria-label')||e.getAttribute('aria-labelledby')||e.closest('label')||(e.id&&document.querySelector('label[for="'+e.id+'"]'))) return; const td=e.closest('td'), kv=e.parentElement&&e.parentElement.previousElementSibling, k=kv&&kv.textContent.trim(); e.setAttribute('aria-label',e.placeholder||(td&&td.getAttribute('data-label'))||(k&&k.length<40?k:'')||e.name||'Field'); }); }
+try{ new MutationObserver(()=>kbFix()).observe(document.getElementById('view'),{childList:true,subtree:true});
+  document.addEventListener('keydown',e=>{ const t=e.target; if((e.key==='Enter'||e.key===' ')&&t&&t.getAttribute&&t.getAttribute('role')==='button'&&t.tagName!=='BUTTON'&&t.hasAttribute('onclick')&&!t.hasAttribute('onkeydown')){ e.preventDefault(); t.click(); } }); }catch(err){}
 
 render();
 </script>
