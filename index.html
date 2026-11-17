@@ -1705,6 +1705,9 @@ table.cmp .no{color:var(--line-strong)}
 @media (max-width:1180px) and (min-width:761px){ #view .split{grid-template-columns:minmax(0,1fr)} }
 @media (max-width:1340px) and (min-width:761px){ #view .split:has(input[placeholder="Vendor"]){grid-template-columns:minmax(0,1fr)} }
 @media (min-width:761px){ #view .tw{max-width:100%;overflow-x:auto} }
+/* ---------- phase 3 ---------- */
+.proofbox{border:1px solid #cfd3cd;background:#fbf8f1;padding:14px 16px;margin-top:14px}
+.proofbox .t{font-weight:600}.proofbox form.inline{margin-top:10px}
 </style>
 </head>
 <body>
@@ -2167,7 +2170,7 @@ function signOut(){ document.getElementById("signin").classList.remove("leaving"
 function setMode(m){ S.mode=m; S.page = m==="staff"?"today":"home"; render(); }
 // older page names still work: they open the matching tab in the new sections
 const ALIAS = {docs:["res",{resTab:"docs"}],content:["res",{resTab:"content"}],dues:["fin",{finTab:"home",stmt:""}],numbers:["fin",{finTab:"numbers",stmt:""}],directory:["help",{helpTab:"who"}],myconcierge:["lc",{lcTab:"tx",lcView:""}],print:["shop",{shopView:"home"}]};
-function go(p,extra){ if(ALIAS[p]){ extra=Object.assign({},ALIAS[p][1],extra); p=ALIAS[p][0]; } S.page=p; if(extra) Object.assign(S.sel,extra); render.top=true; render(); }
+function go(p,extra){ if(ALIAS[p]){ extra=Object.assign({},ALIAS[p][1],extra); p=ALIAS[p][0]; } if(S.mode==="agent"&&STAFF_ONLY.includes(p)) p="home"; S.page=p; if(extra) Object.assign(S.sel,extra); render.top=true; render(); }
 function render(){
   const c=counts();
   document.getElementById("asStaff").classList.toggle("on",S.mode==="staff");
@@ -3102,7 +3105,7 @@ function orderDetail(o,staff){ const l=o.listing&&listing(o.listing);
     ${o.agentNote?`<p class="small" style="margin-top:10px"><span class="muted">Note from the agent:</span> ${o.agentNote}</p>`:""}
     ${staff?`<h3 style="margin-top:18px">Internal notes <span class="muted small">staff only</span></h3><div class="timeline">${(o.notes||[]).length?o.notes.map(u=>`<div class="tl done"><div class="dot"></div><div>${u}</div></div>`).join(""):`<p class="muted small">No notes yet.</p>`}</div><form onsubmit="return orderNote(event,'${o.id}')" class="inline"><input name="u" placeholder="Note for the team. The agent never sees this." required aria-label="Internal note"><button class="btn quiet small" type="submit">Add note</button></form>`:""}
     <h3 style="margin-top:18px">Updates ${staff?`<span class="muted small">the agent sees these</span>`:""}</h3><div class="timeline">${o.updates.map(u=>`<div class="tl done"><div class="dot"></div><div>${u}</div></div>`).join("")}</div>
-    ${staff?`<form onsubmit="return orderUpdate(event,'${o.id}')" class="inline"><input name="u" placeholder="Proof sent, ready for pickup, shipped..." required aria-label="Update for the agent"><button class="btn small" type="submit">Send update to agent</button></form>`:`<div class="actions" style="margin-top:12px"><button class="btn quiet small" onclick="reorder('${o.id}')">Order these again</button></div>`}</div>`; }
+    ${staff?`<form onsubmit="return orderUpdate(event,'${o.id}')" class="inline"><input name="u" placeholder="Proof sent, ready for pickup, shipped..." required aria-label="Update for the agent"><button class="btn small" type="submit">Send update to agent</button></form>`:`${proofActions(o)}<div class="actions" style="margin-top:12px"><button class="btn quiet small" onclick="reorder('${o.id}')">Order these again</button></div>`}</div>`; }
 function shopOrders(){ const mine=S.orders.filter(o=>o.agent===me().name), o=mine.find(x=>x.id===S.sel.order)||mine[0];
   return `<div class="pagehead"><div><div class="eyebrow">The Agent Collection</div><h1>My Purchases</h1><p>Every order, each quote, and each update from marketing.</p></div></div>${quoteList()}${mine.length?`<div class="split"><div class="list">${mine.map(x=>`<div class="item ${x.id===o.id?"on":""}" onclick="S.sel.order='${x.id}';soft()"><div class="t">${x.id} <span class="muted small">${x.placed}</span></div><div class="m"><span>${x.items.length} ${x.items.length>1?"items":"item"}, ${money(x.total)}</span>${ochip(x)}</div></div>`).join("")}</div>${orderDetail(o,false)}</div>`:`<div class="panel"><div class="empty">No purchases yet. The Collection is ready when you are.</div></div>`}`; }
 function reorder(id){ const o=S.orders.find(x=>x.id===id); o.items.forEach(i=>S.cart.push(Object.assign({},i,{listing:""}))); toast("Added to your cart."); go("shop",{shopView:"cart"}); }
@@ -3539,7 +3542,7 @@ function perOf(p,tier){ return p.px&&p.pxo==="Quantity"?(tier?"for "+tier:""):p.
 function addProduct(pid){ const p=prod(pid), z=S.pz, sel=pSel(p), fee=document.getElementById("pzfee"), on=!p.pzfee||!!(fee&&fee.checked);
   const opt=p.opts.map(o=>o[0]+": "+sel[o[0]]).concat(p.pzfee&&on?["Personalization, add "+money(p.pzfee)+" each"]:[]).join(", ");
   const custom=p.pz&&on?PZF[p.pz].map(k=>z[k]).filter(Boolean).join(", "):"", ls=document.getElementById("plist");
-  S.cart.push({pid,name:p.name,opt,qty:S.sel.qty||1,price:unitFor(p,sel,!!p.pzfee&&on),per:perOf(p),custom,listing:ls?ls.value:"",kit:""}); S.sel.qty=1; render.bump=true; toast(p.name+" added to your cart."); soft(); }
+  cartPut({pid,name:p.name,opt,qty:S.sel.qty||1,price:unitFor(p,sel,!!p.pzfee&&on),per:perOf(p),custom,listing:ls?ls.value:"",kit:""}); S.sel.qty=1; render.bump=true; toast(p.name+" added to your cart."); soft(); }
 function priceTag(p){ return p.q?"Request a quote":p.price?(p.px?"From ":"")+money(p.price)+` <small>${p.per}</small>`:"Quoted"; }
 function pcard(p){ p=prod(p.id); const tag=stockOf(p)==="Out of stock"?"Unavailable":p.f.includes("r")?"Program":p.f.includes("s")?"Service":p.f.includes("n")?"New":p.f.includes("p")?"Agent favorite":""; return `<div class="pcard" data-q="${pq(p)}" ${clk(p.f.includes("r")?`go('shop',{shopView:'programs',pgPick:'${p.id.slice(2)}'})`:`go('shop',{shopView:'product',pid:'${p.id}',qty:1})`)}>${tag?`<span class="ptag">${tag}</span>`:""}<span class="pimg">${productArt(p)}</span><span class="pbody"><span class="pname">${p.name}</span><span class="pprice">${priceTag(p)}</span></span></div>`; }
 function leadOf(p){ if(p.lead) return p.lead; const sign=["yardsign","rider","riders","openhouse","arrow","qr","box","banner"].includes(p.art); return p.f.includes("r")?"Starts with the next monthly cycle":p.f.includes("s")?"Scheduled with marketing after checkout":sign?"7 to 10 business days after proof approval":p.cat==="apparel"?"10 to 12 business days":p.cat==="gifts"?"3 to 5 business days":"5 to 7 business days after proof approval"; }
@@ -3605,6 +3608,21 @@ function pCalc(){ const p=prod(S.sel.pid); if(!p) return; const z=document.getEl
   ["p_notecards","a_letterhead","p_stationery","p_intro"].forEach(k=>{ delete PHOTOS[k]; });
   Object.entries({letterhead:"lhead",notecards:"ncard",intro:"icard",stationery:"stset"}).forEach(([id,a])=>{ PROD[id].art=a; });
 })();
+
+// ---------- phase 3: agent workflows ----------
+const STAFF_ONLY = ["today","concierge","orders","requests","onboarding","agents","library","announce","txfiles"];
+function sameLine(a,b){ return a.pid===b.pid&&a.opt===b.opt&&a.custom===b.custom&&a.listing===b.listing&&(a.kit||"")===(b.kit||"")&&!a.program&&!b.program&&a.price===b.price; }
+function cartPut(line){ const hit=S.cart.find(i=>sameLine(i,line)); if(hit) hit.qty+=line.qty; else S.cart.push(line); return !!hit; }
+function reorder(id){ const o=S.orders.find(x=>x.id===id); let n=0, skip=0;
+  o.items.forEach(i=>{ const p=prod(i.pid); if(!p||p.q||i.program||stockOf(p)==="Out of stock"){ skip++; return; }
+    const sel={}; String(i.opt||"").split(", ").forEach(x=>{ const k=x.indexOf(": "); if(k>0) sel[x.slice(0,k)]=x.slice(k+2); });
+    let opt=i.opt||""; if(p.px&&!sel[p.pxo]) opt=[p.pxo+": "+p.px[0][0],opt].filter(Boolean).join(", ");
+    cartPut(Object.assign({},i,{opt,price:unitFor(p,sel,/Personalization/.test(opt)),per:perOf(p),listing:"",kit:""})); n++; });
+  toast(n?n+(n>1?" items":" item")+" added at the current sample prices."+(skip?" "+skip+" could not be reordered.":""):"These items cannot be reordered. Request a new quote instead."); go("shop",{shopView:"cart"}); }
+function proofActions(o){ if(flowOf(o)!=="approval") return "";
+  return `<div class="proofbox"><div class="t">A proof is ready for your approval</div><p class="small muted">Review the proof marketing sent, then approve it or ask for a change. Nothing is produced until you approve.</p><div class="actions"><button class="btn small" onclick="proofOk('${o.id}')">Approve the proof</button></div><form class="inline" onsubmit="return proofChange(event,'${o.id}')"><input name="c" required placeholder="What should change" aria-label="Requested change"><button class="btn quiet small" type="submit">Request a change</button></form></div>`; }
+function proofOk(id){ const o=S.orders.find(x=>x.id===id); if(!o||flowOf(o)!=="approval") return; o.flow="vendor"; o.stage=2; o.updates.push(TODAY+": You approved the proof. It is now with the supplier."); (o.notes=o.notes||[]).push(TODAY+": The agent approved the proof in the portal."); toast("Proof approved. "+o.id+" moves to production."); soft(); }
+function proofChange(e,id){ e.preventDefault(); const f=formData(e.target), o=S.orders.find(x=>x.id===id); if(!o) return false; o.flow="review"; o.stage=0; o.revision=(o.revision||0)+1; o.updates.push(TODAY+": You asked for a change: "+f.get("c")); (o.notes=o.notes||[]).push(TODAY+": Change requested by the agent: "+f.get("c")); toast("Change request sent to marketing."); soft(); return false; }
 
 render();
 </script>
