@@ -1913,6 +1913,12 @@ tr.dim td{opacity:.6}#libtable td.acts{white-space:nowrap}#libtable td.acts .btn
   .yday{grid-template-columns:1fr;gap:28px;margin-bottom:30px}.ydl li{flex-direction:column;gap:3px;padding:13px 0}.ydl li i{text-align:left}.wcont{margin-bottom:30px}.wcl{flex-direction:column}.wcc{gap:14px}.wcc .scta{display:none}.wcc::after{content:"\203A";font-size:24px;line-height:1;color:var(--mute);flex:none}.wcc .wct b{font-size:19px}
   .wmore{justify-content:flex-start;gap:4px 24px}.wmore a{padding:9px 0}.wdemo{text-align:left}.calm{padding:10px 0 22px}.calm h1{font-size:36px}.schoices{grid-template-columns:1fr;gap:12px}.schoice{padding:18px}.schoice b{font-size:20px}}
 @media (prefers-reduced-motion:reduce){.sigc,.schoice{transition:none}.sigc:hover,.schoice:hover{transform:none}}
+/* phone: comfortable touch targets on the welcome pages and the quiet links around them */
+@media (max-width:760px){.ghead a.small,.crumbs a,.wdemo a{display:inline-block;padding:13px 0;margin:-13px 0}.wlc .wlink{margin-top:6px}.wlc .wlink a{display:inline-block;border-bottom:0;text-decoration:underline;text-underline-offset:6px;padding:14px 0}.wmore a{padding:13px 0}.supnote a{display:inline-block;padding:10px 0}#view .item>.small>a{display:inline-block;padding:10px 0}}
+/* tablets and phones on their side: the agent navigation becomes one compact row, so the page starts on the first screen */
+@media (min-width:761px) and (max-width:980px){.rail:not(:has(.navgroup)){padding:14px 22px 8px;align-items:center}.rail:not(:has(.navgroup)) .brand{display:flex;align-items:center;gap:16px;flex:1 1 100%;padding:0;margin:0;border:0}.rail:not(:has(.navgroup)) .raillogo{width:210px}.rail:not(:has(.navgroup)) .brand .sub{margin:0 !important}.rail:not(:has(.navgroup)) .navs{flex:1 1 100%;flex-direction:row;flex-wrap:wrap;gap:2px;margin-top:8px}.rail:not(:has(.navgroup)) .navs button{width:auto;padding:8px 12px;font-size:14px}}
+@media (max-width:360px){.sigc .scta{letter-spacing:.08em;font-size:11.5px}.sigc .simg{width:88px}.sigc .sbody{padding:14px 14px 14px 16px}}
+@media (min-width:761px) and (max-width:830px){.rail:not(:has(.navgroup)) .navs button{padding:8px 8px;font-size:13.5px}}
 </style>
 </head>
 <body>
@@ -5282,7 +5288,7 @@ Object.keys(PAGES).forEach(k=>{ if(!STAFF_ONLY.includes(k)&&!NAV.staff.some(n=>n
 // ---------- The agent welcome: a calm homepage, three signature experiences, and one Resources and Support destination ----------
 function WEL(){ return S.wel||(S.wel={first:false}); }
 NAV.agent = [["home","Home"],["lc","Listing Concierge"],["shop","The Agent Collection"],["fin","Financial Center"],["support","Resources &amp; Support"],["profile","My Profile"]];
-SHORT.support="Support"; ICONS.support=ICONS.help;
+SHORT.support="Support"; ICONS.support=ICONS.help; TABS.agent=["home","lc","shop","support"];
 ICONS.w_phone='<path d="M6 4h3.5l1.6 4.2-2.1 1.4a10.5 10.5 0 0 0 5.4 5.4l1.4-2.1L20 14.5V18a2 2 0 0 1-2 2A14 14 0 0 1 4 6a2 2 0 0 1 2-2z"/>';
 ICONS.w_building='<path d="M4 20h16"/><path d="M6.5 20V6.5L12 4l5.5 2.5V20"/><path d="M10 10h.01M14 10h.01M10 14h.01M14 14h.01"/>';
 ICONS.w_image='<rect x="4" y="5" width="16" height="14" rx="1.5"/><path d="M4 16l4.5-4.5 3.5 3.5 2.5-2.5L20 17"/><circle cx="15" cy="9.5" r="1.2"/>';
