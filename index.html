@@ -1727,6 +1727,44 @@ label .inline{display:flex;gap:8px;align-items:center}label .inline select{flex:
 @media (max-width:760px){ .sens{grid-template-columns:minmax(0,1fr)} .tw table.pm td{text-align:left} }
 label .inline{min-width:0}label .inline select{flex:1 1 0;width:0;min-width:0}
 #stafftable td{vertical-align:top}#stafftable .btn{margin:0 4px 6px 0}
+/* ---- Staff Command Center: grouped navigation, dashboard, work queues, activity log ---- */
+.askbox h3{margin:0 0 8px}.askbox p{margin:0 0 18px;line-height:1.55}
+.mecard{display:flex;align-items:center;gap:16px;flex-wrap:wrap}.mecard > div:nth-child(2){flex:1;min-width:220px}.mecard .t{font-size:18px;font-weight:500}
+.av.lg{width:52px;height:52px;font-size:18px}
+.mytiles .stat.link{transition:border-color .2s var(--ease),transform .2s var(--ease)}.mytiles .stat.link:hover{border-color:var(--gold,#c9b684);transform:translateY(-1px)}
+h2.sech{font-family:var(--serif,inherit);font-size:22px;font-weight:500;margin:34px 0 14px}
+.wbar{display:flex;gap:14px 18px;align-items:center;flex-wrap:wrap;margin:4px 0 14px}.wbar label.inl{display:flex;align-items:center;gap:8px;font-size:13.5px;color:var(--mute)}.wbar select{width:auto;min-width:150px}
+@media (min-width:761px){.wtabs{flex-wrap:wrap}}
+#worktable tr.row{cursor:pointer}#worktable tr.row:hover td,#worktable tr.row:focus-visible td{background:rgba(31,77,63,.045)}
+#audtable .was{color:var(--mute);text-decoration:line-through;text-decoration-color:rgba(0,0,0,.25)}
+.prodnote{margin-top:22px;background:transparent;border-style:dashed}.prodnote h3{font-size:15px}
+#view input[readonly]{background:rgba(0,0,0,.035);color:var(--mute);cursor:not-allowed}
+.rail .navs{overflow-y:auto;min-height:0;scrollbar-width:thin}
+@media (min-width:981px){.rail .navgroup{display:block;padding:12px 10px 3px;font-size:10.5px}.rail .navs button.sub{padding:6px 10px 6px 14px;font-size:14px}.rail{padding-top:22px}}
+@media (max-width:760px){.wbar{gap:10px}.wbar label.inl{flex:1 1 150px}.wbar select{flex:1;min-width:0}.mecard .actions{width:100%}}
+@media (min-width:981px){
+  .rail .navs button.hid{display:none}
+  .rail button.navgroup{display:flex;width:100%;align-items:center;gap:8px;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:#8f9993;padding:12px 10px 5px;background:none;border-radius:var(--r)}
+  .rail button.navgroup:hover{color:#fff;background:none}.rail button.navgroup > span:first-child{flex:1;text-align:left}
+  .rail button.navgroup .car{width:6px;height:6px;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:rotate(-45deg);transition:transform .2s var(--ease);margin-right:4px}
+  .rail button.navgroup.open .car{transform:rotate(45deg)}
+  .rail button.navgroup:focus-visible{outline:1px solid #c9b684;outline-offset:-1px}
+}
+@media (min-width:981px){.mytiles .stat:nth-child(4n){border-right:0;margin-right:0}.mytiles .stat:nth-child(n+5){border-top:1px solid var(--line)}}
+@media (min-width:761px) and (max-width:980px){.mytiles .stat:nth-child(2n){border-right:0;margin-right:0}.rail:has(.navgroup) .navs button.navgroup{font-size:10.5px}}
+/* tablet: the staff navigation sits under the logo as one compact row of groups */
+@media (min-width:761px) and (max-width:980px){
+  .rail:has(.navgroup){padding:18px 22px 12px;align-items:center}
+  .rail:has(.navgroup) .raillogo{width:230px}
+  .rail:has(.navgroup) .navs{flex:1 1 100%;flex-direction:row;flex-wrap:wrap;gap:2px 2px;align-items:center;margin-top:8px}
+  .rail:has(.navgroup) .navs button{padding:7px 11px;font-size:14px}
+  .rail .navs button.hid{display:none}
+  .rail div.navgroup{display:none}
+  .rail button.navgroup{display:flex;align-items:center;gap:7px;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:#8f9993;padding:7px 9px}
+  .rail button.navgroup .car{width:5px;height:5px;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:rotate(-45deg)}
+  .rail button.navgroup.open{color:#c9b684}.rail button.navgroup.open .car{transform:rotate(45deg)}
+}
+.rail .navgroup,.rail button.navgroup{color:#aab4ae}
 </style>
 </head>
 <body>
@@ -2191,13 +2229,13 @@ function setMode(m){ S.mode=m; S.page = m==="staff"?"today":"home"; render(); }
 const ALIAS = {docs:["res",{resTab:"docs"}],content:["res",{resTab:"content"}],dues:["fin",{finTab:"home",stmt:""}],numbers:["fin",{finTab:"numbers",stmt:""}],directory:["help",{helpTab:"who"}],myconcierge:["lc",{lcTab:"tx",lcView:""}],print:["shop",{shopView:"home"}]};
 function go(p,extra){ if(ALIAS[p]){ extra=Object.assign({},ALIAS[p][1],extra); p=ALIAS[p][0]; } if(S.mode==="agent"&&STAFF_ONLY.includes(p)) p="home"; if(S.mode==="staff"&&typeof staffGate==="function"){ const g=staffGate(p,extra); if(g===false) return; p=g[0]; extra=g[1]; } S.page=p; if(extra) Object.assign(S.sel,extra); render.top=true; render(); }
 function render(){
-  const c=counts();
+  const c=counts(); navCounts(c);
   document.getElementById("asStaff").classList.toggle("on",S.mode==="staff");
   document.getElementById("asAgent").classList.toggle("on",S.mode==="agent");
   document.getElementById("whoLabel").textContent = S.mode==="staff"?"Litchfield staff":me().name+", "+me().office;
   document.getElementById("rail").innerHTML = `<div class="brand"><img src="${LOGO}" alt="The Litchfield Company, Christie's International Real Estate" class="raillogo"><div class="sub" style="margin-top:10px">${S.mode==="staff"?"Staff Command Center":"Agent portal"}</div></div>` +
-    `<div class="navs">`+NAV[S.mode].map(([k,l,g],i,a)=>(g&&(!i||a[i-1][2]!==g)?`<div class="navgroup">${g}</div>`:"")+`<button class="${S.page===k?"on":""}${g?" sub":""}" onclick="go('${k}')">${l}${c[k]?`<span class="n">${c[k]}</span>`:""}</button>`).join("")+`</div>` +
-    `<div class="spacer"></div><div class="who">${S.mode==="staff"?"Signed in as staff":"Signed in as "+me().name}<br><button style="padding:4px 0;font-size:12.5px" onclick="signOut()">Sign out</button></div>`;
+    `<div class="navs">`+navList().map(([k,l,g],i,a)=>(g&&(!i||a[i-1][2]!==g)?navGroup(g,c):"")+`<button class="${navOn(k)?"on":""}${g?" sub":""}${navHid(g)?" hid":""}" onclick="go('${k}')">${l}${c[k]?`<span class="n">${c[k]}</span>`:""}</button>`).join("")+`</div>` +
+    `<div class="spacer"></div><div class="who">${"Signed in as "+(S.mode==="staff"?actor().name:me().name)}<br><button style="padding:4px 0;font-size:12.5px" onclick="signOut()">Sign out</button></div>`;
   if(!PAGES[S.page]) S.page=S.mode==="staff"?"today":"home";
   document.getElementById("view").innerHTML = PAGES[S.page]();
   if(render.top){ const v=document.getElementById("view"); v.classList.remove("enter"); void v.offsetWidth; v.classList.add("enter"); }
@@ -2228,14 +2266,14 @@ const ICONS = {
 };
 function ico(k){ return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICONS[k]||ICONS.more}</svg>`; }
 function renderTabs(c){
-  const labels=Object.fromEntries(NAV[S.mode].map(([k,l])=>[k,l])); const main=TABS[S.mode];
-  const moreOn=!main.includes(S.page);
-  document.getElementById("tabbar").innerHTML = main.map(k=>`<button class="${S.page===k?"on":""}" onclick="go('${k}')">${ico(k)}<span>${SHORT[k]||labels[k]}</span>${c[k]?`<i class="dot"></i>`:""}</button>`).join("")
+  const labels=Object.fromEntries(NAV[S.mode].map(([k,l])=>[k,l])); const main=TABS[S.mode].filter(k=>navList().some(n=>n[0]===k));
+  const moreOn=!main.some(navOn);
+  document.getElementById("tabbar").innerHTML = main.map(k=>`<button class="${navOn(k)?"on":""}" onclick="go('${k}')">${ico(k)}<span>${SHORT[k]||labels[k]}</span>${c[k]?`<i class="dot"></i>`:""}</button>`).join("")
     + `<button class="${moreOn?"on":""}" onclick="toggleSheet(true)">${ico("more")}<span>More</span></button>`;
   document.getElementById("sheetbox").innerHTML = `<div class="grab"></div><div class="sheethead"><img src="${LOGO}" alt="The Litchfield Company" class="sheetlogo"><button class="x" onclick="toggleSheet(false)" aria-label="Close">&times;</button></div>
-    <div class="sheetlist">${NAV[S.mode].map(([k,l,g],i,a)=>(g&&(!i||a[i-1][2]!==g)?`<div class="sheetgroup">${g}</div>`:"")+`<button class="${S.page===k?"on":""}" onclick="toggleSheet(false);go('${k}')">${l}${c[k]?`<span class="n">${c[k]}</span>`:""}</button>`).join("")}</div>
+    <div class="sheetlist">${navList().map(([k,l,g],i,a)=>(g&&(!i||a[i-1][2]!==g)?`<div class="sheetgroup">${g}</div>`:"")+`<button class="${navOn(k)?"on":""}" onclick="toggleSheet(false);go('${k}')">${l}${c[k]?`<span class="n">${c[k]}</span>`:""}</button>`).join("")}</div>
     <div class="sheetfoot"><div class="viewas">Viewing as <span class="seg"><button class="${S.mode==="staff"?"on":""}" onclick="toggleSheet(false);setMode('staff')">Staff</button><button class="${S.mode==="agent"?"on":""}" onclick="toggleSheet(false);setMode('agent')">Agent</button></span></div>
-    <div class="muted small" style="margin-top:10px">${S.mode==="staff"?"Signed in as staff":"Signed in as "+me().name}. Demo environment: sample data. <button class="resetbtn" onclick="tourStart()">Presentation mode</button> &middot; <button class="resetbtn" onclick="toggleSheet(false);resetDemo()">Reset demo</button></div>
+    <div class="muted small" style="margin-top:10px">${"Signed in as "+(S.mode==="staff"?actor().name:me().name)}. Demo environment: sample data. <button class="resetbtn" onclick="tourStart()">Presentation mode</button> &middot; <button class="resetbtn" onclick="toggleSheet(false);resetDemo()">Reset demo</button></div>
     <button class="signout" style="margin-top:12px" onclick="toggleSheet(false);signOut()">Sign out</button></div>`;
 }
 function toggleSheet(on){ document.getElementById("sheet").classList.toggle("open",on); }
@@ -3690,47 +3728,59 @@ const ROLE_DEF = [
 ];
 const SP = (id,name,title,dept,office,role,last,x) => Object.assign({id,name,title,dept,office,email:(name[0]+name.split(" ")[1]).toLowerCase()+"@example.com",role,status:"Active",add:[],rem:[],temp:[],last},x||{});
 const STAFF_SEED = [
-  SP("s1","Marcus Reyes","Director of Technology","Technology","Litchfield","super","Nov 17, updated a role"),
-  SP("s2","Elena Brandt","Operations Manager","Operations","Litchfield","brokadmin","Nov 17, assigned an inspection order"),
-  SP("s3","Hannah Whitlow","Marketing Manager","Marketing","Litchfield","mktmgr","Nov 17, changed a product price"),
-  SP("s4","Lydia Okafor","Marketing Coordinator","Marketing","Prince Creek","mktcoord","Nov 17, sent a proof",{temp:[{k:"pricing:v",until:"Nov 30, 2026"}]}),
+  SP("s1","Marcus Reed","Director of Technology","Technology","Litchfield","super","Nov 17, updated a role"),
+  SP("s2","Elena Brooks","Operations Manager","Operations","Litchfield","brokadmin","Nov 17, assigned an inspection order"),
+  SP("s3","Hannah Cole","Marketing Manager","Marketing","Litchfield","mktmgr","Nov 17, changed a product price"),
+  SP("s4","Lydia Park","Platform and Marketing Coordinator","Marketing","Prince Creek","mktcoord","Nov 17, sent a proof",{temp:[{k:"pricing:v",until:"Nov 30, 2026"}]}),
   SP("s5","Graham Pike","Inventory and Fulfillment Specialist","Fulfillment","Litchfield","inventory","Nov 16, counted paper stock"),
   SP("s6","Morgan Ellis","Concierge Manager","Concierge","Myrtle Beach","concmgr","Nov 17, scheduled photography"),
   SP("s7","Avery Lang","Concierge Specialist","Concierge","Prince Creek","conccoord","Nov 17, sent a deliverable for approval"),
   SP("s8","Riley Santos","Concierge Specialist","Concierge","Orangeburg","conccoord","Nov 14, closed a project"),
-  SP("s9","Priscilla Vance","Staff Accountant","Accounting","Litchfield","finance","Nov 15, reviewed statement charges"),
+  SP("s9","Joan Avery","Staff Accountant","Accounting","Litchfield","finance","Nov 15, reviewed statement charges"),
   SP("s10","Carmen Ruiz","Office Administrator","Operations","Myrtle Beach","office","Nov 17, answered a request"),
   SP("s11","Owen Teague","Reporting Analyst","Leadership","Litchfield","readonly","Nov 12, exported a report"),
   SP("s12","Nadia Holt","Marketing Coordinator","Marketing","Litchfield","mktcoord","Oct 30, last sign-in",{status:"Suspended"})
 ];
-const ST = () => S.staffx||(S.staffx={roles:JSON.parse(JSON.stringify(ROLE_DEF)),people:JSON.parse(JSON.stringify(STAFF_SEED)),view:"",log:[["Nov 17","Marcus Reyes","Gave Lydia Okafor temporary access to Pricing, view, until Nov 30, 2026"],["Nov 14","Marcus Reyes","Suspended the account for Nadia Holt"],["Nov 10","Elena Brandt","Moved Carmen Ruiz to the Myrtle Beach office"],["Nov 3","Marcus Reyes","Created the Inventory and Fulfillment Specialist role"]]});
+// sample dates move with the day the demo is opened; open orders and files get a sample owner and a sample due date
+function ST(){ if(!S.staffx){ const x=S.staffx={roles:JSON.parse(JSON.stringify(ROLE_DEF)),people:JSON.parse(JSON.stringify(STAFF_SEED)),view:""}, base=new Date(2026,10,17);
+    x.people.forEach(p=>{ p.last=p.last.replace(/^[A-Z][a-z]{2} \d+/,m=>dago(Math.round((base-parseD(m+", 2026"))/864e5))); p.temp.forEach(t=>{ t.until=fmtD(new Date(NOW.getTime()+13*864e5),true); }); });
+    S.orders.forEach(o=>{ if(o.stage>=4||o.refund) return; if(!o.assignee) o.assignee=["vendor","shipping","pickup"].includes(flowOf(o))?"Graham Pike":"Lydia Park"; const d=parseD(o.placed); if(d&&!o.due) o.due=fmtD(new Date(+d+9*864e5),true); });
+    S.files.forEach(f=>{ if(f.status!=="done"&&!f.owner) f.owner="Elena Brooks"; }); }
+  return S.staffx; }
 const roleOf = id => ST().roles.find(r=>r.id===id)||ST().roles[0];
 const roleKeys = r => { const k=[]; Object.entries(r.m||{}).forEach(([m,a])=>a.split("").forEach(c=>k.push(m+":"+c))); (r.s||[]).forEach(s=>k.push("s:"+s)); return k; };
 function effOf(p){ const k=new Set(roleKeys(roleOf(p.role))); (p.rem||[]).forEach(x=>k.delete(x)); (p.add||[]).forEach(x=>k.add(x)); (p.temp||[]).forEach(t=>k.add(t.k)); return k; }
 const viewer = () => { const x=S.staffx; return x&&x.view&&S.mode==="staff"?x.people.find(p=>p.id===x.view)||null:null; };
 function can(k){ const v=viewer(); return !v||!k||effOf(v).has(k); }
-const PAGE_MOD = {concierge:"concierge",txfiles:"concierge",orders:"orders",requests:"agents",onboarding:"agents",agents:"agents",library:"content",announce:"content",staffadmin:"staff"};
+const PAGE_MOD = {concierge:"concierge",txfiles:"concierge",orders:"orders",requests:"agents",onboarding:"agents",agents:"agents",library:"content",announce:"content",staffadmin:"staff",activity:"staff"};
 const TAB_NEED = {orders:"orders:v",catalog:"products:v",vendors:"products:v",programs:"promos:v",dash:"s:cofin",insights:"s:cofin",sim:"s:cofin",model:"s:cofin"}, TAB_MOD = {orders:"orders",catalog:"products",vendors:"products",programs:"promos",dash:"reports",insights:"reports",sim:"reports",model:"reports"};
-function pageOk(p){ if(!viewer()||p==="today") return true; if(p==="orders") return Object.values(TAB_NEED).some(k=>can(k)); const m=PAGE_MOD[p]; return m?can(m+":v"):true; }
+function pageOk(p){ if(!viewer()||p==="today"||p==="mywork") return true; if(p==="orders") return Object.values(TAB_NEED).some(k=>can(k)); const m=PAGE_MOD[p]; return m?can(m+":v"):true; }
 function staffGate(p,extra){ if(S.sel.sdirty&&(p!=="staffadmin"||(extra&&(("sTab" in extra&&extra.sTab!==(S.sel.sTab||"dir"))||("sEdit" in extra&&extra.sEdit!==S.sel.sEdit)||("sRole" in extra&&extra.sRole!==S.sel.sRole))))){ toast("Save or discard your changes first."); return false; }
   if(!pageOk(p)) p="today";
   if(p==="orders"&&viewer()){ const want=(extra&&extra.mTab)||S.sel.mTab||"dash"; if(!can(TAB_NEED[want])) extra=Object.assign({},extra,{mTab:Object.keys(TAB_NEED).find(t=>can(TAB_NEED[t]))}); }
   return [p,extra]; }
-STAFF_ONLY.push("staffadmin"); NAV.staff.push(["staffadmin","Staff"]);
+STAFF_ONLY.push("staffadmin","mywork","activity");
 const keyName = k => { const [m,a]=k.split(":"); return m==="s"?(SENS.find(x=>x[0]===a)||["",a])[1]:(MODS.find(x=>x[0]===m)||["",m])[1]+", "+(ACTS.find(x=>x[0]===a)||["",a])[1].toLowerCase(); };
-const sLog = what => ST().log.unshift([TODAY,"Administrator, demo",what]);
+const sLog = (action,rec,prev,next,why) => audit({cat:"Staff and access",action,rec,prev,next,why});
+// the signed-in employee: the person being previewed, or the first active Super Administrator
+const admin = () => ST().people.find(p=>p.role==="super"&&p.status==="Active")||ST().people[0];
+const actor = () => viewer()||admin();
+// the last Super Administrator cannot be suspended, archived, moved to another role, or stripped of staff access
+const otherSupers = id => ST().people.filter(p=>p.id!==id&&p.status==="Active"&&p.role==="super"&&effOf(p).has("s:perm")).length;
+const SUPER_NEED = ["s:perm","staff:v","staff:e"];
+const lastSuperMsg = "This is the last active Super Administrator. Give another employee that role first.";
 const inits2 = n => n.split(" ").map(w=>w[0]).join("").slice(0,2);
 function workOf(p){ const n=S.listings.filter(l=>l.coord===p.name&&l.st<5).length, r=p.role; return n?n+(n>1?" listing projects":" listing project"):r==="mktcoord"||r==="mktmgr"?S.orders.filter(o=>o.stage<4).length+" open orders":r==="office"||r==="brokadmin"?S.requests.filter(q=>q.status!=="done").length+" open requests":r==="inventory"?"Stock and purchasing":r==="finance"?"Statement review":"None assigned"; }
 PAGES.staffadmin = () => { const x=ST(), t=S.sel.sTab||"dir";
-  return `<div class="pagehead"><div><div class="eyebrow">Litchfield Staff Command Center</div><h1>Staff management ${sampleTag("Fictional staff")}</h1><p>Who is on the team, what each person can see, and what each person can do. Access here is simulated to show how permissions would behave. It is not security.</p></div></div>`+tabs([["dir","Staff directory",x.people.filter(p=>p.status==="Active").length],["roles","Roles and permissions"],["cmp","Compare roles"],["log","Activity"]],t,"sTab")+({dir:stDir,roles:stRoles,cmp:stCmp,log:stLog}[t]||stDir)(); };
+  return `<div class="pagehead"><div><div class="eyebrow">Litchfield Staff Command Center</div><h1>Staff management ${sampleTag("Fictional staff")}</h1><p>Who is on the team, what each person can see, and what each person can do. Access here is simulated to show how permissions would behave. It is not security.</p></div></div>`+tabs([["dir","Staff directory",x.people.filter(p=>p.status==="Active").length],["roles","Roles and permissions"],["cmp","Compare roles"]],t,"sTab")+({dir:stDir,roles:stRoles,cmp:stCmp}[t]||stDir)()+`<div class="panel prodnote"><h3>About these permissions</h3><p class="small">Every check on this page runs in the browser to show how access would behave. It is a demonstration and not a security control. In a production version each permission must be checked on the server before any record is returned or changed, with real sign-in behind it.</p></div>`; };
 const stChip = s => `<span class="chip ${s==="Active"?"done":s==="Suspended"?"waiting":"gray"}">${s}</span>`;
 function stDir(){ const x=ST(); if(S.sel.sEdit) return stEdit();
   return `<div class="actions" style="margin:6px 0 16px"><button class="btn quiet" onclick="S.sel.sAdd=S.sel.sAdd?'':'1';soft()">${S.sel.sAdd?"Close":"Add an employee"}</button></div>
   ${S.sel.sAdd?`<form class="panel form" style="margin-bottom:18px" onsubmit="return stAdd(event)"><div class="row3"><label>Name<input name="name" required autocomplete="off"></label><label>Job title<input name="title" required autocomplete="off"></label><label>Role<select name="role">${x.roles.map(r=>`<option value="${r.id}">${r.name}</option>`).join("")}</select></label></div><div class="row3"><label>Department<select name="dept">${SDEPTS.map(d=>`<option>${d}</option>`).join("")}</select></label><label>Office<select name="office">${SOFFICES.map(d=>`<option>${d}</option>`).join("")}</select></label><div class="actions" style="align-self:end"><button class="btn" type="submit">Create the profile</button></div></div><p class="fine">Creates a fictional profile in this demo. No account is provisioned and no email is sent.</p></form>`:""}
-  <div class="panel" style="padding:0"><div class="scrollx"><table class="fin" id="stafftable"><thead><tr><th>Employee</th><th>Department and office</th><th>Role</th><th>Access</th><th>Work and activity</th><th>Manage</th></tr></thead><tbody>${x.people.map(p=>{ const e=effOf(p), sn=[...e].filter(k=>k.startsWith("s:")).length, ch=p.add.length+p.rem.length; return `<tr><td class="w"><span class="who2"><span class="av">${inits2(p.name)}</span><span>${p.name}<span class="csub">${p.title}</span><span class="csub">${p.email}</span></span></span></td><td>${p.dept}<span class="csub">${p.office}</span></td><td>${roleOf(p.role).name}<span class="csub">${stChip(p.status)}</span></td><td>${e.size-sn} permissions, ${sn} sensitive${ch?`<span class="csub">${ch} individual ${ch>1?"changes":"change"}</span>`:""}${p.temp.length?`<span class="csub">Temporary access until ${p.temp[0].until}</span>`:""}</td><td>${p.status==="Active"?workOf(p):"None"}<span class="csub">${p.last}</span></td><td class="w"><button class="btn quiet small" onclick="stOpen('${p.id}')" aria-label="Edit ${p.name}">Edit</button> <button class="btn quiet small" onclick="stView('${p.id}')" aria-label="View the portal as ${p.name}">View as</button> ${p.status==="Active"?`<button class="btn quiet small" onclick="stStatus('${p.id}','Suspended')" aria-label="Suspend ${p.name}">Suspend</button>`:p.status==="Suspended"?`<button class="btn quiet small" onclick="stStatus('${p.id}','Active')" aria-label="Reactivate ${p.name}">Reactivate</button>`:""} ${p.status!=="Archived"?`<button class="btn quiet small" onclick="stStatus('${p.id}','Archived')" aria-label="Archive ${p.name}">Archive</button>`:""} <button class="btn quiet small" onclick="go('staffadmin',{sTab:'log',sWho:'${p.name}'})" aria-label="Activity for ${p.name}">History</button></td></tr>`; }).join("")}</tbody></table></div></div>`; }
-function stAdd(e){ e.preventDefault(); const f=formData(e.target), x=ST(), id="s"+(Math.max(...x.people.map(p=>+p.id.slice(1)))+1), name=String(f.get("name")).trim(), parts=name.split(" ");
-  x.people.push({id,name,title:f.get("title"),dept:f.get("dept"),office:f.get("office"),email:((parts[0]||"x")[0]+(parts[1]||parts[0]||"staff")).toLowerCase().replace(/[^a-z]/g,"")+"@example.com",role:f.get("role"),status:"Active",add:[],rem:[],temp:[],last:TODAY+", profile created"}); sLog("Created a profile for "+name+" as "+roleOf(f.get("role")).name); S.sel.sAdd=""; toast("Profile created for "+name+"."); soft(); return false; }
-function stStatus(id,s){ const p=ST().people.find(q=>q.id===id); if(S.staffx.view===id&&s!=="Active") S.staffx.view=""; p.status=s; p.last=TODAY+", account "+s.toLowerCase(); sLog((s==="Active"?"Reactivated":s==="Suspended"?"Suspended":"Archived")+" the account for "+p.name); toast(p.name+" is now "+s.toLowerCase()+"."); soft(); }
+  <div class="panel" style="padding:0"><div class="scrollx"><table class="fin" id="stafftable"><thead><tr><th>Employee</th><th>Department and office</th><th>Role</th><th>Access</th><th>Work and activity</th><th>Manage</th></tr></thead><tbody>${x.people.map(p=>{ const e=effOf(p), sn=[...e].filter(k=>k.startsWith("s:")).length, ch=p.add.length+p.rem.length; return `<tr><td class="w"><span class="who2"><span class="av">${inits2(p.name)}</span><span>${p.name}<span class="csub">${p.title}</span><span class="csub">${p.email}</span></span></span></td><td>${p.dept}<span class="csub">${p.office}</span></td><td>${roleOf(p.role).name}<span class="csub">${stChip(p.status)}</span></td><td>${e.size-sn} permissions, ${sn} sensitive${ch?`<span class="csub">${ch} individual ${ch>1?"changes":"change"}</span>`:""}${p.temp.length?`<span class="csub">Temporary access until ${p.temp[0].until}</span>`:""}</td><td>${p.status==="Active"?workOf(p):"None"}<span class="csub">${p.last}</span></td><td class="w"><button class="btn quiet small" onclick="stOpen('${p.id}')" aria-label="Edit ${p.name}">Edit</button> <button class="btn quiet small" onclick="stView('${p.id}')" aria-label="View the portal as ${p.name}">View as</button> ${p.status==="Active"?`<button class="btn quiet small" onclick="stStatus('${p.id}','Suspended')" aria-label="Suspend ${p.name}">Suspend</button>`:p.status==="Suspended"?`<button class="btn quiet small" onclick="stStatus('${p.id}','Active')" aria-label="Reactivate ${p.name}">Reactivate</button>`:""} ${p.status!=="Archived"?`<button class="btn quiet small" onclick="stStatus('${p.id}','Archived')" aria-label="Archive ${p.name}">Archive</button>`:""} <button class="btn quiet small" onclick="go('activity',{aWho:'${p.name}',aCat:'',aQ:''})" aria-label="Activity for ${p.name}">History</button></td></tr>`; }).join("")}</tbody></table></div></div>`; }
+function stAdd(e){ e.preventDefault(); if(!can("staff:a")){ deny("staff:a"); return false; } const f=formData(e.target), x=ST(), id="s"+(Math.max(...x.people.map(p=>+p.id.slice(1)))+1), name=String(f.get("name")).trim(), parts=name.split(" ");
+  x.people.push({id,name,title:f.get("title"),dept:f.get("dept"),office:f.get("office"),email:((parts[0]||"x")[0]+(parts[1]||parts[0]||"staff")).toLowerCase().replace(/[^a-z]/g,"")+"@example.com",role:f.get("role"),status:"Active",add:[],rem:[],temp:[],last:TODAY+", profile created"}); sLog("Employee added",name,"",roleOf(f.get("role")).name+", "+f.get("dept")+", "+f.get("office")); S.sel.sAdd=""; toast("Profile created for "+name+"."); soft(); return false; }
+function stStatus(id,s){ const p=ST().people.find(q=>q.id===id); if(!can("s:perm")){ deny("s:perm"); return; } if(s!=="Active"&&p.status==="Active"&&p.role==="super"&&!otherSupers(id)){ toast(lastSuperMsg); return; } if(s==="Archived"&&!confirmDo("Archive "+p.name+"? The profile and its history are kept, and the account can no longer be used.",()=>stStatus(id,s))) return; const was=p.status; if(S.staffx.view===id&&s!=="Active") S.staffx.view=""; p.status=s; p.last=TODAY+", account "+s.toLowerCase(); sLog(s==="Active"?"Account reactivated":s==="Suspended"?"Account suspended":"Employee archived",p.name,was,s); toast(p.name+" is now "+s.toLowerCase()+"."); soft(); }
 function stOpen(id){ const p=ST().people.find(q=>q.id===id); S.sel.sdraft=JSON.parse(JSON.stringify(p)); S.sel.sdirty=false; go("staffadmin",{sTab:"dir",sEdit:id}); }
 function stClose(){ S.sel.sdirty=false; S.sel.sdraft=null; S.sel.rdraft=null; go("staffadmin",{sEdit:""}); }
 function matrix(has,tog,dis){ return `<div class="scrollx"><table class="fin pm"><thead><tr><th>Module</th>${ACTS.map(a=>`<th>${a[1]}</th>`).join("")}</tr></thead><tbody>${MODS.map(m=>`<tr data-q="${m[1].toLowerCase()}"><td>${m[1]}</td>${ACTS.map(a=>{ const k=m[0]+":"+a[0]; return `<td><input type="checkbox" ${has(k)?"checked":""} ${dis?"disabled":""} onchange="${tog}('${k}',this.checked)" aria-label="${m[1]}, ${a[1]}"></td>`; }).join("")}</tr>`).join("")}</tbody></table></div><div class="sens">${SENS.map(s=>`<label class="check" data-q="${(s[1]+" "+s[2]).toLowerCase()}"><input type="checkbox" ${has("s:"+s[0])?"checked":""} ${dis?"disabled":""} onchange="${tog}('s:${s[0]}',this.checked)"> <span>${s[1]}<span class="csub">${s[2]}</span></span></label>`).join("")}</div>`; }
@@ -3749,8 +3799,18 @@ function stTog(k,on){ const d=S.sel.sdraft, base=new Set(roleKeys(roleOf(d.role)
 function stReset(){ const d=S.sel.sdraft; d.add=[]; d.rem=[]; d.scope=""; S.sel.sdirty=true; soft(); }
 function stTemp(e){ e.preventDefault(); const f=formData(e.target), k=f.get("k"); if(!k) return false; S.sel.sdraft.temp.push({k,until:fmtD(new Date(NOW.getTime()+(+f.get("days"))*864e5),true)}); S.sel.sdirty=true; soft(); return false; }
 function stTempDel(i){ S.sel.sdraft.temp.splice(i,1); S.sel.sdirty=true; soft(); }
-function stSave(){ const d=S.sel.sdraft, x=ST(), i=x.people.findIndex(p=>p.id===d.id), old=x.people[i]; d.last=TODAY+", access updated"; x.people[i]=JSON.parse(JSON.stringify(d));
-  sLog("Updated "+d.name+": "+[old.role!==d.role?"role to "+roleOf(d.role).name:"",d.add.length+d.rem.length?(d.add.length+d.rem.length)+" individual permission changes":"",d.temp.length!==old.temp.length?"temporary access":"",old.dept!==d.dept?"department to "+d.dept:"",old.office!==d.office?"office to "+d.office:""].filter(Boolean).join(", ")||"profile details"); S.sel.sdirty=false; toast("Saved. "+d.name.split(" ")[0]+"'s access is updated."); soft(); }
+function stSave(){ const d=S.sel.sdraft, x=ST(), i=x.people.findIndex(p=>p.id===d.id), old=x.people[i]; if(!can("s:perm")){ deny("s:perm"); return; }
+  if(old.role==="super"&&old.status==="Active"&&!otherSupers(d.id)&&(d.role!=="super"||SUPER_NEED.some(k=>!effOf(d).has(k)))){ toast(lastSuperMsg); return; }
+  if(!confirmDo("Save the access changes for "+d.name+"?",()=>stSave())) return;
+  const eo=effOf(old), en=effOf(d), plus=[...en].filter(k=>!eo.has(k)), minus=[...eo].filter(k=>!en.has(k)); d.last=TODAY+", access updated"; x.people[i]=JSON.parse(JSON.stringify(d));
+  if(old.role!==d.role) sLog("Staff role changed",d.name,roleOf(old.role).name,roleOf(d.role).name);
+  if(plus.length) sLog("Access granted",d.name,"",plus.map(keyName).join("; "));
+  if(minus.length) sLog("Access revoked",d.name,minus.map(keyName).join("; "),"");
+  if(old.dept!==d.dept) sLog("Department changed",d.name,old.dept,d.dept);
+  if(old.office!==d.office) sLog("Office changed",d.name,old.office,d.office);
+  if((old.scope||"")!==(d.scope||"")) sLog("Record scope changed",d.name,old.scope||roleOf(old.role).scope,d.scope||roleOf(d.role).scope);
+  if(old.name!==d.name||old.title!==d.title) sLog("Profile edited",d.name,old.name+", "+old.title,d.name+", "+d.title);
+  S.sel.sdirty=false; toast("Saved. "+d.name.split(" ")[0]+"'s access is updated."); soft(); }
 function stView(id){ const p=ST().people.find(q=>q.id===id); if(S.sel.sdirty){ toast("Save or discard your changes first."); return; } if(p.status!=="Active"){ toast(p.name+" is "+p.status.toLowerCase()+" and cannot sign in."); return; } S.sel.sdraft=null; S.sel.sEdit=""; ST().view=id; toast("Viewing the portal as "+p.name+"."); go("today"); }
 function stExit(){ ST().view=""; go("staffadmin",{sTab:"dir",sEdit:""}); }
 function stRoles(){ const x=ST(), id=S.sel.sRole||x.roles[0].id, r=S.sel.rdraft&&S.sel.rdraft.id===id?S.sel.rdraft:(S.sel.rdraft=JSON.parse(JSON.stringify(roleOf(id)))), keys=new Set(roleKeys(r)), ppl=x.people.filter(p=>p.role===id&&p.status!=="Archived");
@@ -3763,31 +3823,183 @@ function roleSet(k,v){ S.sel.rdraft[k]=v; S.sel.sdirty=true; if(k==="scope"||!do
 function roleTog(k,on){ const r=S.sel.rdraft, [m,a]=k.split(":"); if(m==="s"){ r.s=r.s.filter(x=>x!==a); if(on) r.s.push(a); } else { const cur=(r.m[m]||"").replace(a,""); r.m[m]=on?cur+a:cur; if(!r.m[m]) delete r.m[m]; } S.sel.sdirty=true; soft(); }
 function roleCopy(){ const src=roleOf(document.getElementById("rolecopy").value), r=S.sel.rdraft; r.m=JSON.parse(JSON.stringify(src.m)); r.s=src.s.slice(); S.sel.sdirty=true; toast("Copied from "+src.name+". Save to keep it."); soft(); }
 function roleReset(){ const def=ROLE_DEF.find(q=>q.id===S.sel.rdraft.id), r=S.sel.rdraft; r.m=def?JSON.parse(JSON.stringify(def.m)):{}; r.s=def?def.s.slice():[]; if(def){ r.scope=def.scope; } S.sel.sdirty=true; soft(); }
-function roleSave(){ const x=ST(), r=S.sel.rdraft, i=x.roles.findIndex(q=>q.id===r.id); x.roles[i]=JSON.parse(JSON.stringify(r)); sLog("Updated the "+r.name+" role"); S.sel.sdirty=false; toast("Saved. Everyone in "+r.name+" follows the new permissions."); soft(); }
+function roleSave(){ const x=ST(), r=S.sel.rdraft, i=x.roles.findIndex(q=>q.id===r.id); if(!can("s:perm")){ deny("s:perm"); return; }
+  if(r.id==="super"&&SUPER_NEED.some(k=>!roleKeys(r).includes(k))){ toast("The Super Administrator role has to keep staff access and permission management."); return; }
+  const n=x.people.filter(p=>p.role===r.id&&p.status==="Active").length; if(!confirmDo("Save the "+r.name+" role? "+(n?n+(n>1?" active employees follow":" active employee follows")+" this role.":"No one is in this role yet."),()=>roleSave())) return;
+  const ko=new Set(roleKeys(x.roles[i])), kn=new Set(roleKeys(r)), plus=[...kn].filter(k=>!ko.has(k)), minus=[...ko].filter(k=>!kn.has(k)), was=x.roles[i]; x.roles[i]=JSON.parse(JSON.stringify(r));
+  if(plus.length) sLog("Role permissions added",r.name+" role","",plus.map(keyName).join("; "));
+  if(minus.length) sLog("Role permissions removed",r.name+" role",minus.map(keyName).join("; "),"");
+  if(was.scope!==r.scope) sLog("Role record scope changed",r.name+" role",was.scope,r.scope);
+  if(was.name!==r.name||was.desc!==r.desc) sLog("Role details edited",r.name+" role",was.name,r.name); S.sel.sdirty=false; toast("Saved. Everyone in "+r.name+" follows the new permissions."); soft(); }
 function roleDrop(){ S.sel.sdirty=false; S.sel.rdraft=null; soft(); }
-function roleNew(){ if(S.sel.sdirty){ toast("Save or discard your changes first."); return; } const x=ST(), id="r"+(x.roles.length+1); x.roles.push({id,name:"New role",desc:"Describe what this role is for.",scope:"Department",m:{},s:[]}); sLog("Created a new role"); S.sel.rdraft=null; go("staffadmin",{sRole:id}); }
+function roleNew(){ if(S.sel.sdirty){ toast("Save or discard your changes first."); return; } const x=ST(), id="r"+(x.roles.length+1); if(!can("s:perm")){ deny("s:perm"); return; } x.roles.push({id,name:"New role",desc:"Describe what this role is for.",scope:"Department",m:{},s:[]}); sLog("Role created","New role","","No permissions yet"); S.sel.rdraft=null; go("staffadmin",{sRole:id}); }
 function pmFilter(q){ q=q.trim().toLowerCase(); document.querySelectorAll("#view [data-q]").forEach(e=>{ e.style.display=!q||e.getAttribute("data-q").includes(q)?"":"none"; }); }
 function stCmp(){ const x=ST(), a=roleOf(S.sel.cA||"mktmgr"), b=roleOf(S.sel.cB||"mktcoord"), ka=new Set(roleKeys(a)), kb=new Set(roleKeys(b)), sel=(k,v)=>`<select onchange="go('staffadmin',{${k}:this.value})" aria-label="Role to compare">${x.roles.map(r=>`<option value="${r.id}" ${r.id===v.id?"selected":""}>${r.name}</option>`).join("")}</select>`, acts=(set,m)=>ACTS.filter(c=>set.has(m+":"+c[0])).map(c=>c[1].toLowerCase()).join(", ")||"No access";
   return `<div class="panel form"><div class="row2"><label>First role${sel("cA",a)}</label><label>Second role${sel("cB",b)}</label></div></div><div class="panel" style="padding:0;margin-top:18px"><div class="scrollx"><table class="fin" id="cmptable"><thead><tr><th>Permission</th><th>${a.name}</th><th>${b.name}</th></tr></thead><tbody>${MODS.map(m=>{ const va=acts(ka,m[0]), vb=acts(kb,m[0]); return `<tr class="${va!==vb?"diff":""}"><td>${m[1]}</td><td>${va}</td><td>${vb}</td></tr>`; }).join("")}${SENS.map(s=>{ const va=ka.has("s:"+s[0]), vb=kb.has("s:"+s[0]); return `<tr class="${va!==vb?"diff":""}"><td>${s[1]}</td><td>${va?"Yes":"No"}</td><td>${vb?"Yes":"No"}</td></tr>`; }).join("")}<tr class="${a.scope!==b.scope?"diff":""}"><td>Record scope</td><td>${a.scope}</td><td>${b.scope}</td></tr></tbody></table></div><p class="fine" style="padding:0 18px 16px">Rows where the two roles differ are shaded.</p></div>`; }
-function stLog(){ const x=ST(), who=S.sel.sWho||"", rows=x.log.filter(l=>!who||l[1]===who||l[2].includes(who));
-  return `<div class="panel form"><label>Show activity for<select onchange="go('staffadmin',{sWho:this.value})"><option value="">Everyone</option>${x.people.map(p=>`<option ${p.name===who?"selected":""}>${p.name}</option>`).join("")}</select></label></div><div class="panel" style="padding:0;margin-top:18px"><div class="scrollx"><table class="fin"><thead><tr><th>Date</th><th>By</th><th>What changed</th></tr></thead><tbody>${rows.map(l=>`<tr><td>${l[0]}</td><td>${l[1]}</td><td class="w">${l[2]}</td></tr>`).join("")||`<tr><td colspan="3">No recorded activity for ${who}.</td></tr>`}</tbody></table></div><p class="fine" style="padding:0 18px 16px">A sample history. Changes made in this demo are added at the top.</p></div>`; }
-// what a previewed employee sees: navigation, tabs, restricted figures, view-only pages, own records
-const TODAY_MOD = {"Onboarding":"agents","Needs a hand":"agents","Listing Concierge":"concierge","Agent Collection":"orders","Monday digest":"reports"};
-function guardView(){ const v=viewer(), rail=document.querySelector(".rail .navs"), view=document.getElementById("view");
-  if(rail) rail.querySelectorAll("button").forEach(b=>{ const m=(b.getAttribute("onclick")||"").match(/go\('(\w+)'/); b.style.display=!v||!m||pageOk(m[1])?"":"none"; });
-  if(!v||!view) return; const role=roleOf(v.role), scope=v.scope||role.scope;
+// what a previewed employee sees: permitted tabs, restricted figures, view-only pages, own records, and why a control is off
+function guardView(){ const v=viewer(), view=document.getElementById("view"); if(!v||!view) return; const role=roleOf(v.role), scope=v.scope||role.scope, why=new Set();
   if(!view.querySelector("#asbar")) view.insertAdjacentHTML("afterbegin",`<div id="asbar" role="status"><span>Viewing as <strong>${v.name}</strong>, ${role.name}. Simulated access, not security.</span><button class="btn small" onclick="stExit()">Exit preview</button></div>`);
   if(S.page==="orders") view.querySelectorAll(".tabs button").forEach(b=>{ const m=(b.getAttribute("onclick")||"").match(/mTab:'(\w+)'/); if(m&&!can(TAB_NEED[m[1]])) b.style.display="none"; });
-  if(S.page==="today") view.querySelectorAll(".panel").forEach(p=>{ const h=p.querySelector("h3"), k=h&&Object.keys(TODAY_MOD).find(t=>h.textContent.trim().startsWith(t)); if(k&&!can(TODAY_MOD[k]+":v")) p.style.display="none"; });
-  const mc=!can("s:cost"), mm=!can("s:margin"); if(mc||mm) view.querySelectorAll("td[data-label]").forEach(td=>{ const l=td.getAttribute("data-label"); if(!td.dataset.mk&&((mc&&/vendor cost|wholesale|cost of goods/i.test(l))||(mm&&/gross profit|margin|contribution/i.test(l)))){ td.dataset.mk="1"; td.textContent="Restricted"; td.classList.add("rst"); } });
-  const mod=S.page==="orders"?TAB_MOD[S.sel.mTab||"dash"]:PAGE_MOD[S.page], ro=S.page==="staffadmin"?!can("s:perm"):mod?!can(mod+":e"):false, lock=e=>{ if(!e.dataset.ro){ e.disabled=true; e.dataset.ro="1"; } };
-  if(ro){ view.querySelectorAll("button, input, select, textarea").forEach(e=>{ if(e.closest(".tabs")||e.closest("#asbar")) return; const oc=e.getAttribute("onclick")||e.getAttribute("onchange")||""; if(/^(go\(|stExit|stOpen)/.test(oc)) return; lock(e); }); if(!view.querySelector("#ronote")) view.querySelector("#asbar").insertAdjacentHTML("afterend",`<div id="ronote" class="cnote">View only. ${role.name} cannot make changes on this page.</div>`); }
-  if(!can("s:refund")) view.querySelectorAll("form[onsubmit*=comRefund] input, form[onsubmit*=comRefund] button, button[onclick*=comCancel]").forEach(lock);
-  if(!can("s:vendor")) view.querySelectorAll("select[aria-label='Assigned supplier'], input[placeholder='Vendor']").forEach(lock);
-  if(!can("s:price")) view.querySelectorAll("input[name=price], input[name=tiers]").forEach(lock);
-  if(!can("s:cost")) view.querySelectorAll("input[name=cost]").forEach(lock);
-  if(S.page==="announce"&&!can("s:announce")) view.querySelectorAll("button[type=submit]").forEach(lock);
+  const mc=!can("s:cost"), mm=!can("s:margin"); if(mc||mm) view.querySelectorAll("td[data-label]").forEach(td=>{ const l=td.getAttribute("data-label"); if(!td.dataset.mk&&((mc&&/vendor cost|wholesale|cost of goods/i.test(l))||(mm&&/gross profit|margin|contribution/i.test(l)))){ td.dataset.mk="1"; td.textContent="Restricted"; td.classList.add("rst"); td.title="Needs the permission: "+keyName(mc&&/cost/i.test(l)?"s:cost":"s:margin"); } });
+  const mod=S.page==="orders"?TAB_MOD[S.sel.mTab||"dash"]:PAGE_MOD[S.page], ro=S.page==="staffadmin"?!can("s:perm"):mod?!can(mod+":e"):false;
+  const lock=(e,k)=>{ if(e.dataset.ro) return; e.dataset.ro="1"; if(/^(INPUT|TEXTAREA)$/.test(e.tagName)&&!/checkbox|radio|submit|button/.test(e.type)) e.readOnly=true; else e.disabled=true; if(k){ e.title="Needs the permission: "+keyName(k); why.add(keyName(k)); } };
+  if(ro){ view.querySelectorAll("button, input, select, textarea").forEach(e=>{ if(e.closest(".tabs")||e.closest("#asbar")||e.dataset.free) return; const oc=e.getAttribute("onclick")||e.getAttribute("onchange")||""; if(/^(go\(|stExit|stOpen)/.test(oc)) return; lock(e); }); if(!view.querySelector("#ronote")) view.querySelector("#asbar").insertAdjacentHTML("afterend",`<div id="ronote" class="cnote">View only. ${role.name} cannot make changes on this page.</div>`); }
+  if(!can("s:refund")) view.querySelectorAll("form[onsubmit*=comRefund] input, form[onsubmit*=comRefund] button, button[onclick*=comCancel]").forEach(e=>lock(e,"s:refund"));
+  if(!can("s:vendor")) view.querySelectorAll("select[aria-label='Assigned supplier'], input[placeholder='Vendor']").forEach(e=>lock(e,"s:vendor"));
+  if(!can("s:price")) view.querySelectorAll("input[name=price], input[name=tiers]").forEach(e=>lock(e,"s:price"));
+  if(!can("s:cost")) view.querySelectorAll("input[name=cost]").forEach(e=>{ const l=e.closest("label"); if(l) l.style.display="none"; });
+  if(S.page==="announce"&&!can("s:announce")) view.querySelectorAll("button[type=submit]").forEach(e=>lock(e,"s:announce"));
+  if(why.size&&!view.querySelector("#whynote")&&!ro) view.querySelector("#asbar").insertAdjacentHTML("afterend",`<div id="whynote" class="cnote">Turned off for ${role.name}: ${[...why].join("; ").toLowerCase()}.</div>`);
   if(S.page==="concierge"&&scope==="Own assigned records"){ const items=[...view.querySelectorAll(".list .item")]; items.forEach(i=>{ i.style.display=i.textContent.includes(v.name)?"":"none"; }); const on=items.find(i=>i.classList.contains("on")), first=items.find(i=>i.style.display!=="none"); if(on&&on.style.display==="none"&&first) first.click(); if(!view.querySelector("#scnote")) view.querySelector("#asbar").insertAdjacentHTML("afterend",`<div id="scnote" class="cnote">Showing only the projects assigned to ${v.name}.</div>`); } }
+
+// ---------- Staff Command Center: confirmations, activity log, grouped navigation, personal dashboard, work queues, action checks ----------
+const dago = n => fmtD(new Date(NOW.getTime()-n*864e5));
+function ask(msg,fn,yes){ ask.fn=fn; openModal(`<div class="askbox" role="alertdialog" aria-label="Please confirm"><h3>Please confirm</h3><p>${msg}</p><div class="actions"><button class="btn" id="askyes" onclick="askYes()">${yes||"Confirm"}</button><button class="btn quiet" onclick="closeModal()">Cancel</button></div></div>`); const b=document.getElementById("askyes"); if(b) b.focus(); }
+function askYes(){ const f=ask.fn; ask.fn=null; closeModal(); if(f) f(); }
+// a consequential action asks first, then runs itself again once confirmed
+function confirmDo(msg,again){ if(confirmDo.ok){ confirmDo.ok=false; return true; } ask(msg,()=>{ confirmDo.ok=true; try{ again(); } finally { confirmDo.ok=false; } }); return false; }
+function deny(k){ toast("Your role cannot do this. It needs: "+keyName(k)+"."); }
+
+// ----- activity log: one record for every significant staff action -----
+const ACATS = ["Staff and access","Products and pricing","Orders","Concierge","Requests","Content","Reports"];
+function audSeed(){ const o1=S.orders.find(o=>o.stage===1), l1=S.listings.find(l=>l.coord==="Avery Lang"), E=(n,tm,by,role,cat,action,rec,prev,next,why)=>({t:dago(n)+", "+tm,by,role,cat,action,rec,prev:prev||"",next:next||"",why:why||""});
+  return [E(0,"8:42 AM","Marcus Reed","Super Administrator","Staff and access","Temporary access granted","Lydia Park","","Pricing, view","Covering price checks for two weeks"),
+    o1?E(1,"3:15 PM","Lydia Park","Marketing Coordinator","Orders","Order status changed",o1.id,"New order","Design approval"):null,
+    l1?E(1,"10:05 AM","Morgan Ellis","Concierge Manager","Concierge","Concierge assignment changed",l1.id+", "+l1.addr,"Unassigned","Avery Lang"):null,
+    E(3,"4:30 PM","Marcus Reed","Super Administrator","Staff and access","Account suspended","Nadia Holt","Active","Suspended","Extended leave"),
+    E(5,"9:20 AM","Owen Teague","Read-Only and Reporting","Reports","Report exported","Monday digest","","Sample CSV"),
+    E(7,"11:48 AM","Elena Brooks","Brokerage Administrator","Staff and access","Office changed","Carmen Ruiz","Litchfield","Myrtle Beach"),
+    E(14,"2:10 PM","Marcus Reed","Super Administrator","Staff and access","Role created","Inventory and Fulfillment Specialist role","","Sample template")].filter(Boolean); }
+const AUD = () => S.audit||(S.audit=audSeed());
+function stamp(){ const d=new Date(), h=d.getHours(); return TODAY+", "+((h%12)||12)+":"+String(d.getMinutes()).padStart(2,"0")+(h<12?" AM":" PM"); }
+function audit(e){ if(S.mode!=="staff") return; const a=actor(); AUD().unshift(Object.assign({t:stamp(),by:a.name,role:roleOf(a.role).name,cat:"",action:"",rec:"",prev:"",next:"",why:""},e)); }
+PAGES.activity = () => { const a=AUD(), who=S.sel.aWho||"", cat=S.sel.aCat||"", names=[...new Set(a.map(e=>e.by).concat(ST().people.map(p=>p.name)))].sort(), rows=a.filter(e=>(!who||e.by===who||e.rec===who)&&(!cat||e.cat===cat));
+  return `<div class="pagehead"><div><div class="eyebrow">Administration</div><h1>Activity log ${sampleTag("Sample history")}</h1><p>Who changed what, and when. Every significant action taken on the staff side of this demo is added at the top.</p></div></div>
+  <div class="panel form"><div class="row3"><label>Employee<select onchange="go('activity',{aWho:this.value})"><option value="">Everyone</option>${names.map(n=>`<option ${n===who?"selected":""}>${n}</option>`).join("")}</select></label><label>Category<select onchange="go('activity',{aCat:this.value})"><option value="">All categories</option>${ACATS.map(c=>`<option ${c===cat?"selected":""}>${c}</option>`).join("")}</select></label><label>Search<input type="search" data-free="1" placeholder="A name, an order number, a product" oninput="actFilter(this.value)" autocomplete="off"></label></div></div>
+  <div class="panel" style="padding:0;margin-top:18px"><div class="scrollx"><table class="fin left" id="audtable"><thead><tr><th>When</th><th>Employee</th><th>Action</th><th>Record</th><th>Change</th><th>Reason</th></tr></thead><tbody>${rows.map(e=>`<tr data-q="${esc([e.by,e.action,e.rec,e.prev,e.next,e.why].join(" ").toLowerCase())}"><td>${e.t}</td><td>${e.by}<span class="csub">${e.role}</span></td><td>${e.action}<span class="csub">${e.cat}</span></td><td class="w">${e.rec}</td><td class="w">${e.prev&&e.next?`<span class="was">${e.prev}</span> &rarr; ${e.next}`:e.next?e.next:e.prev?`<span class="was">${e.prev}</span> removed`:""}</td><td class="w">${e.why}</td></tr>`).join("")||`<tr><td colspan="6">No recorded activity matches these filters.</td></tr>`}</tbody></table></div><p class="fine" style="padding:0 18px 16px">${rows.length} of ${a.length} entries. Entries stay in the log when a product or an employee is archived.</p></div>`; };
+function actFilter(q){ q=q.trim().toLowerCase(); document.querySelectorAll("#audtable tbody tr[data-q]").forEach(r=>{ r.style.display=!q||r.getAttribute("data-q").includes(q)?"":"none"; }); }
+
+// ----- grouped navigation, shown by permission -----
+const SNAV = [["today","My dashboard","Command Center"],["mywork","My tasks","Command Center"],
+  ["lcon","Listing Concierge","Agent Services"],["txcon","Transaction Concierge","Agent Services"],["requests","Support requests","Agent Services"],["agents","Agent directory","Agent Services"],["onboarding","Onboarding","Agent Services"],
+  ["c_dash","Commerce dashboard","The Agent Collection"],["c_orders","Orders","The Agent Collection"],["c_catalog","Products","The Agent Collection"],["c_vendors","Vendors","The Agent Collection"],["c_programs","Marketing programs","The Agent Collection"],
+  ["c_insights","Commerce insights","Analytics"],["c_sim","Revenue simulator","Analytics"],["c_model","Operating model","Analytics"],
+  ["library","Content library","Content and Communications"],["announce","Announcements","Content and Communications"],
+  ["st_dir","Staff directory","Administration"],["st_roles","Roles and permissions","Administration"],["activity","Activity log","Administration"]];
+NAV.staff.length=0; SNAV.forEach(n=>NAV.staff.push(n));
+Object.assign(ALIAS,{lcon:["concierge",{cTab:"projects"}],txcon:["concierge",{cTab:"tx"}],st_dir:["staffadmin",{sTab:"dir",sEdit:""}],st_roles:["staffadmin",{sTab:"roles"}]});
+["dash","orders","catalog","vendors","programs","insights","sim","model"].forEach(t=>{ ALIAS["c_"+t]=["orders",{mTab:t}]; });
+const NAV_DEF = {cTab:"projects",mTab:"dash",sTab:"dir"};
+function navOn(k){ const a=ALIAS[k]; if(S.mode!=="staff"||!a) return S.page===k; if(S.page!==a[0]) return false; return Object.entries(a[1]).every(([key,v])=>!(key in NAV_DEF)||(S.sel[key]||NAV_DEF[key])===v||(k==="st_roles"&&S.sel.sTab==="cmp")); }
+const navOpenG = g => g==="Command Center"||NAV.staff.some(n=>n[2]===g&&navOn(n[0]))||!!(S.sel.navOpen||{})[g];
+const navHid = g => S.mode==="staff"&&!!g&&!navOpenG(g);
+function navGroup(g,c){ if(S.mode!=="staff"||g==="Command Center") return `<div class="navgroup">${g}</div>`; const open=navOpenG(g), n=open?0:navList().filter(x=>x[2]===g).reduce((t,x)=>t+(c[x[0]]||0),0); return `<button class="navgroup${open?" open":""}" aria-expanded="${open}" onclick="navTog('${g}')"><span>${g}</span>${n?`<span class="n">${n}</span>`:""}<i class="car" aria-hidden="true"></i></button>`; }
+function navTog(g){ const o=S.sel.navOpen||(S.sel.navOpen={}); o[g]=!navOpenG(g); soft(); }
+function navOk(k){ if(!viewer()) return true; const a=ALIAS[k]; if(!a) return pageOk(k); return a[0]==="orders"?can(TAB_NEED[a[1].mTab]):pageOk(a[0]); }
+function navList(){ return S.mode==="staff"?NAV.staff.filter(n=>navOk(n[0])):NAV[S.mode]; }
+function navCounts(c){ if(S.mode!=="staff") return; const p=actor(), all=tasksFor(p,true), n=k=>all.filter(t=>t.kind===k&&t.state!=="done").length; c.lcon=n("Listing project"); c.txcon=n("Transaction file"); c.c_orders=n("Order"); c.mywork=tasksFor(p,false).filter(t=>t.state!=="done").length; }
+TABS.staff = ["today","mywork","c_orders","lcon"]; Object.assign(SHORT,{today:"Dashboard",mywork:"My tasks",c_orders:"Orders",lcon:"Concierge"});
+ICONS.mywork='<path d="M9 6h11M9 12h11M9 18h11"/><path d="M4 6l1 1 2-2M4 12l1 1 2-2M4 18l1 1 2-2"/>'; ICONS.c_orders=ICONS.print; ICONS.lcon=ICONS.concierge;
+// the Agent Collection pages and the analytics pages each keep their own short row of tabs
+const CTABS = [["dash","Commerce Dashboard"],["orders","Orders"],["catalog","Products"],["vendors","Vendors"],["programs","Programs"]], ATABS = [["insights","Insights"],["sim","Revenue simulator"],["model","Operating model"]];
+PAGES.orders = () => { syncProds(); const t=S.sel.mTab||"dash", set=ATABS.some(x=>x[0]===t)?ATABS:CTABS; return tabs(set.map(x=>x[0]==="orders"?[x[0],x[1],S.orders.filter(o=>o.stage<4).length]:x),t,"mTab")+({dash:comDash,orders:()=>staffOrders()+comOrders(),catalog:comCatalog,vendors:comVendors,programs:comPrograms,insights:comInsights,sim:comSim,model:comModel}[t]||comDash)(); };
+
+// ----- one list of work, built from the same records every other page uses -----
+const officeOf = n => (S.agents.find(a=>a.name===n)||{}).office||"";
+const fullName = f => { const p=f?ST().people.find(x=>x.name===f||x.name.split(" ")[0]===f):null; return p?p.name:""; };
+const lastD = a => ((a||[])[(a||[]).length-1]||"").split(":")[0];
+function dueInfo(d){ const t=parseD(d); return t?{t:+t,late:t<NOW,today:+t===+NOW}:{t:0,late:false,today:false}; }
+function allTasks(){ ST(); const T=[], add=o=>T.push(Object.assign({owner:"",dept:"",office:"",due:"",sub:"",note:"",stale:false,doneToday:false,opened:""},o));
+  S.requests.forEach(r=>{ const rt=ROUTE[r.cat]||[r.dept||"Operations",""], open=r.status!=="done", age=open?ageDays(lastUpdate(r)):0;
+    add({kind:"Request",mod:"agents",title:"#"+r.id+" "+r.text,agent:r.agent,owner:fullName(r.owner),dept:rt[0]==="Front desk"?"Operations":rt[0],office:officeOf(r.agent),state:!open?"done":r.status==="new"?"new":r.status==="waiting"?"hold":"active",sub:r.cat,note:age>=1?"No update in "+age+(age>1?" days":" day"):"",stale:age>=1,doneToday:!open&&lastUpdate(r)===TODAY,opened:r.opened,act:`go('requests',{req:${r.id}})`}); });
+  S.orders.forEach(o=>{ const f=flowOf(o), end=f==="done"||f==="refund";
+    add({kind:"Order",mod:"orders",title:o.id+" "+o.items.map(i=>i.name).join(", "),agent:o.agent,owner:o.assignee||"",dept:["vendor","shipping","pickup"].includes(f)?"Fulfillment":"Marketing",office:officeOf(o.agent),state:end?"done":f==="new"?"new":f==="approval"||f==="pickup"?"agent":f==="vendor"?"vendor":"active",sub:(FLOW.find(x=>x[0]===f)||["","Refunded"])[1],note:f==="review"&&o.revision?"The agent asked for changes to the proof":f==="pickup"?"Ready for pickup":"",due:end?"":o.due||"",doneToday:end&&lastD(o.updates)===TODAY,opened:o.placed,act:`go('orders',{mTab:'orders',order:'${o.id}'})`}); });
+  QS().forEach(q=>{ const end=q.status==="Accepted"||q.status==="Declined";
+    add({kind:"Quote",mod:"orders",title:q.id+" "+q.name,agent:q.agent,owner:q.assignee||"",dept:"Marketing",office:officeOf(q.agent),state:end?"done":q.status==="Requested"?"new":"agent",sub:q.status,due:end?"":q.need||"",opened:q.placed,act:`go('orders',{mTab:'orders'})`}); });
+  S.listings.forEach(l=>{ const chg=l.deliverables.some(d=>d.st==="changes"), wait=l.deliverables.some(d=>d.st==="awaiting"), end=l.st>=5;
+    add({kind:"Listing project",mod:"concierge",title:l.id+" "+l.addr,agent:l.agent,owner:l.coord||"",dept:"Concierge",office:officeOf(l.agent),state:end?"done":!l.coord?"new":chg?"active":l.st===4||wait?"agent":"active",sub:LSTAGES[l.st],note:chg?"The agent asked for changes":wait?"A deliverable is waiting on the agent":"",due:end?"":l.target||"",doneToday:end&&lastD(l.activity)===TODAY,opened:l.opened,act:`go('concierge',{cTab:'projects',lcId:'${l.id}'})`}); });
+  S.files.forEach(f=>{ const dd=parseD(f.dd), end=f.status==="done";
+    add({kind:"Transaction file",mod:"concierge",title:f.id+" "+f.prop,agent:f.agent,owner:fullName(f.owner),dept:"Operations",office:officeOf(f.agent),state:end?"done":f.status==="waiting"?"hold":f.status==="todo"?"new":"active",sub:dd&&dd>=NOW?"Due diligence ends":"Closing",note:f.flag||"",due:end?"":dd&&dd>=NOW?f.dd:f.close,act:`go('concierge',{cTab:'tx',file:'${f.id}'})`}); });
+  S.agents.filter(a=>a.status==="Onboarding").forEach(a=>Object.keys(ROLES).forEach(k=>{ const done=a.done[k]||[], left=ROLES[k].steps.filter((s,i)=>!done.includes(i)); if(!left.length) return; const who=fullName(ROLES[k].name);
+    add({kind:"Onboarding",mod:"agents",title:"Onboarding "+a.name+": "+left.length+" "+OB_LABEL[k]+(left.length>1?" steps":" step")+" left",agent:a.name,owner:who,dept:who?ST().people.find(p=>p.name===who).dept:ROLES[k].name,office:a.office,state:"active",sub:"Next: "+left[0],opened:a.start,act:`go('onboarding',{agent:${a.id}})`}); }));
+  return T; }
+const OB_LABEL = {ops:"operations",web:"website",platform:"platform",marketing:"marketing",tech:"technology"};
+const scopeOf = p => p.scope||roleOf(p.role).scope;
+function inScope(t,p){ const sc=scopeOf(p); return t.owner===p.name||sc==="Entire brokerage"||(sc==="Office"&&(!t.office||t.office===p.office))||(sc==="Department"&&t.dept===p.dept); }
+// mine: assigned to this person, plus unassigned work inside their scope. team: everything inside their scope.
+function tasksFor(p,team){ const e=effOf(p); return allTasks().filter(t=>e.has(t.mod+":v")&&(team?inScope(t,p):t.owner===p.name||(!t.owner&&inScope(t,p)))); }
+const BUCKETS = [["all","All open"],["assigned","Assigned to me"],["new","New work"],["today","Due today"],["over","Overdue"],["agent","Waiting on agent"],["vendor","Waiting on vendor"],["approval","Awaiting approval"],["done","Completed today"]];
+function bucketsOf(list,p){ const open=list.filter(t=>t.state!=="done"), d=t=>dueInfo(t.due); return {all:open,assigned:open.filter(t=>t.owner===p.name),new:open.filter(t=>t.state==="new"),today:open.filter(t=>d(t).today),over:open.filter(t=>d(t).late||t.stale),agent:open.filter(t=>t.state==="agent"),vendor:open.filter(t=>t.state==="vendor"),approval:open.filter(t=>t.state==="approval"),done:list.filter(t=>t.doneToday)}; }
+function sortTasks(rows,by){ const o=t=>{ const d=parseD(t.opened); return d?+d:9e15; }, far=9e15; return rows.slice().sort(by==="old"?(a,b)=>o(a)-o(b):by==="kind"?(a,b)=>a.kind.localeCompare(b.kind)||a.title.localeCompare(b.title):by==="agent"?(a,b)=>a.agent.localeCompare(b.agent):(a,b)=>((dueInfo(a.due).t||far)-(dueInfo(b.due).t||far))||(o(a)-o(b))); }
+const TSTATE = {new:["new","New"],active:["doing","In progress"],agent:["waiting","Waiting on agent"],vendor:["waiting","Waiting on vendor"],approval:["waiting","Awaiting approval"],hold:["waiting","On hold"],done:["done","Done"]};
+const tchip = t => `<span class="chip ${TSTATE[t.state][0]}">${TSTATE[t.state][1]}</span>`;
+const dueCell = t => { const d=dueInfo(t.due); return t.due?t.due+(d.late?` <span class="age late">overdue</span>`:d.today?` <span class="age">today</span>`:""):t.stale?`<span class="age late">${t.note}</span>`:`<span class="muted">No date set</span>`; };
+PAGES.mywork = () => { const p=actor(), team=S.sel.wTeam==="1", list=tasksFor(p,team), b=bucketsOf(list,p), cur=b[S.sel.wB]?S.sel.wB:"all", kind=S.sel.wKind||"", kinds=[...new Set(list.map(t=>t.kind))].sort(), rows=sortTasks(b[cur].filter(t=>!kind||t.kind===kind),S.sel.wSort||"due"), sc=scopeOf(p);
+  return `<div class="pagehead"><div><div class="eyebrow">Command Center</div><h1>My tasks ${sampleTag("Sample work")}</h1><p>${p.name.split(" ")[0]}'s work in one list: requests, orders, quotes, listing projects, transaction files, and onboarding steps. Open a row to go straight to the record.</p></div></div>
+  <div class="wbar"><span class="seg" role="group" aria-label="Whose work"><button class="${team?"":"on"}" onclick="go('mywork',{wTeam:''})">My work</button><button class="${team?"on":""}" onclick="go('mywork',{wTeam:'1'})">${sc==="Own assigned records"?"My records":sc==="Entire brokerage"?"Whole brokerage":"My "+sc.toLowerCase()}</button></span>
+    <label class="inl">Type<select onchange="go('mywork',{wKind:this.value})"><option value="">All types</option>${kinds.map(k=>`<option ${k===kind?"selected":""}>${k}</option>`).join("")}</select></label>
+    <label class="inl">Sort by<select onchange="go('mywork',{wSort:this.value})">${[["due","Due date"],["old","Oldest first"],["kind","Type"],["agent","Agent"]].map(s=>`<option value="${s[0]}" ${s[0]===(S.sel.wSort||"due")?"selected":""}>${s[1]}</option>`).join("")}</select></label></div>
+  <div class="tabs wtabs" role="tablist">${BUCKETS.map(([k,l])=>`<button role="tab" aria-selected="${cur===k}" class="${cur===k?"on":""}" onclick="go('mywork',{wB:'${k}'})">${l}<span class="n">${b[k].length}</span></button>`).join("")}</div>
+  <div class="panel" style="padding:0"><div class="scrollx"><table class="fin left" id="worktable"><thead><tr><th>Task</th><th>Type</th><th>Agent</th><th>Due</th><th>Status</th><th>Assigned to</th></tr></thead><tbody>${rows.map(t=>`<tr class="row" ${clk(t.act)}><td class="w">${t.title}${t.note&&!t.stale?`<span class="csub">${t.note}</span>`:""}</td><td>${t.kind}<span class="csub">${t.sub}</span></td><td>${t.agent}<span class="csub">${t.office}</span></td><td>${dueCell(t)}</td><td>${tchip(t)}</td><td>${t.owner||`<span class="muted">Unassigned, ${t.dept}</span>`}</td></tr>`).join("")||`<tr><td colspan="6">${cur==="approval"?"Nothing is waiting on an approval from "+p.name.split(" ")[0]+".":cur==="done"?"Nothing has been completed today yet.":"Nothing here right now."}</td></tr>`}</tbody></table></div><p class="fine" style="padding:0 18px 16px">${team?"Everything inside this record scope: "+sc.toLowerCase()+".":"Work assigned to "+p.name+", plus unassigned work inside this record scope: "+sc.toLowerCase()+"."}</p></div>`; };
+
+// ----- the dashboard each employee opens to -----
+const SHORTCUTS = [["agents:a","Add a new agent","go('onboarding',{agent:'new'})"],["orders:v","Open orders","go('c_orders')"],["concierge:v","Listing projects","go('lcon')"],["products:a","Add a product","go('c_catalog',{addProd:'1'})"],["s:announce","Post an announcement","go('announce')"],["staff:a","Add an employee","go('st_dir',{sAdd:'1'})"],["staff:v","Activity log","go('activity')"]];
+PAGES.today = () => { const p=actor(), role=roleOf(p.role), first=p.name.split(" ")[0], mine=tasksFor(p,false), b=bucketsOf(mine,p), team=tasksFor(p,true).filter(t=>t.state!=="done"), next=sortTasks(b.all,"due").slice(0,6), sc=scopeOf(p), of=k=>team.filter(t=>t.kind===k), onb=can("agents:v")?S.agents.filter(a=>a.status==="Onboarding"&&(sc!=="Office"||a.office===p.office)&&(sc!=="Own assigned records")):[], reqs=of("Request"), flagged=of("Transaction file").filter(t=>t.note), lst=of("Listing project"), ords=of("Order");
+  const ref=(t,list,key)=>list.find(x=>t.title.startsWith((key==="id"?x.id:"#"+x.id)+" ")), tile=(k,l)=>`<div class="stat link" ${clk(`go('mywork',{wB:'${k}',wTeam:'',wKind:''})`)}><div class="k">${b[k].length}</div><div class="l">${l}</div></div>`, sh=SHORTCUTS.filter(s=>can(s[0]));
+  return `<div class="pagehead"><div><div class="eyebrow">Litchfield Staff Command Center</div><h1>My dashboard</h1><p>Everything your team needs to deliver exceptional service.</p></div></div>
+  <div class="panel mecard"><span class="av lg">${inits2(p.name)}</span><div><div class="t">${p.name}</div><div class="muted small">${p.title}, ${p.dept}, ${p.office} office</div><div class="muted small">${role.name} access. Sees: ${sc.toLowerCase()}.</div></div>${sh.length?`<div class="actions">${sh.slice(0,4).map(s=>`<button class="btn quiet small" onclick="${s[2]}">${s[1]}</button>`).join("")}</div>`:""}</div>
+  <div class="grid c4 mytiles" style="margin:18px 0 24px">${tile("assigned","assigned to me")}${tile("new","new work")}${tile("today","due today")}${tile("over","overdue")}${tile("agent","waiting on agent")}${tile("vendor","waiting on vendor")}${tile("approval","awaiting approval")}${tile("done","completed today")}</div>
+  <div class="panel"><h3>Next up for ${first} <button class="btn quiet small" style="float:right" onclick="go('mywork',{wB:'all',wTeam:''})">All my tasks</button></h3><div class="list">${next.map(t=>`<div class="item" ${clk(t.act)}><div class="t">${t.title}</div><div class="m"><span>${t.kind}${t.sub?": "+t.sub:""}${t.note?". "+t.note:""}${t.due?". Due "+t.due:""}</span>${tchip(t)}</div></div>`).join("")||`<div class="empty">Nothing is waiting on ${first} right now.</div>`}</div></div>
+  ${can("agents:v")||can("concierge:v")||can("orders:v")?`<h2 class="sech">Across ${sc==="Entire brokerage"?"the brokerage":sc==="Own assigned records"?"my records":"my "+sc.toLowerCase()}</h2>`:""}
+  ${can("agents:v")?`<div class="grid c4" style="margin-bottom:24px">
+    <div class="stat"><div class="k">${onb.length}</div><div class="l">agents onboarding</div></div>
+    <div class="stat"><div class="k">${reqs.filter(t=>t.state==="new").length}</div><div class="l">requests not yet assigned</div></div>
+    <div class="stat"><div class="k">${reqs.filter(t=>t.state==="hold").length}</div><div class="l">requests waiting on someone</div></div>
+    <div class="stat"><div class="k">${can("concierge:v")?lst.length+of("Transaction file").length:0}</div><div class="l">Concierge projects and files open</div></div>
+  </div>
+  <div class="grid c2">
+    <div class="panel"><h3>Onboarding in progress</h3>${onb.map(a=>`<div class="item" onclick="go('onboarding',{agent:${a.id}})"><div class="t">${a.name} <span class="muted small">${a.office}, started ${a.start}</span></div><div class="bar"><i style="width:${pct(a)}%"></i></div><div class="m"><span>${pct(a)}% of steps done</span><span>${nextStep(a)}</span></div></div>`).join("")||`<div class="empty">No one is onboarding inside this scope.</div>`}</div>
+    <div class="panel"><h3>Needs a hand</h3><div class="list">${reqs.map(t=>`<div class="item" onclick="${t.act}"><div class="t">${t.agent}: ${t.title.replace(/^#\d+ /,"")}</div><div class="m"><span>${t.sub}${t.stale?` <span class="age late">${t.note.toLowerCase()}</span>`:""}</span>${tchip(t)}</div></div>`).join("")}${can("concierge:v")?flagged.map(t=>`<div class="item" onclick="${t.act}"><div class="t">${t.title}</div><div class="m"><span>${t.note}</span></div></div>`).join(""):""}${reqs.length+(can("concierge:v")?flagged.length:0)?"":`<div class="empty">No open requests inside this scope.</div>`}</div></div>
+  </div>`:""}
+  ${can("concierge:v")||can("orders:v")?`<div class="grid c2" style="margin-top:22px">${can("concierge:v")?`<div class="panel"><h3>Listing Concierge</h3>${lst.map(t=>{ const l=ref(t,S.listings,"id"); return `<div class="item" onclick="${t.act}"><div class="t">${l.addr} <span class="muted small">${l.agent}</span></div><div class="m"><span>${svcDone(l)} of ${l.services.length} services complete</span>${lchip(l.st)}</div></div>`; }).join("")||`<div class="empty">No open listing projects inside this scope.</div>`}</div>`:""}${can("orders:v")?`<div class="panel"><h3>Agent Collection orders</h3>${ords.map(t=>{ const o=ref(t,S.orders,"id"); return `<div class="item" onclick="${t.act}"><div class="t">${o.id} <span class="muted small">${o.agent}</span></div><div class="m"><span>${o.items.map(i=>i.name).join(", ")}</span>${ochip(o)}</div></div>`; }).join("")||`<div class="empty">No open orders inside this scope.</div>`}</div>`:""}</div>`:""}
+  ${can("reports:v")?`<div class="panel" style="margin-top:22px"><h3>Monday digest <span class="muted small">goes to James, Carol, Marian, and Elena every Monday at 7:00 AM</span></h3>
+    <div class="grid c4" style="border:0"><div class="stat"><div class="k">${S.requests.length}</div><div class="l">requests this week</div></div><div class="stat"><div class="k">${S.requests.filter(r=>r.status==="done").length}</div><div class="l">closed</div></div><div class="stat"><div class="k">${S.orders.length}</div><div class="l">Agent Collection orders</div></div><div class="stat"><div class="k">${S.agents.filter(a=>a.status==="Onboarding").length}</div><div class="l">agents onboarding</div></div></div>
+    <p class="muted small" style="margin-top:10px">Most common request this week: ${(()=>{const m={};S.requests.forEach(r=>m[r.cat]=(m[r.cat]||0)+1);return (Object.entries(m).sort((a,b)=>b[1]-a[1])[0]||["none"])[0]})()}. Oldest open request: ${(()=>{ const o=S.requests.filter(r=>r.status!=="done").sort((a,b)=>ageDays(b.opened)-ageDays(a.opened))[0]; return o?"#"+o.id:"none open"; })()}.</p></div>`:""}`; };
+
+// ----- every staff action that changes a record passes through one permission check and one log -----
+const ordOf = id => S.orders.find(x=>x.id===id)||{}, reqOf = id => S.requests.find(x=>x.id===id)||{}, flowName = o => (FLOW.find(x=>x[0]===flowOf(o))||["","Refunded"])[1], svcName = sid => (SVC[sid]||{name:sid}).name;
+const ACTIONS = {
+  assign:{need:"agents:e",pre:id=>reqOf(id).owner||"Front desk",log:(p,id,v)=>({cat:"Requests",action:"Request assigned",rec:"Request #"+id,prev:p,next:v||"Front desk"})},
+  setStatus:{need:"agents:e",pre:id=>CHIP[reqOf(id).status],log:(p,id,v)=>({cat:"Requests",action:"Request status changed",rec:"Request #"+id,prev:p,next:CHIP[v]})},
+  addAgent:{need:"agents:a",log:()=>({cat:"Requests",action:"Onboarding started",rec:S.agents[0].name,next:S.agents[0].office+" office"})},
+  setCoord:{need:"concierge:e",pre:id=>listing(id).coord||"Unassigned",log:(p,id,v)=>({cat:"Concierge",action:"Concierge assignment changed",rec:id+", "+listing(id).addr,prev:p,next:v||"Unassigned"})},
+  setProj:{need:"concierge:e",pre:id=>LSTAGES[listing(id).st],log:(p,id,v)=>({cat:"Concierge",action:"Project status changed",rec:id+", "+listing(id).addr,prev:p,next:LSTAGES[v]})},
+  setSvc:{need:"concierge:e"}, setAppt:{need:"concierge:e"}, projUpdate:{need:"concierge:e"}, projNote:{need:"concierge:e"}, delivResend:{need:"concierge:e"}, toggleFile:{need:"concierge:e"},
+  setVendor:{need:"s:vendor",pre:(id,sid)=>(listing(id).services.find(x=>x.sid===sid)||{}).vendor||"None",log:(p,id,sid,v)=>({cat:"Concierge",action:"Service vendor changed",rec:id+", "+svcName(sid),prev:p,next:esc(String(v).trim())||"None"})},
+  delivAdd:{need:"concierge:a",log:(p,e,lid)=>({cat:"Concierge",action:"Deliverable sent for approval",rec:lid+", "+listing(lid).addr,next:DELIV[listing(lid).deliverables[listing(lid).deliverables.length-1].kind]})},
+  comFlow:{need:"orders:e",pre:id=>flowName(ordOf(id)),log:(p,id)=>({cat:"Orders",action:"Order status changed",rec:id,prev:p,next:flowName(ordOf(id))})},
+  setOrderStage:{need:"orders:e",pre:id=>flowName(ordOf(id)),log:(p,id)=>({cat:"Orders",action:"Order status changed",rec:id,prev:p,next:flowName(ordOf(id))})},
+  comVendor:{need:"s:vendor",pre:id=>ordOf(id).vendor||"Department default",log:(p,id,n)=>({cat:"Orders",action:"Order supplier changed",rec:id,prev:p,next:n||"Department default"})},
+  comProof:{need:"orders:e",log:(p,e,id)=>({cat:"Orders",action:"Proof sent for approval",rec:id,next:ordOf(id).proof.name})},
+  orderUpdate:{need:"orders:e"}, orderNote:{need:"orders:e"},
+  comCancel:{need:"s:refund",confirm:id=>"Cancel order "+id+" and reverse "+money(ordOf(id).total)+"? This is a simulation. No real charge was made.",pre:id=>!ordOf(id).refund,log:(p,id)=>p?{cat:"Orders",action:"Order canceled",rec:id,prev:"Open",next:money(ordOf(id).total)+" reversed",why:"Order canceled"}:null},
+  comRefund:{need:"s:refund",log:(p,e,id)=>({cat:"Orders",action:"Refund issued",rec:id,next:money(ordOf(id).refund.amt),why:ordOf(id).refund.why})},
+  comQuote:{need:"orders:e",log:(p,e,id)=>{ const q=QS().find(x=>x.id===id)||{}; return {cat:"Orders",action:"Quote sent",rec:id+", "+q.name,next:money(q.amount||0)}; }},
+  comSave:{need:e=>{ if(!can("products:e")) return "products:e"; const ch=n=>{ const i=e.target.querySelector("[name="+n+"]"); return !!i&&i.value!==i.defaultValue; }; return (ch("price")||ch("tiers"))&&!can("s:price")?"s:price":ch("cost")&&!can("s:cost")?"s:cost":""; },pre:(e,id)=>{ const p=prod(id); return {name:p.name,price:p.price,cost:p.cost}; },log:(p,e,id)=>{ const n=prod(id), out=[{cat:"Products and pricing",action:"Product edited",rec:n.name,prev:p.name!==n.name?p.name:"",next:p.name!==n.name?n.name:"Details saved"}]; if(p.price!==n.price) out.push({cat:"Products and pricing",action:"Product price changed",rec:n.name,prev:money(p.price),next:money(n.price)}); if(p.cost!==n.cost) out.push({cat:"Products and pricing",action:"Product cost changed",rec:n.name,prev:money(p.cost||0),next:money(n.cost||0)}); return out; }},
+  comAdd:{need:"products:a",log:()=>{ const n=CS().newProds[CS().newProds.length-1]; return {cat:"Products and pricing",action:"Product created",rec:n.name,next:money(n.price)+" "+n.per}; }},
+  comDel:{need:"products:d",confirm:id=>"Remove "+((PROD[id]||{}).name||"this product")+" from the catalog? Orders already placed keep their own record of it.",pre:id=>(PROD[id]||{}).name||id,log:p=>({cat:"Products and pricing",action:"Product removed",rec:p,prev:"In the catalog",next:"Removed"})},
+  comVendSave:{need:"products:e",log:(p,e,i)=>({cat:"Products and pricing",action:i<0?"Supplier added":"Supplier edited",rec:formData(e.target).get("n")})},
+  comVendDel:{need:"products:d",pre:i=>(vend()[i]||{}).n,log:p=>({cat:"Products and pricing",action:"Supplier removed",rec:p})},
+  addAnnounce:{need:"s:announce",log:()=>({cat:"Content",action:"Announcement published",rec:S.announcements[0].title,next:"Live on agent Home"})}
+};
+Object.keys(ACTIONS).forEach(name=>{ const f=window[name], a=ACTIONS[name]; if(typeof f!=="function") return;
+  window[name]=function(...args){ const ev=args[0]&&args[0].preventDefault?args[0]:null;
+    if(S.mode==="staff"){ const need=typeof a.need==="function"?a.need(...args):a.need; if(need&&!can(need)){ if(ev) ev.preventDefault(); deny(need); return false; }
+      if(a.confirm&&!confirmDo(a.confirm(...args),()=>window[name](...args))){ if(ev) ev.preventDefault(); return false; } }
+    let pre; try{ pre=a.pre?a.pre(...args):null; }catch(err){}
+    const out=f.apply(this,args);
+    if(S.mode==="staff"&&a.log){ try{ [].concat(a.log(pre,...args)||[]).forEach(audit); saveDemo(); }catch(err){} }
+    return out; }; });
 
 render();
 </script>
