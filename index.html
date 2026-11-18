@@ -1869,6 +1869,50 @@ tr.dim td{opacity:.6}#libtable td.acts{white-space:nowrap}#libtable td.acts .btn
 @media (max-width:980px){.setn{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:760px){.setn,.setr{grid-template-columns:1fr}.setk{grid-template-columns:1fr}.calg{grid-template-columns:1fr}.cday{min-height:0}.cday:not(.now):not(:has(.cevt)){display:none}#libtable td.acts{white-space:normal}.mbell{right:14px}}
 @media print{.crumbs{display:none !important}}
+/* the agent welcome: calm homepage, three signature experiences, Resources and Support */
+.wlc{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);background:var(--panel);border:1px solid var(--line);min-height:350px;margin-bottom:46px}
+.wlc .wtx{padding:66px 60px 60px;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;min-width:0}
+.wlc h1{font-size:50px;line-height:1.04;margin:8px 0 0}
+.wlc.firstv h1{font-size:46px;max-width:13ch}
+.wlc .motto{font-family:var(--serif);font-style:italic;font-weight:500;font-size:23px;color:var(--ink-2);margin-top:14px}
+.wlc .lead{font-size:16px;line-height:1.65;color:var(--ink-2);max-width:42ch;margin-top:20px}
+.wlc .wlink{margin-top:16px}.wlc .wlink a,.sigc .scta,.wcc .scta{font-size:12px;letter-spacing:.13em;text-transform:uppercase;color:var(--green);border-bottom:1px solid currentColor;padding-bottom:3px;text-decoration:none}
+.wlc .when{font-size:12.5px;letter-spacing:.04em;color:var(--mute);margin-top:32px}
+.wlc .wart{position:relative;min-height:300px;overflow:hidden;background:var(--stone)}
+.wlc .wart .scene,.sigc .simg .scene,.wcc .wci .scene{position:absolute;inset:0;width:auto;height:auto;box-shadow:none;border-radius:0;flex:none}
+.sig{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:28px;margin-bottom:56px}
+.sigc{background:var(--panel);border:1px solid var(--line);cursor:pointer;display:flex;flex-direction:column;transition:box-shadow .25s ease,transform .25s ease}
+.sigc:hover,.sigc:focus-visible{box-shadow:0 22px 44px -28px rgba(22,23,22,.4);transform:translateY(-2px)}
+.sigc .simg{position:relative;aspect-ratio:16/10;overflow:hidden;background:var(--stone)}
+.sigc .sbody{padding:28px 30px 30px;display:flex;flex-direction:column;flex:1}
+.sigc h2{font-family:var(--serif);font-size:28px;line-height:1.14;font-weight:500;margin:6px 0 12px}
+.sigc p{font-size:14.5px;line-height:1.62;color:var(--ink-2);margin:0 0 24px}
+.sigc .scta{margin-top:auto;align-self:flex-start}
+.yday{display:grid;grid-template-columns:minmax(0,1.45fr) minmax(0,1fr);gap:64px;margin-bottom:46px}
+.yday .ghead,.wcont .ghead{justify-content:space-between;border-bottom:1px solid var(--line);padding-bottom:12px;margin-bottom:4px}
+.ydl{list-style:none;margin:0;padding:0}.ydl li{display:flex;justify-content:space-between;align-items:baseline;gap:18px;padding:15px 0;border-bottom:1px solid var(--line);cursor:pointer}
+.ydl li span{font-size:15px}.ydl li i{font-style:normal;font-size:13px;color:var(--mute);text-align:right}.ydl li:hover span,.ydl li:focus-visible span{text-decoration:underline;text-underline-offset:4px}
+.ydsub{margin:26px 0 0}.caught{font-family:var(--serif);font-style:italic;font-size:19px;color:var(--ink-2);padding:18px 0 0;margin:0}
+.annone{padding:16px 0 0}.annone .t{font-weight:500;font-size:15px}.annone p{font-size:14px;line-height:1.6;color:var(--ink-2);margin:6px 0 0}
+.wcont{margin-bottom:46px}.wcl{display:flex;gap:0 64px}
+.wcc{flex:1 1 0;min-width:0;display:flex;align-items:center;gap:18px;padding:16px 0;border-bottom:1px solid var(--line);cursor:pointer}.wcc .wci{position:relative;width:86px;height:58px;flex:none;overflow:hidden;background:var(--stone)}
+.wcc .wct{flex:1;min-width:0}.wcc .wct b{display:block;font-family:var(--serif);font-size:20px;font-weight:500}.wcc .wct i{font-style:normal;font-size:13px;color:var(--mute)}.wcc .scta{flex:none}
+.wmore{display:flex;flex-wrap:wrap;justify-content:center;gap:10px 34px;padding:26px 0 6px;border-top:1px solid var(--line)}.wmore.left{justify-content:flex-start;border-top:0;padding-top:8px}
+.wmore a{font-size:13px;letter-spacing:.04em;color:var(--ink-2);text-decoration:none;padding:6px 0}.wmore a:hover,.wmore a:focus-visible{color:var(--green);text-decoration:underline;text-underline-offset:4px}
+.wdemo{text-align:center;font-size:12px;color:var(--mute);margin:26px 0 0}.wdemo a{color:inherit}
+.calm{padding:34px 0 30px;max-width:640px}.calm h1{font-size:50px;line-height:1.05;margin:6px 0 0}.calm .lead{font-size:16px;line-height:1.65;color:var(--ink-2);margin-top:16px}
+.supnote{font-size:14px;color:var(--ink-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:14px 0;margin:0 0 28px}
+.schoices{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:22px;margin-bottom:26px}
+.schoice{display:flex;gap:18px;align-items:flex-start;background:var(--panel);border:1px solid var(--line);padding:26px 26px 24px;cursor:pointer;transition:box-shadow .25s ease,transform .25s ease}
+.schoice:hover,.schoice:focus-visible{box-shadow:0 18px 38px -26px rgba(22,23,22,.4);transform:translateY(-2px)}
+.schoice svg{width:26px;height:26px;flex:none;color:var(--green);margin-top:2px}.schoice b{display:block;font-family:var(--serif);font-size:22px;font-weight:500;line-height:1.2}.schoice p{font-size:14px;line-height:1.55;color:var(--ink-2);margin:8px 0 0}
+.schoice.sp{background:var(--green);border-color:var(--green);color:#fff}.schoice.sp svg{color:#e9dfc4}.schoice.sp p{color:rgba(255,255,255,.82)}
+@media (max-width:1100px){.wlc h1{font-size:44px}.wlc .wtx{padding:48px 40px}.sig{gap:18px}.sigc h2{font-size:23px}.sigc .sbody{padding:22px}.yday{gap:36px}.wcl{gap:0 36px}.schoices{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:760px){.wlc{grid-template-columns:1fr;min-height:0;margin-bottom:22px}.wlc .wart{order:-1;min-height:0;height:132px}.wlc .wtx{padding:26px 22px 24px}.wlc h1,.wlc.firstv h1{font-size:36px;max-width:none}.wlc .motto{font-size:19px;margin-top:10px}.wlc .when{margin-top:18px}
+  .sig{grid-template-columns:1fr;gap:12px;margin-bottom:30px}.sigc{flex-direction:row;align-items:stretch}.sigc .simg{aspect-ratio:auto;width:104px;flex:none}.sigc .sbody{padding:16px 16px 16px 18px}.sigc h2{font-size:20px;margin:4px 0 12px}.sigc p{display:none}
+  .yday{grid-template-columns:1fr;gap:28px;margin-bottom:30px}.ydl li{flex-direction:column;gap:3px;padding:13px 0}.ydl li i{text-align:left}.wcont{margin-bottom:30px}.wcl{flex-direction:column}.wcc{gap:14px}.wcc .scta{display:none}.wcc::after{content:"\203A";font-size:24px;line-height:1;color:var(--mute);flex:none}.wcc .wct b{font-size:19px}
+  .wmore{justify-content:flex-start;gap:4px 24px}.wmore a{padding:9px 0}.wdemo{text-align:left}.calm{padding:10px 0 22px}.calm h1{font-size:36px}.schoices{grid-template-columns:1fr;gap:12px}.schoice{padding:18px}.schoice b{font-size:20px}}
+@media (prefers-reduced-motion:reduce){.sigc,.schoice{transition:none}.sigc:hover,.schoice:hover{transform:none}}
 </style>
 </head>
 <body>
@@ -2473,7 +2517,7 @@ function requestForm(staff){ return `<form class="form" onsubmit="return addRequ
   <label>What is it about<select name="cat"><option>Email and Microsoft 365</option><option>SkySlope</option><option>BoldTrail</option><option>Printing</option><option>Website or marketing</option><option>Pay or commission</option><option>Something else</option></select></label>
   <label>What do you need<textarea name="text" required placeholder="Say what is happening and what you have tried"></textarea></label>
   ${staff?"":`<label>Best way to reach you<select name="reach"><option>Text my cell</option><option>Call my cell</option><option>Email</option></select></label><label class="check"><input type="checkbox" name="callme"> I would rather talk it through. Call me first.</label>`}
-  <div class="actions"><button class="btn" type="submit">${staff?"Log it":"Request Assistance"}</button><button class="btn quiet" type="button" onclick="go('${staff?"requests":"home"}',{req:1041})">Cancel</button></div></form>`; }
+  <div class="actions"><button class="btn" type="submit">${staff?"Log it":"Request Assistance"}</button><button class="btn quiet" type="button" onclick="go('${staff?"requests":"support"}',{req:1041})">Cancel</button></div></form>`; }
 function addRequest(e,staff){ e.preventDefault(); const f=formData(e.target); const id=Math.max(...S.requests.map(r=>r.id))+1; const cat=f.get("cat"); const callme=!staff&&f.get("callme"); const [dept,owner]=ROUTE[cat]||["Front desk",""];
   S.requests.unshift({id,agent:staff?f.get("agent"):me().name,cat,dept,text:f.get("text"),status:owner?"doing":"new",owner,opened:TODAY,updates:owner?[TODAY+": We have your request. "+owner+" in "+dept+" has it."]:[TODAY+": We have your request. The front desk is finding the right person."],notes:[TODAY+": Opened "+(staff?"by staff":"from the agent portal")+". Routed to "+dept+(owner?", "+owner:", no default owner")+"."+(callme?" Agent asked for a call first.":"")]});
   toast("Request #"+id+" is in. "+(owner?"Routed to "+owner+".":"Waiting for the front desk to route it.")); if(staff) go("requests",{req:id}); else go("help",{req:id,helpTab:"mine"}); return false; }
@@ -2915,7 +2959,7 @@ function lcHome(){
   const waiting=mine.flatMap(l=>l.deliverables.filter(d=>d.st==="awaiting").map(d=>[l,d]));
   const recent=mine.flatMap(l=>l.deliverables.filter(d=>d.st==="approved").map(d=>[l,d])).sort((a,b)=>(parseD(b[1].d)||0)-(parseD(a[1].d)||0)).slice(0,4);
   return `<section class="lx-hero"><div class="tx"><div class="eyebrow">Litchfield Listing Concierge</div><h1>How may we assist with your listing?</h1><p class="lead">Let us help bring your property to market. Tell us about the home once, choose the services you would like, and follow every step from one place.</p>
-      <div class="actions"><button class="btn" onclick="startWizard()">Begin Your Listing Experience</button><button class="btn quiet" onclick="go('lc',{lcTab:'services',lcView:''})">Explore Concierge Services</button></div><p class="fine">${sampleTag("Proposed service concept")}</p></div>
+      <div class="actions"><button class="btn" onclick="startWizard()">Begin Your Listing Experience</button><button class="btn quiet" onclick="go('lc',{lcTab:'projects',lcView:''})">View My Projects</button><button class="btn quiet" onclick="go('lc',{lcTab:'services',lcView:''})">Explore Concierge Services</button></div><p class="fine">${sampleTag("Proposed service concept")}</p></div>
     <div class="art">${scene("oak")}</div></section>
   <ol class="lx-steps"><li><span>01</span><div><b>Tell us about the property</b><p>A short, guided consultation. A few details are all we need to begin.</p></div></li><li><span>02</span><div><b>Choose your services</b><p>Preparation, media, marketing, and print, selected one at a time or as a package.</p></div></li><li><span>03</span><div><b>Approve and follow along</b><p>Your Concierge Specialist keeps you informed and sends each piece for your approval.</p></div></li></ol>
   ${draftNote()}
@@ -3617,7 +3661,7 @@ function tourListing(){ return (S.listings.find(l=>l.id==="L-2026-011")||myListi
 function tourDraft(step){ if(!S.draft||S.draft.forListing) newDraft(); const d=S.draft; if(!d.addr) sampleInto(d); if(step>=2&&!d.services.length) d.services=["staging","photo","video","socialc","ohflyer"]; if(step>=3&&!d.pkg) addPkg("signature"); if(step>=4&&!Object.keys(d.items).length) d.items={brochure:2,jlpost:1,riders:1,openhouse:1}; d.step=step; go("lc",{lcView:"new"}); }
 function tourCart(){ if(S.cart.length) return; [["polo","Size: L, Color: Black",1,""],["cards","",2,"Will Ellison, Realtor, 843-555-0102, wellison@example.com"]].forEach(([pid,opt,qty,custom])=>{ const p=prod(pid); S.cart.push({pid,name:p.name,opt,qty,price:p.price,per:p.per,custom,listing:"",kit:""}); }); }
 const TOUR = [
-  ["Agent Command Center","An agent signs in to a personal welcome: what needs attention today, production, the fee balance, listing projects, and five services within reach.",0,()=>{ S.mode="agent"; go("home"); }],
+  ["Agent Command Center","An agent signs in to a personal welcome and three signature experiences: Listing Concierge, The Agent Collection, and How May We Assist. Below them, only what needs attention today.",0,()=>{ S.mode="agent"; go("home"); }],
   ["Start a Listing Concierge project","A new listing begins with a short, guided consultation. A sample property is filled in for the presentation.",1,()=>{ S.mode="agent"; tourDraft(0); }],
   ["Choose listing services","Preparation, media, marketing, and open house services, chosen in one pass.",1,()=>{ S.mode="agent"; tourDraft(2); }],
   ["Choose a marketing package","Three package concepts add their services to the plan. Signature Marketing is selected here.",1,()=>{ S.mode="agent"; tourDraft(3); }],
@@ -5235,6 +5279,90 @@ if(S.tour&&S.tour.on&&S.tour.kind==="staff") tourUse(TOUR_STAFF);
 if(S.tour&&S.tour.on&&!TOUR[S.tour.i]) S.tour.on=false;
 { const f=PAGES.today; PAGES.today=()=>{ const h=f(); return viewer()?h:h.replace('<p>Everything your team needs to deliver exceptional service.</p></div></div>','<p>Everything your team needs to deliver exceptional service.</p></div><button class="btn quiet" onclick="staffTourStart()">Begin the staff presentation</button></div>'); }; }
 Object.keys(PAGES).forEach(k=>{ if(!STAFF_ONLY.includes(k)&&!NAV.staff.some(n=>n[0]===k||(ALIAS[n[0]]||[])[0]===k)) return; const f=PAGES[k]; PAGES[k]=()=>{ if(crumbs.in) return f(); crumbs.in=true; let h; try{ h=f(); } finally{ crumbs.in=false; } return S.mode==="staff"?crumbs(k)+h:h; }; });
+// ---------- The agent welcome: a calm homepage, three signature experiences, and one Resources and Support destination ----------
+function WEL(){ return S.wel||(S.wel={first:false}); }
+NAV.agent = [["home","Home"],["lc","Listing Concierge"],["shop","The Agent Collection"],["fin","Financial Center"],["support","Resources &amp; Support"],["profile","My Profile"]];
+SHORT.support="Support"; ICONS.support=ICONS.help;
+ICONS.w_phone='<path d="M6 4h3.5l1.6 4.2-2.1 1.4a10.5 10.5 0 0 0 5.4 5.4l1.4-2.1L20 14.5V18a2 2 0 0 1-2 2A14 14 0 0 1 4 6a2 2 0 0 1 2-2z"/>';
+ICONS.w_building='<path d="M4 20h16"/><path d="M6.5 20V6.5L12 4l5.5 2.5V20"/><path d="M10 10h.01M14 10h.01M10 14h.01M14 14h.01"/>';
+ICONS.w_image='<rect x="4" y="5" width="16" height="14" rx="1.5"/><path d="M4 16l4.5-4.5 3.5 3.5 2.5-2.5L20 17"/><circle cx="15" cy="9.5" r="1.2"/>';
+ICONS.w_grid='<rect x="4" y="4" width="6.5" height="6.5" rx="1"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="1"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="1"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1"/>';
+{ const f=navOn; navOn=function(k){ return S.mode!=="staff"&&k==="support"?["support","res","help"].includes(S.page):f(k); }; }
+{ const f=counts; counts=function(){ const c=f(); if(S.mode!=="staff") c.support=S.requests.filter(r=>r.agent===me().name&&r.status==="waiting").length; return c; }; }
+const welImg = k => scene(k);
+const supCrumb = here => S.mode==="staff"?"":`<nav class="crumbs" aria-label="Breadcrumb"><a href="#" onclick="go('support');return false">Resources &amp; Support</a><i>/</i><span aria-current="page">${here}</span></nav>`;
+
+// what needs the agent today, and what is coming up: read from the agent's own records, never invented
+function dayDates(){ const m=me(), txGo=id=>`go('lc',{lcTab:'tx',lcView:'',file:'${id}'})`, files=S.files.filter(f=>f.agent===m.name&&f.status!=="done"), active=myListings().filter(l=>l.st<5);
+  return [...files.flatMap(f=>[[f.dd,"Due diligence ends",f.prop,txGo(f.id)],[f.close,"Closing",f.prop,txGo(f.id)]]),
+    ...active.flatMap(l=>[[l.target,"Target listing date",fullAddr(l),`openProject('${l.id}')`],...l.services.filter(s=>s.appt&&s.st<5).map(s=>[s.appt,SVC[s.sid].name,fullAddr(l),`openProject('${l.id}')`])]),
+    [DUES.nextDraft,"Fee draft","Financial Center","go('fin',{finTab:'home',stmt:''})"]].map(d=>[parseD(d[0]),d[1],d[2],d[3]]).filter(d=>d[0]&&d[0]>=day0(NOW)).sort((a,b)=>a[0]-b[0]); }
+function dayAttention(){ const m=me(), out=[];
+  myListings().filter(l=>l.st<5).forEach(l=>{ const n=l.deliverables.filter(d=>d.st==="awaiting").length; if(n) out.push([(n===1?"One piece is":n+" pieces are")+" awaiting your approval",l.addr,`openProject('${l.id}')`]); });
+  S.orders.filter(o=>o.agent===m.name&&!o.canceled&&!o.refund).forEach(o=>{ const f=flowOf(o), go_=`go('shop',{shopView:'orders',order:'${o.id}'})`; if(f==="approval") out.push(["A proof is ready for your approval","Order "+o.id,go_]); else if(f==="pickup") out.push(["Your order is ready for pickup","Order "+o.id+", "+m.office+" office",go_]); });
+  S.requests.filter(r=>r.agent===m.name&&r.status==="waiting").forEach(r=>out.push(["We have a question for you","Request #"+r.id,`go('help',{helpTab:'mine',req:${r.id}})`]));
+  return out; }
+function dayItems(){ const soon=new Date(NOW.getFullYear(),NOW.getMonth(),NOW.getDate()+7); return dayAttention().concat(dayDates().filter(d=>d[0]<=soon&&d[1]!=="Fee draft").map(d=>[d[1],d[2]+" &middot; "+fmtD(d[0]),d[3]])); }
+function welContinue(){ const out=[], active=myListings().filter(l=>l.st<5), f=active.find(l=>l.deliverables.some(d=>d.st==="awaiting"))||active[0], open=S.orders.filter(o=>o.agent===me().name&&o.stage<4&&!o.canceled&&!o.refund);
+  if(S.draft&&!S.draft.forListing) out.push(["Your listing consultation"+(S.draft.addr?" for "+S.draft.addr:""),"Saved for this session","go('lc',{lcView:'new'})","Continue","",""]);
+  if(S.cart.length) out.push(["Your cart",S.cart.reduce((t,i)=>t+i.qty,0)+(S.cart.reduce((t,i)=>t+i.qty,0)===1?" item":" items")+" waiting","go('shop',{shopView:'cart'})","Review your cart","",""]);
+  if(f) out.push([f.addr,svcDone(f)+" of "+f.services.length+" services complete",`openProject('${f.id}')`,"Open the project",f.art,LSTAGES[f.st]]);
+  else if(open[0]) out.push(["Order "+open[0].id,open[0].items.map(i=>i.name).join(", "),`go('shop',{shopView:'orders',order:'${open[0].id}'})`,"View the order","",""]);
+  return out.slice(0,2); }
+function welFirst(on){ WEL().first=!!on; S.sel.dayAll=false; go("home"); }
+function welAnn(){ const a=annFor(); openModal(`<div class="askbox"><div class="eyebrow">From the brokerage</div><h3>Announcements</h3>${a.length?a.map(x=>`<div class="item" style="cursor:default"><div class="t">${x.title}</div><div class="muted small">${x.body}</div></div>`).join(""):`<p class="muted">No announcements right now.</p>`}<div class="actions" style="margin-top:16px"><button class="btn quiet" onclick="closeModal()">Close</button></div></div>`); }
+function welGuide(){ const row=(t,d,act)=>`<div class="item" ${clk(`closeModal();${act}`)}><div class="t">${t}</div><div class="muted small">${d}</div></div>`;
+  openModal(`<div class="askbox"><div class="eyebrow">A short guide</div><h3>Where everything lives</h3>
+    ${row("Listing Concierge","Start a listing project, choose services, approve work, and follow each step.","go('lc',{lcTab:'home',lcView:''})")}
+    ${row("The Agent Collection","Apparel, print, signs, gifts, kits, and creative services for your business.","go('shop',{shopView:'home'})")}
+    ${row("Financial Center","Brokerage fees, statements, a commission calculator, and your numbers.","go('fin',{finTab:'home',stmt:''})")}
+    ${row("Resources &amp; Support","Request assistance, documents, marketing resources, company information, and who to call.","go('support')")}
+    ${row("My Profile","Your contact details and how the company reaches you.","go('profile')")}
+    <div class="actions" style="margin-top:16px"><button class="btn quiet" onclick="closeModal()">Close</button></div></div>`); }
+
+const homeBefore = PAGES.home;
+PAGES.home = () => { const m=me(), first=m.name.split(" ")[0], hr=new Date().getHours(), hello=(hr<12?"Good morning":hr<17?"Good afternoon":"Good evening")+", "+first, today=new Date().toLocaleDateString("en-US",{weekday:"long",month:"long",day:"numeric"}), fv=WEL().first;
+  const att=dayAttention(), items=dayItems(), dates=dayDates(), all=!!S.sel.dayAll, show=all?att:items.slice(0,3), more=att.length+dates.length>show.length, ann=annFor(), cont=fv?[]:welContinue();
+  const sig=(img,name,line,desc,cta,act)=>`<div class="sigc" ${clk(act)} aria-label="${name}. ${cta}."><div class="simg" aria-hidden="true">${welImg(img)}</div><div class="sbody"><div class="eyebrow">${name}</div><h2>${line}</h2><p>${desc}</p><span class="scta">${cta}</span></div></div>`;
+  const li=x=>`<li ${clk(x[2])}><span>${x[0]}</span><i>${x[1]}</i></li>`, lk=(l,act)=>`<a href="#" onclick="${act};return false">${l}</a>`;
+  return `<section class="wlc${fv?" firstv":""}">
+    <div class="wtx"><div class="eyebrow">${fv?hello:"Welcome to Your Litchfield Experience"}</div><h1>${fv?"Welcome to Your Litchfield Experience":hello}</h1><p class="motto">Exceptional service. Thoughtfully delivered.</p>
+      ${fv?`<p class="lead">Everything the company offers its agents lives in three places. Begin wherever you like, and we will take it from there.</p><p class="wlink"><a href="#" onclick="welGuide();return false">Explore the portal</a></p>`:""}
+      <p class="when">${m.office} office &middot; ${today}</p></div>
+    <div class="wart" aria-hidden="true">${welImg("c_open")}</div>
+  </section>
+  <div class="sig" aria-label="Three signature experiences">
+    ${sig("oak","Listing Concierge","Let's bring your listing to life.","Start a listing project, request marketing, coordinate services, and follow your active projects.","Begin Your Listing Experience","go('lc',{lcTab:'home',lcView:''})")}
+    ${sig("c_shop","The Agent Collection","Everything you need to elevate your business.","Branded apparel, marketing materials, listing supplies, growth kits, and creative services.","Explore the Collection","go('shop',{shopView:'home'})")}
+    ${sig("c_prep","How May We Assist?","We're here to make your day easier.","Request assistance, find a document, reach the right department, and open brokerage resources.","Resources and Support","go('support')")}
+  </div>
+  ${fv?"":`<section class="yday"><div class="ydcol"><div class="ghead"><h3>Your Day at a Glance</h3>${more||all?`<a href="#" class="small" onclick="S.sel.dayAll=${!all};soft();return false">${all?"Show less":"View all"}</a>`:""}</div>
+      ${show.length?`<ul class="ydl" id="ydl">${show.map(li).join("")}</ul>`:all?"":`<p class="caught">You're all caught up. Enjoy your day.</p>`}
+      ${all?(dates.length?`<div class="eyebrow ydsub">Coming up</div><ul class="ydl" id="ydates">${dates.slice(0,8).map(d=>li([d[1],d[2]+" &middot; "+fmtD(d[0]),d[3]])).join("")}</ul>`:(show.length?"":`<p class="caught">You're all caught up. Enjoy your day.</p>`)):""}</div>
+    <div class="ydcol"><div class="ghead"><h3>From the brokerage</h3>${ann.length>1?`<a href="#" class="small" onclick="welAnn();return false">All announcements</a>`:""}</div>
+      ${ann.length?`<div class="annone" id="annone"><div class="t">${ann[0].title}</div><p>${ann[0].body}</p></div>`:`<p class="caught">No announcements right now.</p>`}</div></section>
+  ${cont.length?`<section class="wcont"><div class="ghead"><h3>Continue Your Work</h3></div><div class="wcl">${cont.map(c=>`<div class="wcc" ${clk(c[2])}>${c[4]?`<div class="wci" aria-hidden="true">${welImg(c[4])}</div>`:""}<div class="wct"><b>${c[0]}</b><i>${c[1]}${c[5]?" &middot; "+c[5]:""}</i></div><span class="scta">${c[3]}</span></div>`).join("")}</div></section>`:""}`}
+  <nav class="wmore" aria-label="More of the portal">${lk("Financial Center","go('fin',{finTab:'home',stmt:''})")}${lk("Documents","go('res',{resTab:'docs'})")}${lk("Marketing resources","go('res',{resTab:'content',resCat:''})")}${lk("Company systems","go('res',{resTab:'apps'})")}${lk("Who to call","go('help',{helpTab:'who'})")}${fv?"":lk("Announcements","welAnn()")}</nav>
+  <p class="wdemo">${sampleTag("Demo view")} Showing the ${fv?"first-visit":"returning agent"} home. <a href="#" onclick="welFirst(${!fv});return false">Show the ${fv?"returning agent":"first-visit"} home</a></p>
+  <details class="credits"><summary>Sample photography from Unsplash. These images stand in for company photography.</summary><p class="fine">Photographs by ${PHOTO_CREDITS.join(", ")}.</p></details>`; };
+
+// Resources and Support: one destination, a simple choice first, and the detail one step in
+function resApps(){ const h=homeBefore(), i=h.indexOf('<div class="home-d"'); return `<div class="pagehead"><div><h1>Company systems</h1><p>The applications you use with the company. Each one opens with your work sign-in.</p></div></div>${i<0?"":h.slice(i,h.indexOf('<details class="credits">')<0?h.length:h.indexOf('<details class="credits">')).replace('<div class="ghead"><h3>Your apps</h3></div>',"").replace('<h3 class="mh-sec">Your apps</h3>',"").replace('style="margin-top:40px"',"").replace('style="padding-top:30px"',"")}`; }
+PAGES.res = () => { const t=S.sel.resTab||"docs"; return supCrumb("Documents and resources")+tabs([["docs","My documents"],["bank","Document bank"],["content","Marketing resources"],["company","Company information"],["apps","Company systems"]],t,"resTab")+(t==="bank"?resBank():t==="content"?PAGES.content():t==="company"?resCompany():t==="apps"?resApps():resDocs()); };
+{ const f=PAGES.help; PAGES.help=()=>supCrumb("Support")+f(); }
+PAGES.support = () => { const m=me(), open=S.requests.filter(r=>r.agent===m.name&&r.status!=="done"), r=open[0], st={new:"has been received",doing:"is in progress",waiting:"is waiting on your reply"};
+  const ch=(icon,t,d,act,pri)=>`<div class="schoice${pri?" sp":""}" ${clk(act)}>${ico(icon)}<div><b>${t}</b><p>${d}</p></div></div>`;
+  return `<section class="calm"><div class="eyebrow">Resources &amp; Support</div><h1>How may we assist?</h1><p class="lead">We're here to make your day easier. Choose where you would like to begin.</p></section>
+  ${r?`<p class="supnote" id="supnote">Request #${r.id} ${st[r.status]||"is open"}${r.owner?" with "+r.owner:""}. <a href="#" onclick="go('help',{helpTab:'mine',req:${r.id}});return false">View my requests</a></p>`:""}
+  <div class="schoices">
+    ${ch("requests","Request Assistance","Tell us what you need. Each request has a number and a named owner.","go('help',{helpTab:'new'})",true)}
+    ${ch("docs","Documents","Your transaction files and the company document bank.","go('res',{resTab:'docs'})")}
+    ${ch("w_image","Marketing Resources","Logos, photography, templates, guides, and copy cleared for your use.","go('res',{resTab:'content',resCat:''})")}
+    ${ch("w_building","Company Information","Company forms, references, and announcements.","go('res',{resTab:'company'})")}
+    ${ch("w_phone","Who to Call","The right person for each kind of question.","go('help',{helpTab:'who'})")}
+    ${ch("w_grid","Company Systems","The applications you use with the company.","go('res',{resTab:'apps'})")}
+  </div>
+  <nav class="wmore left" aria-label="Also here"><a href="#" onclick="go('help',{helpTab:'mine'});return false">My requests${open.length?" ("+open.length+" open)":""}</a><a href="#" onclick="go('help',{helpTab:'inspect'});return false">Order an inspection</a><a href="#" onclick="go('res',{resTab:'bank'});return false">Document bank</a></nav>`; };
 
 render();
 </script>
