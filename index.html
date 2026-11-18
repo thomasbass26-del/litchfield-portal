@@ -1919,6 +1919,11 @@ tr.dim td{opacity:.6}#libtable td.acts{white-space:nowrap}#libtable td.acts .btn
 @media (min-width:761px) and (max-width:980px){.rail:not(:has(.navgroup)){padding:14px 22px 8px;align-items:center}.rail:not(:has(.navgroup)) .brand{display:flex;align-items:center;gap:16px;flex:1 1 100%;padding:0;margin:0;border:0}.rail:not(:has(.navgroup)) .raillogo{width:210px}.rail:not(:has(.navgroup)) .brand .sub{margin:0 !important}.rail:not(:has(.navgroup)) .navs{flex:1 1 100%;flex-direction:row;flex-wrap:wrap;gap:2px;margin-top:8px}.rail:not(:has(.navgroup)) .navs button{width:auto;padding:8px 12px;font-size:14px}}
 @media (max-width:360px){.sigc .scta{letter-spacing:.08em;font-size:11.5px}.sigc .simg{width:88px}.sigc .sbody{padding:14px 14px 14px 16px}}
 @media (min-width:761px) and (max-width:830px){.rail:not(:has(.navgroup)) .navs button{padding:8px 8px;font-size:13.5px}}
+/* part two: simple first screens */
+.shopmore{border-top:1px solid var(--line);margin-top:44px;padding-top:32px}.shopmore>.lead{font-size:15.5px;line-height:1.6;color:var(--ink-2);margin:6px 0 20px;max-width:62ch}.shopmore>.ghead{justify-content:space-between;margin-bottom:22px}
+.lcsum{margin-top:34px}.lcwait{margin-top:30px}.schoices.c4{grid-template-columns:repeat(4,minmax(0,1fr));margin-top:30px}
+@media (max-width:1100px){.schoices.c4{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:760px){.schoices.c4{grid-template-columns:1fr}.shopmore{margin-top:30px;padding-top:24px}.shopmore>.btn{width:100%}}
 </style>
 </head>
 <body>
@@ -3542,7 +3547,7 @@ const TOUR_COL = [
   ["Select a recurring marketing program","Three program concepts at sample prices. Signature is selected here. Add it to the cart and enrollment is simulated at checkout.",1,()=>{ S.mode="agent"; go("shop",{shopView:"programs",pgPick:CS().plan==="signature"?"":"signature"}); }],
   ["Complete a simulated checkout","The kit and the first month of the program are in the cart. The agent picks delivery and charges the order to the brokerage statement. No payment is taken.",1,()=>{ S.mode="agent"; colTourCart(); go("shop",{shopView:"checkout"}); }],
   ["View the purchase in order history","The order appears under My Purchases with its status and each update from marketing.",2,()=>{ S.mode="agent"; const o=colTourOrder(); go("shop",{shopView:"orders",order:o.id}); }],
-  ["See the charge in the Financial Center","The order, with the first month of the program on it, posts to the agent's sample statement.",2,()=>{ S.mode="agent"; colTourOrder(); go("fin",{finTab:"home",stmt:""}); }],
+  ["See the charge in the Financial Center","The order, with the first month of the program on it, posts to the agent's sample statement.",2,()=>{ S.mode="agent"; colTourOrder(); go("fin",{finTab:"activity",stmt:""}); }],
   ["Switch to the Collection Commerce Dashboard","The same activity from the brokerage side: sales, cost of goods, gross profit, orders, and subscribers.",3,()=>{ S.mode="staff"; colTourOrder(); go("orders",{mTab:"dash"}); }],
   ["Order, vendor cost, and gross profit","The order just placed, line by line: retail revenue, the vendor cost, and the illustrative gross profit.",3,()=>{ S.mode="staff"; const o=colTourOrder(); go("orders",{mTab:"orders",order:o.id}); }],
   ["Recurring program revenue","Subscribers, monthly recurring revenue, fulfillment cost, and contribution for each program concept.",3,()=>{ S.mode="staff"; colTourOrder(); go("orders",{mTab:"programs"}); }],
@@ -5369,6 +5374,32 @@ PAGES.support = () => { const m=me(), open=S.requests.filter(r=>r.agent===m.name
     ${ch("w_grid","Company Systems","The applications you use with the company.","go('res',{resTab:'apps'})")}
   </div>
   <nav class="wmore left" aria-label="Also here"><a href="#" onclick="go('help',{helpTab:'mine'});return false">My requests${open.length?" ("+open.length+" open)":""}</a><a href="#" onclick="go('help',{helpTab:'inspect'});return false">Order an inspection</a><a href="#" onclick="go('res',{resTab:'bank'});return false">Document bank</a></nav>`; };
+
+// ---------- Part two: each section opens on a simple first screen, and the detail is one step in ----------
+ICONS.w_chart='<path d="M4 20h16"/><path d="M7 20v-6M12 20V8M17 20v-9"/>';
+const FRONT = {fin:{finTab:"home",stmt:""},lc:{lcTab:"home",lcView:""},shop:{shopView:"home"}};
+{ const f=go; go=function(p,extra){ if(S.mode!=="staff"&&extra===undefined&&FRONT[p]&&!(S.tour&&S.tour.on)) extra=Object.assign({},FRONT[p]); return f(p,extra); }; }
+
+// Listing Concierge: the overview keeps the welcome, the three choices, and the three steps. The project summary moves to My projects.
+{ const f=lcHome, p=lcProjects, cut=h=>{ const a=h.indexOf('<div class="ghead"'), g=h.indexOf('<div class="grid c3"'), g2=g<0?-1:h.indexOf('<div class="ghead"',g); return [a<0?h:h.slice(0,a),g<0||g2<0?"":h.slice(g,g2)]; };
+  lcHome=function(){ const wait=myListings().filter(l=>l.st<5).map(l=>[l,l.deliverables.filter(d=>d.st==="awaiting").length]).filter(x=>x[1]);
+    return cut(f())[0]+wait.map(([l,n])=>`<p class="supnote lcwait">${n===1?"One piece is":n+" pieces are"} awaiting your approval at ${l.addr}. <a href="#" onclick="openProject('${l.id}');return false">Review it</a></p>`).join("")
+      +`<nav class="wmore left" aria-label="Also in Listing Concierge"><a href="#" onclick="go('lc',{lcTab:'packages',lcView:''});return false">Marketing packages</a><a href="#" onclick="go('lc',{lcTab:'tx',lcView:''});return false">Transaction Concierge</a></nav>`; };
+  lcProjects=function(){ const s=cut(f())[1]; return p()+(s?`<div class="lcsum">${s}</div>`:""); }; }
+
+// The Agent Collection: the departments come first. Everything else waits behind one step.
+{ const f=shopHome; shopHome=function(){ const h=f(), a=h.indexOf('<section class="season"'), r=h.indexOf('<section class="recs"'), e=h.lastIndexOf('</div>'); if(a<0||e<a||(r>=0&&r<a)) return h;
+    const re=r<0?-1:h.indexOf('</section>',r)+10, recs=r<0?"":h.slice(r,re), rest=r<0?h.slice(a,e):h.slice(a,r)+h.slice(re,e), open=!!S.sel.shopMore||!!(S.tour&&S.tour.on);
+    return h.slice(0,a)+recs+`<section class="shopmore" id="shopmore">`+(open?`<div class="ghead"><div><div class="eyebrow">More of the Collection</div><h3>Everything else in the Collection</h3></div><a href="#" class="small" onclick="S.sel.shopMore=false;soft();return false">Show less</a></div>${rest}`:`<div class="eyebrow">More of the Collection</div><p class="lead">Seasonal collections, new arrivals, agent favorites, curated kits, marketing programs, and premium services.</p><button class="btn quiet" onclick="S.sel.shopMore=true;soft()">Explore more of the Collection</button>`)+`</section>`+h.slice(e); }; }
+
+// Financial Center: a short overview first. The month's activity has its own tab.
+{ const f=PAGES.fin, FT=[["home","Overview"],["activity","Activity"],["stmts","Statements"],["calc","Commission calculator"],["numbers","My numbers"]];
+  PAGES.fin=()=>{ const t=S.sel.finTab||"home", bar=tabs(FT,t,"finTab",",stmt:''"), strip=h=>h.slice(h.indexOf('</div>')+6);
+    if(t!=="home"&&t!=="activity") return bar+strip(f());
+    S.sel.finTab="home"; const body=strip(f()), g=body.indexOf('<div class="grid c2"'); S.sel.finTab=t;
+    if(t==="activity") return bar+`<div class="pagehead"><div><div class="eyebrow">Financial Center</div><h1>Activity ${sampleTag()}</h1><p>This month's charges and credits, your payment history, and the Agent Collection purchases charged to your statement.</p></div></div>${g<0?"":body.slice(g)}`;
+    const ch=(icon,tt,d,tab)=>`<div class="schoice" ${clk(`go('fin',{finTab:'${tab}',stmt:''})`)}>${ico(icon)}<div><b>${tt}</b><p>${d}</p></div></div>`;
+    return bar+(g<0?body:body.slice(0,g))+`<div class="schoices c4" id="finchoices">${ch("fin","This month's activity","Charges, credits, and payments on your account.","activity")}${ch("docs","Statements","Monthly statements to view or print.","stmts")}${ch("calc","Commission calculator","An illustrative estimate for a sale.","calc")}${ch("w_chart","My numbers","Sales volume and transactions, year to date.","numbers")}</div>`; }; }
 
 render();
 </script>
